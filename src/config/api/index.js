@@ -1,6 +1,6 @@
 /**
  * This file exports an instance of axios configured to make requests to the backend.
- * Usage example: api.get('/relative/url');
+ * Usage example: api.get('/users/1');
  */
 import axios from 'axios';
 
@@ -12,16 +12,15 @@ const api = axios.create({
   },
 });
 
-/**
- * Add the jwt token to the authorization header on each request
- */
+//Add the JWT token to the Authorization header on each request
 api.interceptors.request.use((config) => {
-  const bearerToken = localStorage.getItem(process.env.REACT_APP_LS_TOKEN || 'token');    // Retrieve token from localStorage
+  const lsTokenKey = process.env.REACT_APP_LS_TOKEN || 'token';
+  const bearerToken = localStorage.getItem(lsTokenKey);
 
   if(bearerToken) {
-      config.headers.Authorization = `Bearer ${bearerToken}`;   // Attach token to Authorization header
+    config.headers.Authorization = `Bearer ${bearerToken}`;
   } else {
-      delete api.defaults.headers.common.Authorization;   // Delete header otherwise
+    delete api.defaults.headers.common.Authorization;
   }
 
   return config;
