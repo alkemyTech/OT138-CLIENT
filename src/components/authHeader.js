@@ -12,6 +12,7 @@ function AuthHeader(props){
     const Brand = styled.div`
         padding: 20px;
         box-sizing: border-box;
+        text-align: center;
     `;
 
     const Divisor = styled.hr`
