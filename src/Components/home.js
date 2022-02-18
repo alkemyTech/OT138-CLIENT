@@ -1,9 +1,9 @@
 import React, {Fragment, useState } from 'react';
 import styled from 'styled-components';
-import FondoPortada1 from "../Img/portada-1.png";
-import FondoPortada2 from "../Img/portada-2.jpg";
-import FondoPortada3 from "../Img/portada-3.jpg";
-import FondoPortada4 from "../Img/portada-4.jpg";
+import BackgroundCover1 from "../Img/portada-1.png";
+import BackgroundCover2 from "../Img/portada-2.jpg";
+import BackgroundCover3 from "../Img/portada-3.jpg";
+import BackgroundCover4 from "../Img/portada-4.jpg";
 import ImagenSecion1 from "../Img/secion-1.png";
 import ImagenSecion2 from "../Img/secion-2.png";
 import 'animate.css';
@@ -11,40 +11,40 @@ import 'animate.css';
 function Home(){
 
   const [position,SetPosition] = useState(0);
-  const [selecion,SetSelecion] = useState([true,false,false,false]);
+  const [selection,SetSelection] = useState([true,false,false,false]);
   const [classAnimation,SetClassAnimation] = useState("animate__animated animate__fadeInUp");
 
   const slider = [
 
     {id:1,
-    titulo:"Somos la comunidad de la clase creativa",
-    imagen:FondoPortada1
+    titulo:"We are the creative class community",
+    imagen:BackgroundCover1
     },
 
     {id:2,
-    titulo:"Nos apasiona trabajar en equipo",
-    imagen:FondoPortada2
+    titulo:"We are passionate about working as a team",
+    imagen:BackgroundCover2
      },
 
      {id:3,
-     titulo:"Brindarte la mejor experiencia de trabajo",
-     imagen:FondoPortada3
+     titulo:"Give you the best work experience",
+     imagen:BackgroundCover3
      },
 
      {id:4,
-     titulo:"Crear las mentes del futuro es nuestra pasion",
-     imagen:FondoPortada4
+     titulo:"Creating the minds of the future is our passion",
+     imagen:BackgroundCover4
      }
 
   ];
  
 
-  function CambiarSlider(e){
+  function ChangeSlider(e){
    const item = e.target.getAttribute("data-item");
    if(item === "1"){
 
     SetClassAnimation("animate__animated animate__fadeOutDown")
-    SetSelecion([true,false,false,false]);
+    SetSelection([true,false,false,false]);
     setTimeout(()=>{
     SetPosition(0);
     SetClassAnimation("animate__animated animate__fadeInDown")
@@ -52,7 +52,7 @@ function Home(){
    }else if(item === "2"){
 
     SetClassAnimation("animate__animated animate__fadeOutDown")
-    SetSelecion([false,true,false,false]);
+    SetSelection([false,true,false,false]);
     setTimeout(()=>{
     SetPosition(1);
     SetClassAnimation("animate__animated animate__fadeInDown")
@@ -61,7 +61,7 @@ function Home(){
    }else if(item === "3"){
 
     SetClassAnimation("animate__animated animate__fadeOutDown")
-    SetSelecion([false,false,true,false]);
+    SetSelection([false,false,true,false]);
     setTimeout(()=>{
     SetPosition(2);
     SetClassAnimation(" animate__animated animate__fadeInDown")
@@ -70,7 +70,7 @@ function Home(){
    }else if(item === "4"){
 
     SetClassAnimation(" animate__animated animate__fadeOutDown")
-    SetSelecion([false,false,false,true]);
+    SetSelection([false,false,false,true]);
     setTimeout(()=>{
     SetPosition(3);
     SetClassAnimation(" animate__animated animate__fadeInDown")
@@ -84,40 +84,40 @@ function Home(){
   return (
   <Fragment>
   <Container>
-  <Portada fondo={slider[position].imagen}>
+  <CoverPage fondo={slider[position].imagen}>
   <h1 className={classAnimation}>{slider[position].titulo}</h1>
-  <Boton className={classAnimation}>Aplicar ahora</Boton>
-  <CajaItems className={classAnimation}>
-  <Item data-item={1} onClick={CambiarSlider} color={Number(selecion[0])}/>
-  <Item data-item={2} onClick={CambiarSlider} color={Number(selecion[1]) }/>
-  <Item data-item={3} onClick={CambiarSlider} color={Number(selecion[2]) }/>
-  <Item data-item={4} onClick={CambiarSlider} color={Number(selecion[3]) }/>
-  </CajaItems>
-  </Portada>
+  <Buttom className={classAnimation}>Aplicar ahora</Buttom>
+  <BoxItems className={classAnimation}>
+  <Item data-item={1} onClick={ChangeSlider} color={Number(selection[0])}/>
+  <Item data-item={2} onClick={ChangeSlider} color={Number(selection[1]) }/>
+  <Item data-item={3} onClick={ChangeSlider} color={Number(selection[2]) }/>
+  <Item data-item={4} onClick={ChangeSlider} color={Number(selection[3]) }/>
+  </BoxItems>
+  </CoverPage>
   </Container>
 
-  <Secion1>
-    <Caja1>
+  <Section1>
+    <Box1>
     <h1>Build an Interative Comapny Directory</h1>
     <p>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem.</p>
     <button>Conocer</button>
-    </Caja1>
-    <Caja2>
+    </Box1>
+    <Box2>
     <img src={ImagenSecion1} alt="secion1"width="70%" />
-    </Caja2>
-  </Secion1>
+    </Box2>
+  </Section1>
 
 
-  <Secion2>
-    <Caja3>
+  <Section2>
+    <Box3>
     <img src={ImagenSecion2} alt="secion1"width="70%" />
-    </Caja3>
-    <Caja4>
+    </Box3>
+    <Box4>
     <h1>Build an Interative Comapny Directory</h1>
     <p>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem.</p>
     <button>Conocer</button>
-    </Caja4>
-  </Secion2>
+    </Box4>
+  </Section2>
   </Fragment>
   );
 }
@@ -132,7 +132,7 @@ overflow:hidden;
 `;
 
 
-const Portada = styled.div`
+const CoverPage = styled.div`
 
 background-image:url(${props => props.fondo && props.fondo});
 transition:1500ms ease all;
@@ -191,7 +191,7 @@ font-family: 'Poppins', sans-serif;
 `;
 
 
-const Boton = styled.button`
+const Buttom = styled.button`
 
   padding:20px 60px;
   margin:50px;
@@ -232,7 +232,7 @@ const Item = styled.button`
 `;
 
 
-const CajaItems = styled.div`
+const BoxItems = styled.div`
 position:absolute;
 bottom:50px;
 @media (max-width:500px){
@@ -241,7 +241,7 @@ bottom:15px;
 `;
 
 
-const Secion1 = styled.section`
+const Section1 = styled.section`
 width:100%;
 height:auto;
 margin-top:100px;
@@ -274,7 +274,7 @@ grid-template-areas: "caja1 caja2";
 
 
 
-const Caja1 = styled.section`
+const Box1 = styled.section`
 
 font-family: 'Poppins', sans-serif;
 padding:40px;
@@ -328,7 +328,7 @@ button{
 `;
 
 
-const Caja2 = styled.section`
+const Box2 = styled.section`
 
 padding:20px;
 display:flex;
@@ -341,7 +341,7 @@ img{
 }
 `;
 
-const Secion2 = styled.section`
+const Section2 = styled.section`
 width:100%;
 height:auto;
 margin-top:100px;
@@ -372,7 +372,7 @@ grid-template-areas: "caja3 caja4";
 }
 `;
 
-const Caja3 = styled.div`
+const Box3 = styled.div`
 
 grid-area:caja3;
 padding:20px;
@@ -387,7 +387,7 @@ img{
 `;
 
 
-const Caja4 = styled.div`
+const Box4 = styled.div`
 
 grid-area:caja4;
 padding:40px;

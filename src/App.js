@@ -6,13 +6,13 @@ import {Link, NavLink, Route, Routes} from "react-router-dom";
 import './App.css';
 import styled from 'styled-components';
 import Logo from "./Img/logo.png";
-import IconMenu from "./Img/menu.png";
+import IconBurger from "./Img/menu.png";
 
 function App() {
 
-  const [alto,SetAlto] = useState("0px");
-  function MostrarMenu(){SetAlto("100vh")}
-  function OcultarMenu(){SetAlto("0px")}
+  const [high,SetHigh] = useState("0px");
+  function MostrarMenu(){SetHigh("100vh")}
+  function OcultarMenu(){SetHigh("0px")}
 
 
 
@@ -27,11 +27,11 @@ function App() {
    <NavLink to="/signup">Signup</NavLink>
    <NavLink to="/login">Login</NavLink>
    </ListMenu>
-   <IconoMenu src={IconMenu} alt="menu" onClick={MostrarMenu}/>
+   <IconMenu src={IconBurger} alt="menu" onClick={MostrarMenu}/>
     
   </Menu>
 
-  <MenuMobil alto={alto} onClick={OcultarMenu}>
+  <MenuMobil alto={high} onClick={OcultarMenu}>
   <NavLink to="/">Home</NavLink>
   <NavLink to="/services">Services</NavLink>
   <NavLink to="/signup">Signup</NavLink>
@@ -41,7 +41,7 @@ function App() {
 
   <Routes>
   <Route path='/' element={<Home/>}/>
-  <Route path='/services' element={<h1>Servicios</h1>}/>
+  <Route path='/services' element={<h1>services</h1>}/>
   <Route path='/signup' element={<Signup/>}/>
   <Route path='/login' element={<Login/>}/>
   </Routes>
@@ -115,7 +115,7 @@ display:none;
 `;
 
 
-const IconoMenu = styled.img`
+const IconMenu = styled.img`
 width:50px;
 display:none;
 cursor:pointer;
