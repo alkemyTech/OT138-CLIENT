@@ -40,108 +40,85 @@ function Home(){
  
 
   function CambiarSlider(e){
-
    const item = e.target.getAttribute("data-item");
-
    if(item === "1"){
 
     SetClassAnimation("animate__animated animate__fadeOutDown")
     SetSelecion([true,false,false,false]);
     setTimeout(()=>{
-
     SetPosition(0);
     SetClassAnimation("animate__animated animate__fadeInDown")
-
     },1300)
    }else if(item === "2"){
 
-    
     SetClassAnimation("animate__animated animate__fadeOutDown")
     SetSelecion([false,true,false,false]);
     setTimeout(()=>{
-
     SetPosition(1);
     SetClassAnimation("animate__animated animate__fadeInDown")
-
     },1300)
 
    }else if(item === "3"){
 
-    
     SetClassAnimation("animate__animated animate__fadeOutDown")
     SetSelecion([false,false,true,false]);
     setTimeout(()=>{
-
     SetPosition(2);
     SetClassAnimation(" animate__animated animate__fadeInDown")
-
     },1300)
 
    }else if(item === "4"){
 
-    
     SetClassAnimation(" animate__animated animate__fadeOutDown")
     SetSelecion([false,false,false,true]);
     setTimeout(()=>{
-
     SetPosition(3);
     SetClassAnimation(" animate__animated animate__fadeInDown")
 
     },1300)
 
-   }
-  
-  
-
-  }
-
-
-
+   }}
 
 
 
   return (
   <Fragment>
   <Container>
-      <Portada fondo={slider[position].imagen}>
-        <h1 className={classAnimation}>{slider[position].titulo}</h1>
-        <Boton className={classAnimation}>Aplicar ahora</Boton>
-
-        
-      <CajaItems className={classAnimation}>
-        <Item data-item={1} onClick={CambiarSlider} color={Number(selecion[0])}/>
-        <Item data-item={2} onClick={CambiarSlider} color={Number(selecion[1]) }/>
-        <Item data-item={3} onClick={CambiarSlider} color={Number(selecion[2]) }/>
-        <Item data-item={4} onClick={CambiarSlider} color={Number(selecion[3]) }/>
-     </CajaItems>
-      </Portada>
-
+  <Portada fondo={slider[position].imagen}>
+  <h1 className={classAnimation}>{slider[position].titulo}</h1>
+  <Boton className={classAnimation}>Aplicar ahora</Boton>
+  <CajaItems className={classAnimation}>
+  <Item data-item={1} onClick={CambiarSlider} color={Number(selecion[0])}/>
+  <Item data-item={2} onClick={CambiarSlider} color={Number(selecion[1]) }/>
+  <Item data-item={3} onClick={CambiarSlider} color={Number(selecion[2]) }/>
+  <Item data-item={4} onClick={CambiarSlider} color={Number(selecion[3]) }/>
+  </CajaItems>
+  </Portada>
   </Container>
 
   <Secion1>
-  <Caja1>
+    <Caja1>
     <h1>Build an Interative Comapny Directory</h1>
     <p>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem.</p>
     <button>Conocer</button>
-  </Caja1>
- <Caja2>
-   <img src={ImagenSecion1} alt="secion1"width="70%" />
- </Caja2>
+    </Caja1>
+    <Caja2>
+    <img src={ImagenSecion1} alt="secion1"width="70%" />
+    </Caja2>
   </Secion1>
 
 
   <Secion2>
-  <Caja3>
-<img src={ImagenSecion2} alt="secion1"width="70%" />
-</Caja3>
-
-<Caja4>
-<h1>Build an Interative Comapny Directory</h1>
+    <Caja3>
+    <img src={ImagenSecion2} alt="secion1"width="70%" />
+    </Caja3>
+    <Caja4>
+    <h1>Build an Interative Comapny Directory</h1>
     <p>Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem.</p>
     <button>Conocer</button>
-</Caja4>
+    </Caja4>
   </Secion2>
-</Fragment>
+  </Fragment>
   );
 }
 
@@ -170,7 +147,6 @@ flex-direction:column;
 position:relative;
 padding:30px;
 font-family: 'Poppins', sans-serif;
-
 
 
 @media (max-width:500px){
@@ -219,7 +195,7 @@ const Boton = styled.button`
 
   padding:20px 60px;
   margin:50px;
-  background:#efcc70;
+  background:#3b2284;
   font-family: 'Poppins', sans-serif;
   font-size:20px;
   border:none;
@@ -315,7 +291,8 @@ button{
   font-size:17px;
   border-radius:5px;
   cursor:pointer;
-  background-color:#efcc70;
+  background-color:#3b2284;
+  color:#fff;
   margin:10px 0px;
   
 
@@ -426,7 +403,8 @@ button{
   font-size:17px;
   border-radius:5px;
   cursor:pointer;
-  background-color:#efcc70;
+  background-color:#3b2284;
+  color:#fff;
   margin:10px 0px;
   
 
