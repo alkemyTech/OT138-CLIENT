@@ -1,9 +1,8 @@
 import React from 'react';
-import styled from '@emotion/styled';
 import AuthHeader from '../components/AuthHeader.js';
 import { useFormik } from 'formik';
-import { withTheme } from '@emotion/react';
 import { Link } from 'react-router-dom';
+import generalStyles from '../styles/generalStyles.js';
 
 // Returns an object with the error messages for handled input validation
 // i.e. fields required, correct email format and password min 6 chars length
@@ -49,100 +48,49 @@ function Signup(props){
     })
 
     const attemptSignup = ({name, lastname, email, password}) => {
-        // Code login function
+        // Code signup function
         console.log("Signup attempt");
     }
 
-    const loginViewStyle = {
-        backgroundColor: "#E7E0D2",
-        height: "100vh",
-    };
-
-    const labelStyle = {
-        width: "90%",
-        maxWidth: "600px",
-        display: "block",
-        margin: "auto",
-        marginTop: "10px",
-    };
-
-    const labelTextStyle = {
-        display: "block",
-    }
-
-    const inputTextStyle = {
-        width: "100%",
-        padding: "0.5rem",
-        boxSizing: "border-box",
-        borderRadius: "10px",
-        border: "none",
-        textAlign: "center",
-    };
-
-    const buttonStyle = {
-        width: "90%",
-        maxWidth: "600px",
-        padding: "0.5rem",
-        boxSizing: "bordr-box",
-        borderRadius: "10px",
-        display: "block",
-        margin: "auto",
-        marginTop: "30px",
-        border: "none",
-        backgroundColor: "#17A768",
-        color: 'white',
-        };
-
-    const validationErrorTextStyle = {
-        display: "block",
-        fontSize: "0.8rem",
-    };
-
-    const linkStyle = {
-        display: 'block',
-        textAlign: 'center',
-        marginTop: '20px'
-    }
-
     return (
-        <div style={loginViewStyle}>
+        <div style={generalStyles.authView}>
             <AuthHeader logoSrc="../images/assets/logo.png" subtitle="Iniciar sesión"/>
             <form onSubmit={formik.handleSubmit}>
-                <label style={labelStyle}>
-                    <span style={labelTextStyle}>Nombre:</span>
-                    <input type="text" name="name" value={formik.values.name} onChange={formik.handleChange} style={inputTextStyle}/>
+                <label style={generalStyles.label}>
+                    <span style={generalStyles.labelText}>Nombre:</span>
+                    <input type="text" name="name" value={formik.values.name} onChange={formik.handleChange} style={generalStyles.inputText}/>
                     {formik.errors.name ? 
-                        <span style={validationErrorTextStyle}>{formik.errors.name}</span>:
+                        <span style={generalStyles.formValidationErrorText}>{formik.errors.name}</span>:
                         null
                     }
                 </label>
-                <label style={labelStyle}>
-                    <span style={labelTextStyle}>Apellido:</span>
-                    <input type="text" name="lastname" value={formik.values.lastname} onChange={formik.handleChange} style={inputTextStyle}/>
+                <label style={generalStyles.label}>
+                    <span style={generalStyles.labelText}>Apellido:</span>
+                    <input type="text" name="lastname" value={formik.values.lastname} onChange={formik.handleChange} style={generalStyles.inputText}/>
                     {formik.errors.lastname ? 
-                        <span style={validationErrorTextStyle}>{formik.errors.lastname}</span>:
+                        <span style={generalStyles.formValidationErrorText}>{formik.errors.lastname}</span>:
                         null
                     }
                 </label>
-                <label style={labelStyle}>
-                    <span style={labelTextStyle}>Email:</span>
-                    <input type="email" name="email" value={formik.values.email} onChange={formik.handleChange} style={inputTextStyle}/>
+                <label style={generalStyles.label}>
+                    <span style={generalStyles.labelText}>Email:</span>
+                    <input type="email" name="email" value={formik.values.email} onChange={formik.handleChange} style={generalStyles.inputText}/>
                     {formik.errors.email ? 
-                        <span style={validationErrorTextStyle}>{formik.errors.email}</span>:
+                        <span style={generalStyles.formValidationErrorText}>{formik.errors.email}</span>:
                         null
                     }
                 </label>
-                <label style={labelStyle}>
-                    <span style={labelTextStyle}>Contraseña:</span>
-                    <input type="password" name="password" value={formik.values.password} onChange={formik.handleChange} style={inputTextStyle}/>
+                <label style={generalStyles.label}>
+                    <span style={generalStyles.labelText}>Contraseña:</span>
+                    <input type="password" name="password" value={formik.values.password} onChange={formik.handleChange} style={generalStyles.inputText}/>
                     {formik.errors.password ? 
-                        <span style={validationErrorTextStyle}>{formik.errors.password}</span>:
+                        <span style={generalStyles.formValidationErrorText}>{formik.errors.password}</span>:
                         null
                     }
                 </label>
-                <button type="submit" style={buttonStyle}>Ingresar</button>
+                <button type="submit" style={generalStyles.primaryButton}>Ingresar</button>
             </form>
-            <Link to="/login" style={linkStyle}>Ya estoy registrado</Link>
+            <Link to="/login" style={generalStyles.link}>Ya estoy registrado</Link>
         </div>
     )
 }
