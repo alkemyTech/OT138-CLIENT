@@ -1,13 +1,21 @@
 import React from 'react';
 import AuthHeader from '../components/AuthHeader.js';
 import { useFormik } from 'formik';
-import { Link } from "react-router-dom";
-import generalStyles from '../styles/generalStyles'
+import { Link } from 'react-router-dom';
+import generalStyles from '../styles/generalStyles.js';
 
 // Returns an object with the error messages for handled input validation
-// i.e. both fields required, correct email format and password min 6 chars length
+// i.e. fields required, correct email format and password min 6 chars length
 const validate = values => {
     const errors = {};
+    
+    if(!values.name){
+        errors.name = "Campo requerido";
+    }
+
+    if(!values.lastname){
+        errors.lastname = "Campo requerido";
+    }
 
     if(!values.email){
         errors.email = "Campo requerido";
@@ -23,23 +31,25 @@ const validate = values => {
     return errors;
 }
 
-function Login(props){
+function Signup(props){
 
     const formik = useFormik({
         initialValues: {
-            email: props.email? props.email : '',
+            name: '',
+            lastname: '',
+            email: '',
             password: ''
         },
         validate,
         // Only submits if there is not any validation error
         onSubmit: (values) => {
-            attemptLogin(values);
+            attemptSignup(values);
         }
     })
 
-    const attemptLogin = ({email, password}) => {
-        // Code login function
-        console.log("Login attempt");
+    const attemptSignup = ({name, lastname, email, password}) => {
+        // Code signup function
+        console.log("Signup attempt");
     }
 
     return (
@@ -47,10 +57,26 @@ function Login(props){
             <AuthHeader logoSrc="../images/assets/logo.png" subtitle="Iniciar sesión"/>
             <form onSubmit={formik.handleSubmit}>
                 <label style={generalStyles.label}>
+                    <span style={generalStyles.labelText}>Nombre:</span>
+                    <input type="text" name="name" value={formik.values.name} onChange={formik.handleChange} style={generalStyles.inputText}/>
+                    {formik.errors.name ? 
+                        <span style={generalStyles.formValidationErrorText}>{formik.errors.name}</span>:
+                        null
+                    }
+                </label>
+                <label style={generalStyles.label}>
+                    <span style={generalStyles.labelText}>Apellido:</span>
+                    <input type="text" name="lastname" value={formik.values.lastname} onChange={formik.handleChange} style={generalStyles.inputText}/>
+                    {formik.errors.lastname ? 
+                        <span style={generalStyles.formValidationErrorText}>{formik.errors.lastname}</span>:
+                        null
+                    }
+                </label>
+                <label style={generalStyles.label}>
                     <span style={generalStyles.labelText}>Email:</span>
                     <input type="email" name="email" value={formik.values.email} onChange={formik.handleChange} style={generalStyles.inputText}/>
                     {formik.errors.email ? 
-                        <span style={generalStyles.validationErrorText}>{formik.errors.email}</span>:
+                        <span style={generalStyles.formValidationErrorText}>{formik.errors.email}</span>:
                         null
                     }
                 </label>
@@ -58,15 +84,15 @@ function Login(props){
                     <span style={generalStyles.labelText}>Contraseña:</span>
                     <input type="password" name="password" value={formik.values.password} onChange={formik.handleChange} style={generalStyles.inputText}/>
                     {formik.errors.password ? 
-                        <span style={generalStyles.validationErrorText}>{formik.errors.password}</span>:
+                        <span style={generalStyles.formValidationErrorText}>{formik.errors.password}</span>:
                         null
                     }
                 </label>
                 <button type="submit" style={generalStyles.primaryButton}>Ingresar</button>
             </form>
-            <Link to="/signup" style={generalStyles.link}>Aún no tengo cuenta</Link>
+            <Link to="/login" style={generalStyles.link}>Ya estoy registrado</Link>
         </div>
     )
 }
 
-export default Login;
+export default Signup;
