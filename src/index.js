@@ -8,7 +8,7 @@ import { BrowserRouter } from "react-router-dom";
 import "animate.css";
 import "./styles/index.css";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
-import "sweetalert/dist/sweetalert.css";
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
