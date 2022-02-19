@@ -12,6 +12,7 @@
     "axios": "^0.26.0",
     "formik": "^2.2.9",
     "moment": "^2.29.1",
+    "animate.css": "^4.1.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-helmet": "^6.1.0",
@@ -23,7 +24,8 @@
     "react-router-dom": "^6.2.1",
     "react-scripts": "^5.0.0",
     "redux-thunk": "^2.4.1",
-    "sweetalert2-react": "^0.8.3"
+    "sweetalert2-react": "^0.8.3",
+    "styled-components": "^5.3.3"
   },
   "scripts": {
     "start": "react-scripts start",
