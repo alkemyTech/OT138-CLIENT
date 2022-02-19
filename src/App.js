@@ -1,10 +1,8 @@
 import React, { Fragment, useState } from "react";
-import { BrowserRouter as Route, Routes } from "react-router-dom";
-import Home from "./components/Home";
-import Counter from "./components/Counter";
-import Login from "./views/Login";
-import Signup from "./views/Signup";
-import { Link, NavLink } from "react-router-dom";
+import Home from "./Components/Home";
+import Signup from "./Components/Signup";
+import Login from "./Components/Login";
+import { Link, NavLink, Route, Routes } from "react-router-dom";
 import "./App.css";
 import styled from "styled-components";
 import Logo from "./Img/logo.png";
