@@ -82,7 +82,7 @@ function Login(props) {
           Ingresar
         </button>
       </form>
-      <Link to="/signup" style={generalStyles.link}>
+      <Link to="/registro" style={generalStyles.link}>
         Aún no tengo cuenta
       </Link>
     </div>
