@@ -7,16 +7,14 @@ import Signup from "./views/Signup";
 
 function App() {
   return (
-    <div>
-      <Router>
-        <Routes>
-          <Route exact path="/" element={<Home />} />
-          <Route exact path="/login" element={<Login />} />
-          <Route exact path="/registro" element={<Signup />} />
-          <Route exact path="/counter" element={<Counter />} />
-        </Routes>
-      </Router>
-    </div>
+    <Router>
+      <Routes>
+        <Route exact path="/" element={<Home />} />
+        <Route exact path="/login" element={<Login />} />
+        <Route exact path="/registro" element={<Signup />} />
+        <Route exact path="/counter" element={<Counter />} />
+      </Routes>
+    </Router>
   );
 }
 
