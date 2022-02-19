@@ -6,6 +6,10 @@ import store from "./app/store";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 
+import * as serviceWorker from "./serviceWorker";
+import "./styles/index.css";
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import "sweetalert/dist/sweetalert.css";
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
