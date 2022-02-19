@@ -227,7 +227,7 @@ const Item = styled.button`
   border:none;
   margin:0px 10px;
   cursor:pointer;
-  opacity:${props => props.color ? "1;" : "0.5;"};
+  opacity:${props => props.color ? "1;" : "0.5;"}
   transition:500ms ease;
 `;
 
