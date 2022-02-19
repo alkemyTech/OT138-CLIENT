@@ -51,5 +51,16 @@ export const Box = styled.section`
     padding: 0 1rem;
     margin: 1rem 0;
     align-items: center;
+    h1 {
+      text-align: center;
+    }
+    .btn__left,
+    .btn__right {
+      align-self: center;
+    }
+    .right,
+    .left {
+      align-self: center;
+    }
   }
 `;
