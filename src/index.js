@@ -1,11 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./styles/index.css";
 import App from "./App";
 import store from "../src/store/index";
 import { Provider } from "react-redux";
 import * as serviceWorker from "./serviceWorker";
-
+import "./styles/index.css";
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import "sweetalert/dist/sweetalert.css";
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
