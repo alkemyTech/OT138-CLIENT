@@ -4,6 +4,7 @@ import Home from "./components/Home";
 import Counter from "./components/Counter";
 import Login from "./views/Login";
 import Signup from "./views/Signup";
+import FormContacto from "./views/Form_contact";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/registro" element={<Signup />} />
         <Route exact path="/counter" element={<Counter />} />
+        <Route exact path="/formulario-contacto" element={<FormContacto/>}/>
       </Routes>
     </Router>
   );
