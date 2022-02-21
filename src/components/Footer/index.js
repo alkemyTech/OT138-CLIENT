@@ -19,9 +19,9 @@ export function Footer() {
         <div>
           <p>Links</p>
           <ul>
-            {publicData.webLinks.map((link) => {
+            {publicData.webLinks.map((link, index) => {
               return (
-                <li>
+                <li key={index}>
                   <a href={link.url}>{link.name}</a>
                 </li>
               );
@@ -31,9 +31,9 @@ export function Footer() {
         <div>
           <p>Redes Sociales</p>
           <ul>
-            {publicData.socialMediaLinks.map((link) => {
+            {publicData.socialMediaLinks.map((link, index) => {
               return (
-                <li>
+                <li key={index}>
                   <a href={link.url}>{link.name}</a>
                 </li>
               );
