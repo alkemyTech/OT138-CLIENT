@@ -14,12 +14,31 @@ export function Footer() {
       <FooterStyle>
         <div>
           <p>{publicData.name}</p>
+          <img src={publicData.image} alt="Logo" className="logo"></img>
         </div>
         <div>
           <p>Links</p>
+          <ul>
+            {publicData.webLinks.map((link) => {
+              return (
+                <li>
+                  <a href={link.url}>{link.name}</a>
+                </li>
+              );
+            })}
+          </ul>
         </div>
         <div>
           <p>Redes Sociales</p>
+          <ul>
+            {publicData.socialMediaLinks.map((link) => {
+              return (
+                <li>
+                  <a href={link.url}>{link.name}</a>
+                </li>
+              );
+            })}
+          </ul>
         </div>
       </FooterStyle>
     );
