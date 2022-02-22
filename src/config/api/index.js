@@ -10,9 +10,6 @@ import axios from 'axios';
   if(typeof process.env.REACT_APP_API_URL === 'undefined') {
     console.warn('Variable REACT_APP_API_URL not defined in environment file');
   }
-  if(typeof process.env.REACT_APP_LS_TOKEN === 'undefined') {
-    console.warn('Variable REACT_APP_LS_TOKEN not defined in environment file');
-  }
 })();
 
 // Create axios instance
