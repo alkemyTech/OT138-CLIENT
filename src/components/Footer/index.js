@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { getPublicData } from "../../services/requests/publicData";
 import { FooterStyle } from "./styles";
-import api from "../../config/api";
 export function Footer() {
   const [publicData, setPublicData] = useState();
   useEffect(() => {
-    api.get("/api/organizations/1/public").then((res) => {
+    getPublicData().then((res) => {
+      console.log(res.data);
       setPublicData(res.data);
     });
   }, []);
