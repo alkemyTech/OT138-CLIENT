@@ -2,9 +2,9 @@
  * This file contains requests to the auth routes in the backend
  */
 
-import api from '../config/api';
+import api from '../../config/api';
 import { API_AUTH_LOGIN } from '../../constants/urls';
-import * as localStorageService from '../localStorage';
+import localStorageService from '../localStorage';
 
 /**
  * Makes a POST request to the API's login endpoint.
@@ -23,7 +23,7 @@ export const login = async (credentials) => {
     try {
         const {data: responseObject} = await api.post(API_AUTH_LOGIN, credentials);
         
-        if(data.error) {
+        if(responseObject.error) {
             result.errorMessage = responseObject.message;
         } else {
             result.success = true;

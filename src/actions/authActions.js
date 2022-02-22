@@ -14,7 +14,7 @@ import { login as loginRequest } from '../services/requests/auth';
  * @returns dispatch function
  */
 export const login = (credentials) => {
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch({ type: AUTH_LOGIN_REQUEST });
 
         const {success, data, errorMessage} = await loginRequest(credentials);
