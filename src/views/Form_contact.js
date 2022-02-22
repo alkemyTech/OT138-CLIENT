@@ -126,50 +126,50 @@ return(
     </Colum>
     <Formik
     initialValues={{
-    nombre:"",
+    name:"",
     email:"",
-    mensaje:""
+    message:""
     }}
 
 
-    onSubmit={(valores,{resetForm})=>{
+    onSubmit={(values,{resetForm})=>{
       resetForm();
-      console.log(valores) 
+      console.log(values) 
     }}
 
-    validate={(valores)=>{
+    validate={(values)=>{
     let errores = {};
 
     //VALIDATION NAME
-    if(!valores.nombre || (valores.nombre).length < 4){
-    errores.nombre = "Por favor ingresar un nombre"
-    }else if(!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(valores.nombre)){
-    errores.nombre = "El nombre solo puede contener letras y espacios"
+    if(!values.name || (values.name).length < 4){
+    errores.name = "Please enter a name"
+    }else if(!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.name)){
+    errores.name = "The name can only contain letters and spaces"
     } 
                
     
     //VALIDATION EMAIL
-    if(!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(valores.email)){
-    errores.email = "Ingresa un correo valido"
+    if(!/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(values.email)){
+    errores.email = "Enter a valid email"
     }
 
 
     //VALIDATION MESSAGE
-    if((valores.mensaje).length < 30){
-    errores.mensaje = "El mensaje es muy corto";
+    if((values.message).length < 30){
+    errores.message = "The message is very short";
     }
 
     return errores;
 }}>
         {({values,handleSubmit,handleChange,handleBlur,errors,touched})=>(
          <Form onSubmit={handleSubmit}>
-         <Input name="nombre" type="text" placeholder='Nombre completo' value={values.nombre} onChange={handleChange} onBlur={handleBlur}/>
-         <MessageError>{touched.nombre &&  errors.nombre}</MessageError>
-         <Input name="email" type="email" placeholder='Correo electronico' value={values.email} onChange={handleChange} onBlur={handleBlur}/>
+         <Input name="name" type="text" placeholder='Full name' value={values.name} onChange={handleChange} onBlur={handleBlur}/>
+         <MessageError>{touched.name &&  errors.name}</MessageError>
+         <Input name="email" type="email" placeholder='Email' value={values.email} onChange={handleChange} onBlur={handleBlur}/>
          <MessageError>{touched.email && errors.email}</MessageError>
-         <Textarea name="mensaje" placeholder='Mensaje' value={values.mensaje} onChange={handleChange} onBlur={handleBlur}/>
-         <MessageError>{touched.mensaje && errors.mensaje}</MessageError>
-         <Button type='submit'>Enviar formulario</Button>
+         <Textarea name="message" placeholder='Message' value={values.message} onChange={handleChange} onBlur={handleBlur}/>
+         <MessageError>{touched.message && errors.message}</MessageError>
+         <Button type='submit'>Send form</Button>
          </Form>
 
         )}
