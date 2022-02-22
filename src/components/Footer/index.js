@@ -5,7 +5,6 @@ export function Footer() {
   const [publicData, setPublicData] = useState();
   useEffect(() => {
     getPublicData().then((res) => {
-      console.log(res.data);
       setPublicData(res.data);
     });
   }, []);
