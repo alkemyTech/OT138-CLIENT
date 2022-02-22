@@ -1,4 +1,5 @@
 import api from "../../config/api";
+import { API_PUBLIC_DATA } from "../../constants/urls";
 
 export async function getPublicData() {
   const result = {
@@ -7,7 +8,7 @@ export async function getPublicData() {
     errorMessage: "",
   };
   try {
-    const response = await api.get("/api/organizations/1/public");
+    const response = await api.get(API_PUBLIC_DATA);
     if (response.error) {
       result.errorMessage = response.message;
     } else {
