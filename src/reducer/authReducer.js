@@ -18,34 +18,44 @@ export default function authReducer(state = initialState, action) {
     switch (action.type) {
         case AUTH_LOGIN_REQUEST:
             return {
-                ...initialState,
-                isFetching: true
+                ...state,
+                isFetching: true,
+                failure: false,
+                errors: []
             }
         case AUTH_LOGIN_FAILURE:
             return {
-                ...initialState,
+                ...state,
                 failure: true,
                 errors: action.payload
             }
         case AUTH_LOGIN_SUCCESS:
             return {
-                ...initialState,
+                ...state,
                 authenticated: true,
+                isFetching: false,
+                failure: false,
+                errors: []
             }
         case AUTH_LOGOUT_REQUEST:
             return {
-                ...initialState,
-                isFetching: true
+                ...state,
+                isFetching: true,
+                failure: false,
+                errors: []
             }
         case AUTH_LOGOUT_FAILURE:
             return {
-                ...initialState,
+                ...state,
                 failure: true,
                 errors: action.payload
             }
         case AUTH_LOGOUT_SUCCESS:
             return {
-                ...initialState
+                authenticated: false,
+                isFetching: false,
+                failure: false,
+                errors: [],
             }
         default:
             return state
