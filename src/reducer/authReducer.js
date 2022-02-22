@@ -8,7 +8,6 @@ import {
 } from '../constants/actionTypes';
 
 let initialState = {
-    user: {},
     authenticated: false,
     isFetching: false,
     failure: false,
@@ -31,7 +30,6 @@ export default function authReducer(state = initialState, action) {
         case AUTH_LOGIN_SUCCESS:
             return {
                 ...initialState,
-                user: action.payload,
                 authenticated: true,
             }
         case AUTH_LOGOUT_REQUEST:

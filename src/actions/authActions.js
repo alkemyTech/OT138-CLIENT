@@ -20,8 +20,7 @@ export const login = (credentials) => {
         const {success, data, errorMessage} = await loginRequest(credentials);
 
         if(success) {
-            console.log(data);
-            return dispatch({type: AUTH_LOGIN_SUCCESS, payload: data});
+            return dispatch({type: AUTH_LOGIN_SUCCESS});
         } else {
             return dispatch({type: AUTH_LOGIN_FAILURE, payload: [errorMessage]});
         }

@@ -27,7 +27,8 @@ export const login = async (credentials) => {
             result.errorMessage = responseObject.message;
         } else {
             result.success = true;
-            result.data = responseObject.user;
+            
+            result.data = responseObject.data || {};
             
             // Save token to localStorage
             const {accessToken, refreshToken} = responseObject;
