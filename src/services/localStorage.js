@@ -26,9 +26,19 @@ function setRefreshToken(token) {
     localStorage.setItem(REFRESH_TOKEN, token)
 }
 
+function removeAccessToken() {
+    localStorage.removeItem(ACCESS_TOKEN);
+}
+
+function removeRefreshToken() {
+    localStorage.removeItem(REFRESH_TOKEN);
+}
+
 export default {
     getAccessToken,
     setAccessToken,
     getRefreshToken,
-    setRefreshToken
+    setRefreshToken,
+    removeAccessToken,
+    removeRefreshToken
 }

@@ -3,7 +3,7 @@
  */
 
 import api from '../../config/api';
-import { API_AUTH_LOGIN } from '../../constants/urls';
+import { API_AUTH_LOGIN, API_AUTH_LOGOUT } from '../../constants/urls';
 import localStorageService from '../localStorage';
 
 /**
@@ -38,6 +38,34 @@ export const login = async (credentials) => {
             if(refreshToken){
                 localStorageService.setRefreshToken(refreshToken);
             }
+        }
+    } catch(error) {
+        result.errorMessage = 'Found an unexpected error during the request';
+    }
+
+    return result;
+}
+
+/**
+ * Makes a POST request to the API's logout endpoint.
+ * @returns An object with the following entries:
+ *      - success: whether or not the logout attempt was successful
+ *      - errorResponse: a string with the error message, if success is false
+ */
+ export const logout = async () => {
+    const result = {
+        success: false,
+        errorMessage: ""
+    }
+    try {
+        const {data: responseObject} = await api.post(API_AUTH_LOGOUT);
+        
+        if(responseObject.error) {
+            result.errorMessage = responseObject.message;
+        } else {
+            result.success = true;
+            localStorageService.removeAccessToken();
+            localStorageService.removeRefreshToken();
         }
     } catch(error) {
         result.errorMessage = 'Found an unexpected error during the request';
