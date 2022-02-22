@@ -8,6 +8,11 @@ import {
 } from '../constants/actionTypes';
 import { login as loginRequest } from '../services/requests/auth';
 
+/**
+ * Authenticates the user with the given credentials and updates auth state accordingly.
+ * @param {Object} credentials Object containing email and password keys
+ * @returns dispatch function
+ */
 export const login = (credentials) => {
     return (dispatch) => {
         dispatch({ type: AUTH_LOGIN_REQUEST });

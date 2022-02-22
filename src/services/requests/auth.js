@@ -4,6 +4,7 @@
 
 import api from '../config/api';
 import { API_AUTH_LOGIN } from '../../constants/urls';
+import * as localStorageService from '../localStorage';
 
 /**
  * Makes a POST request to the API's login endpoint.
@@ -27,6 +28,15 @@ export const login = async (credentials) => {
         } else {
             result.success = true;
             result.data = responseObject.user;
+            
+            // Save token to localStorage
+            const {accessToken, refreshToken} = responseObject;
+            if(accessToken) {
+                localStorageService.setAccessToken(accessToken);
+            }
+            if(refreshToken){
+                localStorageService.setRefreshToken(refreshToken);
+            }
         }
     } catch(error) {
         result.errorMessage = 'Found an unexpected error during the request';
