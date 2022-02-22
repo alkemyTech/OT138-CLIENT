@@ -4,6 +4,7 @@
  * Usage example: api.get('/users/1');
  */
 import axios from 'axios';
+import localStorageService from '../../services/localStorage';
 
 // Notify in case required env variables are not declared in environment file
 (() => {
@@ -23,7 +24,7 @@ const api = axios.create({
 
 //Add the JWT token to the Authorization header on each request
 api.interceptors.request.use((config) => {
-  const bearerToken = localStorage.getItem(process.env.REACT_APP_LS_TOKEN);
+  const bearerToken = localStorageService.getAccessToken();
 
   if(bearerToken) {
     config.headers.Authorization = `Bearer ${bearerToken}`;

@@ -11,7 +11,7 @@ import localStorageService from '../localStorage';
  * @param {Object} credentials Object containing the keys: email and password
  * @returns An object with the following entries:
  *      - success: whether or not the login attempt was successful
- *      - data: user data returned from the API, if success is true
+ *      - data: user data returned from the API (may be empty), if success is true
  *      - errorResponse: a string with the error message, if success is false
  */
 export const login = async (credentials) => {
