@@ -11,10 +11,10 @@ export default function Slider() {
 
   return (
     <Swiper pagination={{dynamicBullets: true}} modules={[Pagination]} className="mySwiper">
-      <SwiperSlide><Slide link='https://wallpaperaccess.com/full/2384120.jpg'>Build a great company...</Slide></SwiperSlide>
-      <SwiperSlide><Slide>Explore the best option for your business.</Slide></SwiperSlide>
-      <SwiperSlide><Slide link='../../../public/portada-3.jpg'>Hire only the service you need.</Slide></SwiperSlide>
-      <SwiperSlide><Slide>Customers service on demand!</Slide></SwiperSlide>
+      <SwiperSlide><Slide link='/portada-1.png'>Build a great company...</Slide></SwiperSlide>
+      <SwiperSlide><Slide link='/portada-2.jpg' orientation='left'>Explore the best option for your business.</Slide></SwiperSlide>
+      <SwiperSlide><Slide link='/portada-3.jpg' orientation='right'>Hire only the service you need.</Slide></SwiperSlide>
+      <SwiperSlide><Slide link='/portada-4.jpg'orientation='left'>Customers service on demand!</Slide></SwiperSlide>
     </Swiper>
   );
 }
