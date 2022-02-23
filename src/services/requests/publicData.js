@@ -15,12 +15,12 @@ export async function getPublicData() {
     errorMessage: "",
   };
   try {
-    const response = await api.get(API_PUBLIC_DATA);
+    const { data: response } = await api.get(API_PUBLIC_DATA);
     if (response.error) {
       result.errorMessage = response.message;
     } else {
       result.success = true;
-      result.data = response.data;
+      result.data = response;
     }
   } catch (error) {
     console.log(error);
