@@ -4,11 +4,16 @@ import {
     AUTH_LOGIN_FAILURE,
     AUTH_LOGOUT_REQUEST,
     AUTH_LOGOUT_SUCCESS,
-    AUTH_LOGOUT_FAILURE
+    AUTH_LOGOUT_FAILURE,
+    AUTH_GET_PROFILE_DATA_REQUEST,
+    AUTH_GET_PROFILE_DATA_SUCCESS,
+    AUTH_GET_PROFILE_DATA_FAILURE,
 } from '../constants/actionTypes';
+import { API_AUTH_GET_PROFILE_DATA } from '../constants/urls';
 import { 
     login as loginRequest,
-    logout as logoutRequest
+    logout as logoutRequest,
+    getProfileData as getProfileDataRequest
 } from '../services/requests/auth';
 
 /**
@@ -47,3 +52,17 @@ export const login = (credentials) => {
         }
     };
 };
+
+export const getProfileData = () => {
+    return async (dispatch) => {
+        dispatch({ type: API_AUTH_GET_PROFILE_DATA });
+
+        const { success, errorMessage, data: user } = await getProfileDataRequest();
+
+        if(success) {
+            return dispatch({ type: AUTH_GET_PROFILE_DATA_SUCCESS, payload: {success, user}});
+        } else {
+            return dispatch({ type: AUTH_GET_PROFILE_DATA_FAILURE, payload: [errorMessage]})
+        }
+    }
+}
