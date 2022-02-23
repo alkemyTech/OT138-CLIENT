@@ -1,122 +1,117 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-/** @jsx jsx */
-import { css, jsx } from '@emotion/react';
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 import {
-    BsTwitter,
-    BsFacebook,
-    BsInstagram
-} from 'react-icons/bs';
-import { GiHamburgerMenu } from 'react-icons/gi';
-import {
-    HeaderContainer,
-    HeaderBar,
-    Logo,
-    NavBar,
-    NavList,
-    NavItem,
-    SocialNavBar,
-    SocialNavItem,
-    SocialNavButton,
-    NavButton,
-    slideIn,
-    slideOut,
-} from '../../styles/Header'
+  HeaderContainer,
+  HeaderBar,
+  Logo,
+  NavBar,
+  NavItem,
+  MobileNavBar,
+  Avatar,
+  Hamburger,
+  MobileItem,
+  ProfileDropdown,
+  SessionButton,
+} from "../../styles/Header";
+import { FaBars, FaCaretDown, FaCaretUp } from "react-icons/fa";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { getProfileData } from "../../actions/authActions";
 
-function Header(props){
-    
-    const slideInAnimation = css`
-        animation: ${slideIn} 1s ease forwards;
-    `;
-    
-    const slideOutAnimation = css`
-        animation: ${slideOut} 1s ease forwards;
-    `;
+function Header(props) {
+  const [dataState, setDataState] = useState("loading");
+  const [profileData, setProfileData] = useState({
+    image: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+  });
+  useEffect(() => {
+    getProfileData();
+  }, []);
 
-    const [menuState, setMenuState] = useState('closed');
-    const [animation, setAnimation] = useState(slideOutAnimation);
-    
-    const navItems = [
-        {
-            route: '/',
-            text: 'Inicio'
-        },
-        {
-            route: 'acerca_de',
-            text: 'Acerca de nosotros'
-        },
-        {
-            route: '/contacto',
-            text: 'Contacto'
-        },
-        {
-            route: '/perfil',
-            text: 'Mi perfil'
-        }
-    ]
-
-    const socialLinks = [
-        {
-            social: 'facebook',
-            url: 'https://facebook.com/ong',
-            icon: <BsFacebook />
-        },
-        {
-            social: 'instagram',
-            url: 'https://instagram/ong',
-            icon: <BsInstagram />
-        },
-        {
-            social: 'twitter',
-            url: 'https://twitter.com/ong',
-            icon: <BsTwitter />
-        }
-    ]
-
-    function toggleMenu(){
-        if(menuState === 'closed'){
-            setMenuState('open');
-            setAnimation(slideInAnimation);
-        }
-        else{
-            setAnimation(slideOutAnimation);
-            setTimeout(() => setMenuState('closed'), 900);
-        }
+  const getProfileData = async () => {
+    let data = await props.getProfileData();
+    if (data.payload.success) {
+      let { image, firstName, lastName, email } = data.payload.user;
+      setProfileData({
+        image: image,
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+      });
+      setDataState("loaded");
+    } else {
+      setDataState("error");
     }
+  };
+  const [menuState, setMenuState] = useState(false);
+  const [dropdownState, setDropdownState] = useState(false);
 
-
-    return(
-        <HeaderContainer>
-            <HeaderBar>
-                <Logo>
-                    <img src="./logo.png" alt="ong logo" />
-                </Logo>
-                <GiHamburgerMenu onClick={toggleMenu}/>
-            </HeaderBar>
-                { menuState === 'open' &&
-                <NavBar>
-                    <NavList css={animation}>
-                        { navItems.map( (item, index) => {
-                            return (<NavItem key={index}><Link to={item.route}>{item.text}</Link></NavItem>);
-                        })}
-                        <NavItem>
-                            <SocialNavBar>
-                            { 
-                                socialLinks.filter(item => item.url !== '').map( (item, index) => {
-                                    return (
-                                        <SocialNavItem key={index}><SocialNavButton href={item.url}>{item.icon}</SocialNavButton></SocialNavItem>
-                                    )
-                                })
-                            }
-                            </SocialNavBar>
-                        </NavItem>
-                        <NavItem><NavButton onClick={toggleMenu}>Cerrar</NavButton></NavItem>
-                    </NavList>
-                </NavBar>
-                }
-        </HeaderContainer>
-    )
+  return (
+    <HeaderContainer>
+      <HeaderBar>
+        <Hamburger onClick={() => setMenuState(!menuState)}>
+          <FaBars />
+        </Hamburger>
+        <Link to="/">
+          <Logo>
+            <img src="./logo.png" alt="ong logo" />
+            <h2 className="logo__title">Alkemy ONG</h2>
+          </Logo>
+        </Link>
+        <NavBar>
+          {props.navItems.map((item, index) => {
+            return (
+              <NavItem key={index}>
+                <Link to={item.route}>{item.text}</Link>
+              </NavItem>
+            );
+          })}
+        </NavBar>
+        {dataState === "loaded" ? (
+          <Avatar onClick={() => setDropdownState(!dropdownState)}>
+            <img
+              src={profileData?.image ? profileData?.image : ""}
+              alt="ong logo"
+            />
+            <p>
+              {profileData?.firstName} {profileData?.lastName}
+            </p>
+            {dropdownState ? <FaCaretUp /> : <FaCaretDown />}
+            <ProfileDropdown dropdownState={dropdownState}>
+              <Link to={"/perfil"}>Mi Perfil</Link>
+              <Link to={"/backoffice"}>BackOffice</Link>
+              <Link to={"#"}>Cerrar Sesión</Link>
+            </ProfileDropdown>
+          </Avatar>
+        ) : dataState !== "loading" ? (
+          <SessionButton>
+            <Link to="/login">Iniciar Sesión</Link>
+          </SessionButton>
+        ) : null}
+        <MobileNavBar menuState={menuState}>
+          {props.navItems.map((item, index) => {
+            return (
+              <MobileItem key={index}>
+                <Link to={item.route}>{item.text}</Link>
+              </MobileItem>
+            );
+          })}
+        </MobileNavBar>
+      </HeaderBar>
+    </HeaderContainer>
+  );
 }
 
-export default Header;
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators(
+    {
+      getProfileData,
+    },
+    dispatch
+  );
+};
+
+export default connect(null, mapDispatchToProps)(Header);

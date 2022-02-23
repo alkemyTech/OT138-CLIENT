@@ -23,7 +23,7 @@ export const ContentStyle = styled.div`
   align-items: center;
   flex: 1;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1440px;
   @media (max-width: 1366px) {
     max-width: 960px;
   }
