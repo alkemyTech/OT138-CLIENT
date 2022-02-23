@@ -1,1 +1,1 @@
-export const API_PUBLIC_DATA = "/api/organizations/1/public";
+export const API_PUBLIC_DATA = "/organizations/1/public";
