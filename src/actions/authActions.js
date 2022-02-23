@@ -80,9 +80,9 @@ export const getProfileData = () => {
     return async (dispatch) => {
         dispatch({ type: AUTH_CHECK_REQUEST });
 
-        const {success, data, errorMessage} = await checkAuthenticationRequest();
+        const {success, data: isAuthenticated, errorMessage} = await checkAuthenticationRequest();
 
-        if(success) {
+        if(success && isAuthenticated) {
             return dispatch({type: AUTH_CHECK_SUCCESS});
         } else {
             return dispatch({type: AUTH_CHECK_FAILURE, payload: [errorMessage]});
