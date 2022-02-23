@@ -32,7 +32,7 @@ export const login = (credentials) => {
     const { success, data, errorMessage } = await loginRequest(credentials);
 
     if (success) {
-      window.location.href = `/`;
+      //window.location.href = `/`;
       return dispatch({ type: AUTH_LOGIN_SUCCESS });
     } else {
       return dispatch({ type: AUTH_LOGIN_FAILURE, payload: [errorMessage] });
