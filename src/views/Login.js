@@ -161,7 +161,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators(
         {
-            login,
+            login,  // This is the action (function) imported in line 16
         },
         dispatch
     );
