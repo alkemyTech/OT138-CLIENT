@@ -8,13 +8,18 @@ import {
     AUTH_GET_PROFILE_DATA_REQUEST,
     AUTH_GET_PROFILE_DATA_SUCCESS,
     AUTH_GET_PROFILE_DATA_FAILURE,
+    AUTH_CHECK_REQUEST,
+    AUTH_CHECK_SUCCESS,
+    AUTH_CHECK_FAILURE,
 } from '../constants/actionTypes';
 import { API_AUTH_GET_PROFILE_DATA } from '../constants/urls';
 import { 
     login as loginRequest,
     logout as logoutRequest,
-    getProfileData as getProfileDataRequest
+    getProfileData as getProfileDataRequest,
+    checkAuthentication as checkAuthenticationRequest,
 } from '../services/requests/auth';
+
 
 /**
  * Authenticates the user with the given credentials and updates auth state accordingly.
@@ -66,3 +71,21 @@ export const getProfileData = () => {
         }
     }
 }
+
+/**
+ * Checks if the user is authenticated and updates the auth state
+ * @returns dispatch function
+ */
+ export const checkAuthentication = () => {
+    return async (dispatch) => {
+        dispatch({ type: AUTH_CHECK_REQUEST });
+
+        const {success, data: isAuthenticated, errorMessage} = await checkAuthenticationRequest();
+
+        if(success && isAuthenticated) {
+            return dispatch({type: AUTH_CHECK_SUCCESS});
+        } else {
+            return dispatch({type: AUTH_CHECK_FAILURE, payload: [errorMessage]});
+        }
+    };
+};
