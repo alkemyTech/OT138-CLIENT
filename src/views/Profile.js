@@ -2,70 +2,122 @@ import React, { useState, useEffect } from 'react';
 import Header from '../components/Header/Header';
 import {
     ProfileContainer,
+    ProfileContent,
+    Message,
+    Image,
+    TextFields,
     Field,
+    Button,
 } from "../styles/Profile";
-import axios from 'axios';
+import { connect } from 'react-redux';
+import { bindActionCreators } from "redux";
+import { getProfileData } from '../actions/authActions';
+
 
 function Profile(props){
 
     const [editing, setEditing] = useState(false);
-    const [isDataLoaded, setIsDataLoaded] = useState(false);
+    const [saving, setSaving] = useState(false);
+    const [dataState, setDataState] = useState('loading');
 
     const [profileData, setProfileData] = useState({
-        firstName: 'Juan',
-        lastName: 'Díaz',
-        email: 'juan.diaz@gmail.com',
+        image: '',
+        firstName: '',
+        lastName: '',
+        email: '',
     })
 
     function switchMode(){
         editing? setEditing(false) : setEditing(true);
     }
 
-    function save(){
-        switchMode();
+    useEffect(()=>{
+        getProfileData();
+    }, [])
+
+    const getProfileData = async () => {
+        let data = await props.getProfileData();
+        if(data.payload.success){
+            let {image, firstName, lastName, email} = data.payload.user;
+            setProfileData({
+                image: image,
+                firstName: firstName,
+                lastName: lastName,
+                email: email
+            });
+            setDataState('loaded');
+        }
+        else{
+            setDataState('error');
+        }
     }
 
-    useEffect(()=>{
-        if(!isDataLoaded){
-            getProfileData();
-        }
-    })
+    async function save(){
+        setSaving(true);
+        // saving login
+        setTimeout(() => { // this emulate the saving lapse - delete after implement the actual saving
+            setSaving(false);
+            switchMode();
 
-    async function getProfileData(){
-        axios.get('https://localhost:4000/profile', {
-            params: {
-                id: 1 // CHANGE THIS
-            }
-        })
-        .then(function(response){
-            console.log(response)
-        })
+        }, 2000);
     }
 
     return(
         <ProfileContainer>
-            <h2>Mis datos personales</h2>
-            <Field>
-                <span>Nombre:</span>
-                <input type="text" name="name" value={profileData.firstName} />
-            </Field>
-            <Field>
-                <span>Apellido:</span>
-                <input type="text" name="lastname" value={profileData.lastName} />
-            </Field>
-            <Field>
-                <span>Email:</span>
-                <input type="text" name="email" value={profileData.email} />
-            </Field>
+            <Header/>
             {
-                editing?
-                    <button onClick={switchMode}>Guardar</button> :
-                    <button onClick={save}>Modificar</button>
+                dataState === 'loading' &&
+                    <ProfileContent>Cargando...</ProfileContent>
             }
-            <button>Eliminar cuenta</button>
+            {
+                dataState === 'loaded' &&
+                    <ProfileContent>
+                        <Image>
+                            <img src={profileData.image}/>
+                        </Image>
+                        <TextFields>
+                            <h2>Mis datos personales</h2>
+                            <Field>
+                                <span>Nombre:</span>
+                                <input type="text" name="name" value={profileData.firstName} disabled={!editing}/>
+                            </Field>
+                            <Field>
+                                <span>Apellido:</span>
+                                <input type="text" name="lastname" value={profileData.lastName} disabled={!editing} />
+                            </Field>
+                            <Field>
+                                <span>Email:</span>
+                                <input type="text" name="email" value={profileData.email} disabled={!editing} />
+                            </Field>
+                            {
+                                editing?
+                                    <Button onClick={save}>{
+                                        saving? 
+                                            "Guardando..." :
+                                            "Guardar"
+                                        }</Button> :
+                                    <Button onClick={switchMode}>Modificar</Button>
+                            }
+                            <Button>Eliminar cuenta</Button>
+                        </TextFields>
+                    </ProfileContent>
+            }
+            {
+                dataState === 'error' &&
+                    <ProfileContent>
+                        <Message>Error al cargar los datos</Message>
+                        <Button onClick={getProfileData}>Reintentar</Button>
+                    </ProfileContent>
+            }
         </ProfileContainer>
 
     )
 }
 
-export default Profile;
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({
+        getProfileData
+    }, dispatch);
+}
+
+export default connect(null, mapDispatchToProps)(Profile);
