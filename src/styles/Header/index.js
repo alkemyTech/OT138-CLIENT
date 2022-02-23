@@ -41,23 +41,24 @@ export const NavBar = styled.nav`
     z-index: 5;
     top: 81px;
     right: 0px;
-    ul{
-        margin: 0;
-        padding: 0;
-        background-color: white;
-        border-radius: 10px;
-        box-shadow: 0 5px 15px 0px rgba(0,0,0,0.5);
-    }
     button{
         width: 100%;
         height: 100%;
         display: block;
         background: none;
         border: none;
-    };
+    }
     button:hover{
         background-color: rgba(0,0,0,0.5);
-    
+    }
+    `;
+
+export const NavList = styled.ul`
+    margin: 0;
+    padding: 0;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px 0px rgba(0,0,0,0.5);
 `;
 
 export const NavItem = styled.li`

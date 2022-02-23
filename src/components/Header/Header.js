@@ -14,6 +14,7 @@ import {
     HeaderBar,
     Logo,
     NavBar,
+    NavList,
     NavItem,
     SocialNavBar,
     SocialNavItem,
@@ -48,6 +49,10 @@ function Header(props){
         {
             route: '/contacto',
             text: 'Contacto'
+        },
+        {
+            route: '/perfil',
+            text: 'Mi perfil'
         }
     ]
 
@@ -91,7 +96,7 @@ function Header(props){
             </HeaderBar>
                 { menuState === 'open' &&
                 <NavBar>
-                    <ul css={animation}>
+                    <NavList css={animation}>
                         { navItems.map( (item, index) => {
                             return (<NavItem key={index}><Link to={item.route}>{item.text}</Link></NavItem>);
                         })}
@@ -107,7 +112,7 @@ function Header(props){
                             </SocialNavBar>
                         </NavItem>
                         <NavItem><NavButton onClick={toggleMenu}>Cerrar</NavButton></NavItem>
-                    </ul>
+                    </NavList>
                 </NavBar>
                 }
         </HeaderContainer>
