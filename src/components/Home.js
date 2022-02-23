@@ -1,10 +1,12 @@
 import React from "react";
 import { Container, Content } from "./Wrappers/Containers";
 import Slider from "./Slider";
+import Header from "../components/Header/Header";
 import LandingSection from "./LandingSection";
 function Home() {
   return (
     <Container>
+      <Header />
       <Slider />
       <Content>
         <LandingSection
