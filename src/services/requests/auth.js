@@ -3,7 +3,12 @@
  */
 
 import api from '../../config/api';
-import { API_AUTH_LOGIN, API_AUTH_LOGOUT, API_AUTH_GET_PROFILE_DATA } from '../../constants/urls';
+import { 
+    API_AUTH_LOGIN, 
+    API_AUTH_LOGOUT, 
+    API_AUTH_GET_PROFILE_DATA,
+    API_AUTH_CHECK
+} from '../../constants/urls';
 import localStorageService from '../localStorage';
 
 /**
@@ -95,6 +100,36 @@ export const getProfileData = async () => {
         } else{
             result.success = true;
             result.data = responseObject.user;
+        }
+    } catch(error){
+        console.log(await error);
+        result.errorMessage = 'Found and unexpected error during the request';
+    }
+
+    return result;
+}
+
+/**
+ * Checks if the user is authenticated in the backend.
+ * @returns An object with the following entries:
+ *      - success: true if the request succeeded without errors, false otherwise
+ *      - data: a boolean value, true if the user is authenticated, false otherwise
+ *      - errorMessage: a string with the error message, if success is false
+ */
+export const checkAuthentication = async () => {
+    const result = {
+        success: false,
+        data: false,
+        errorMessage: ''
+    }
+
+    try{
+        const{data: responseObject} = await api.post(API_AUTH_CHECK);
+        if(responseObject.error){
+            result.errorMessage = responseObject.message;
+        } else{
+            result.success = true;
+            result.data = true;
         }
     } catch(error){
         console.log(await error);
