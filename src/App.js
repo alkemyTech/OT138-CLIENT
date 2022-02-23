@@ -1,4 +1,4 @@
-import {useEffect} from "react";
+import React, {useEffect} from "react";
 import Home from "./components/Home";
 import Login from "./views/Login";
 import Signup from "./views/Signup";
@@ -8,8 +8,9 @@ import "./styles/App.css";
 import { Footer } from "./components/Footer";
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import { checkAuthentication as checkAuthenticationAction } from './actions/authActions';
 
-function App() {
+function App({ checkAuthentication }) {
 
   useEffect(() => {
     checkAuthentication();
@@ -29,4 +30,10 @@ function App() {
   );
 }
 
-export default App;
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({
+        checkAuthentication: checkAuthenticationAction
+    }, dispatch);
+}
+
+export default connect(null, mapDispatchToProps)(App);
