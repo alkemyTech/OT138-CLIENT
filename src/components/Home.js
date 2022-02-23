@@ -1,8 +1,9 @@
 import React from "react";
 import { Container, Content } from "./Wrappers/Containers";
 import Slider from "./Slider";
-import Header from "../components/Header/Header";
+import Header from "../components/Header/Landing";
 import LandingSection from "./LandingSection";
+import { Footer } from "./Footer";
 function Home() {
   return (
     <Container>
@@ -28,6 +29,7 @@ function Home() {
           direction="left"
         />
       </Content>
+      <Footer />
     </Container>
   );
 }

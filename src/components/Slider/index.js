@@ -1,20 +1,33 @@
 import React from "react";
-import { Pagination } from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import Slide from './styles/index.js';
-import 'swiper/css';
-import 'swiper/css/pagination';
-import './styles/index.css';
-
+import { Pagination } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
+import Slide from "./styles/index.js";
+import "swiper/css";
+import "swiper/css/pagination";
+import "./styles/index.css";
+import { SliderContent } from "../../styles/Slides/index.js";
 
 export default function Slider() {
-
   return (
-    <Swiper pagination={{dynamicBullets: true}} modules={[Pagination]} className="mySwiper">
-      <SwiperSlide><Slide link='/portada-1.png'>Build a great company...</Slide></SwiperSlide>
-      <SwiperSlide><Slide link='/portada-2.jpg' orientation='left'>Explore the best option for your business.</Slide></SwiperSlide>
-      <SwiperSlide><Slide link='/portada-3.jpg' orientation='right'>Hire only the service you need.</Slide></SwiperSlide>
-      <SwiperSlide><Slide link='/portada-4.jpg'orientation='left'>Customers service on demand!</Slide></SwiperSlide>
+    <Swiper className="mySwiper">
+      <SwiperSlide>
+        <Slide>
+          <SliderContent>
+            <img src="/portada-1.jpg" alt="slide"></img>
+          </SliderContent>
+          <h1>Alkemy ONG</h1>
+          <p>¡Cambiando Vidas!</p>
+        </Slide>
+      </SwiperSlide>
+      <SwiperSlide>
+        <Slide>
+          <SliderContent>
+            <img src="/portada-2.jpg" alt="slide"></img>
+          </SliderContent>
+          <h1>Alkemy ONG</h1>
+          <p>¡Juntos todo es posible!</p>
+        </Slide>
+      </SwiperSlide>
     </Swiper>
   );
 }

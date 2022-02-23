@@ -17,6 +17,7 @@ export const Input = ({
   onKeyPress,
   min,
   max,
+  disabled,
 }) => {
   return (
     <InputContainer
@@ -30,6 +31,7 @@ export const Input = ({
       defaultValue={defaultValue}
       min={min}
       max={max}
+      disabled={disabled}
     ></InputContainer>
   );
 };

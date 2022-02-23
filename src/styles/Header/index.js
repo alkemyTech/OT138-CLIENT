@@ -1,126 +1,226 @@
-import { keyframes } from '@emotion/react';
-import styled from '@emotion/styled';
+import { keyframes } from "@emotion/react";
+import styled from "@emotion/styled";
 
 export const HeaderContainer = styled.header`
-    width: 100%;
-`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  box-shadow: 0px 2px 0px rgb(0 0 0 / 10%);
+  a {
+    width: fit-content;
+  }
+`;
 
-export const HeaderBar = styled.div `
-    height: 80px;
-    width: 100%;
-    padding: 5px 20px 5px 20px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 3px solid rgba(0,0,0,0.9);
-    background-color: white;
-    svg{
-        width: 30px;
-        height: 30px;
-        color: #3b2284;
-    }
-    `;
-    
+export const HeaderBar = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+  height: 4rem;
+  width: 100%;
+  max-width: 1440px;
+  background-color: #fff;
+  @media (max-width: 960px) {
+    grid-template-columns: auto 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+  }
+`;
+
 export const Logo = styled.div`
-    widht: 40%;
-    height: 100%;
-    max-width: 300px;
-    display: flex;
-    align-items: center;
-    img{
-        height: 95%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 4rem;
+
+  .logo__title {
+    font-size: 1.2rem;
+  }
+  img {
+    height: 95%;
+    padding: 0 0.5rem;
+  }
+  @media (max-width: 960px) {
+    .logo__title {
+      margin: 0 0 0 10px;
     }
-    `;
+    img {
+      padding: 0;
+    }
+  }
+`;
 
 export const NavBar = styled.nav`
-    width: 100%;
-    max-width: 450px;
-    position: absolute;
-    z-index: 5;
-    top: 81px;
-    right: 0px;
-    button{
-        width: 100%;
-        height: 100%;
-        display: block;
-        background: none;
-        border: none;
-    }
-    button:hover{
-        background-color: rgba(0,0,0,0.5);
-    }
-    `;
-
-export const NavList = styled.ul`
-    margin: 0;
-    padding: 0;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px 0px rgba(0,0,0,0.5);
-`;
-
-export const NavItem = styled.li`
-    width: 100%;
-    border: (3px 3px 0 3px) solid white;
-    list-style: none;
-    text-align: center;
-    a{
-        width: 100%;
-        height: 100%;
-        display: block;
-        padding: 10px;
-        box-sizing: border-box;
-    }
-    a:hover{
-        background-color: rgba(0,0,0,0.2);
-    }
-`;
-
-export const NavButton = styled.button`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: fit-content;
+  button {
     width: 100%;
     height: 100%;
     display: block;
-    padding: 10px;
-    box-sizing: border-box;
-    border: none;
     background: none;
+    border: none;
+  }
+  button:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
 `;
 
-export const SocialNavBar = styled.ul`
-    width: 100%;
-    display: 'flex;
-    flexDirection: row;
-    justify-content: space-around;
-    padding: 20px;
-    box-sizing: border-box;
+export const NavList = styled.div`
+  margin: 0;
+  padding: 0;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.5);
 `;
 
-export const SocialNavItem = styled.li`
-    list-style: none;
+export const NavItem = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 0 10px;
+  a {
+    font-size: 16px;
+  }
+  svg {
+    font-size: 16px;
+    margin: 0 5px 0 0;
+  }
+  z-index: 2;
+  @media (max-width: 960px) {
+    display: none;
+  }
 `;
 
-export const SocialNavButton = styled.a`
-    width: 30px;
-    height: 30px;
-    display: inline-block;
+export const NavButton = styled.button`
+  width: 100%;
+  height: 100%;
+  display: block;
+  padding: 10px;
+  box-sizing: border-box;
+  border: none;
+  background: none;
 `;
 
-export const slideIn = keyframes`
-    from {
-        opacity: 0;
+export const Avatar = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  justify-self: flex-end;
+  padding: 0 0.5rem;
+  position: relative;
+  cursor: pointer;
+  img {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+  }
+  svg {
+    font-size: 16px;
+  }
+  p {
+    font-size: 16px;
+    margin: 0 5px;
+  }
+  @media (max-width: 1000px) {
+    p {
+      display: none;
     }
-    to {
-        opacity: 1;
-    }
+  }
 `;
 
-export const slideOut = keyframes`
-    0% {
-        opacity: 1;
-    }
-    100%{
-        opacity: 0;
-    }
-`
+export const Hamburger = styled.div`
+  display: none;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  justify-self: flex-start;
+  padding: 0 0.5rem;
+  @media (max-width: 960px) {
+    display: flex;
+    font-size: 30px;
+  }
+`;
+
+export const MobileNavBar = styled.div`
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 4rem;
+  z-index: 2;
+  height: 300px;
+  width: 100%;
+  background: #fff;
+  border-radius: 0 0 5px 5px;
+  @media (max-width: 960px) {
+    display: ${({ menuState }) => (menuState ? "flex" : "none")};
+  }
+`;
+export const MobileItem = styled.div`
+  display: none;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 10px 0;
+  a {
+    font-size: 16px;
+  }
+  svg {
+    font-size: 16px;
+    margin: 0 5px 0 0;
+  }
+  z-index: 3;
+
+  display: ${({ open }) => (open ? "flex" : "none")};
+  @media (max-width: 960px) {
+    display: flex;
+  }
+`;
+
+export const ProfileDropdown = styled.div`
+  display: ${({ dropdownState }) => (dropdownState ? "flex" : "none")};
+  flex-direction: column;
+  justify-content: center;
+  min-width: 140px;
+  width: 100%;
+  height: 150px;
+  background: #fff;
+  position: absolute;
+  top: 4.1rem;
+  right: 0;
+  z-index: 3;
+  box-shadow: rgb(0 0 0 / 20%) 0px 8px 16px 0px;
+  padding: 1rem;
+  border-radius: 5px;
+  a {
+    margin: 4px 0;
+    cursor: pointer;
+  }
+`;
+
+export const SessionButton = styled.button`
+  height: 40px;
+  background: #584afa;
+  color: #ffffff;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  max-width: 140px;
+  width: 100%;
+  font-weight: bold;
+  align-self: center;
+  justify-self: flex-end;
+  margin: 0 0.5rem;
+  &:hover {
+    transform: scale(1.02);
+  }
+`;
