@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import Home from "./components/Home";
 import Login from "./views/Login";
 import Signup from "./views/Signup";
@@ -6,21 +6,16 @@ import FormContacto from "./views/Form_contact";
 import { Route, Routes } from "react-router-dom";
 import "./styles/App.css";
 import { Footer } from "./components/Footer";
-
 import Backoffice from "./views/Backoffice";
 import Profile from "./views/Profile";
-function App() {
-
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import { checkAuthentication as checkAuthenticationAction } from './actions/authActions';
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { checkAuthentication as checkAuthenticationAction } from "./actions/authActions";
 
 function App({ checkAuthentication }) {
-
   useEffect(() => {
     checkAuthentication();
   }, []);
-
 
   return (
     <>
@@ -37,10 +32,13 @@ function App({ checkAuthentication }) {
   );
 }
 
-const mapDispatchToProps = dispatch => {
-    return bindActionCreators({
-        checkAuthentication: checkAuthenticationAction
-    }, dispatch);
-}
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators(
+    {
+      checkAuthentication: checkAuthenticationAction,
+    },
+    dispatch
+  );
+};
 
 export default connect(null, mapDispatchToProps)(App);
