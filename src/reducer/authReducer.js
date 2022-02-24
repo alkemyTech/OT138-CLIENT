@@ -22,60 +22,60 @@ export default function authReducer(state = initialState, action) {
         case AUTH_LOGIN_REQUEST:
             return {
                 ...state,
-                requestStatus: status.FETCHING,
+                status: status.FETCHING,
                 errors: []
             }
         case AUTH_LOGIN_FAILURE:
             return {
                 ...state,
                 authenticated: false,
-                requestStatus: status.FAILURE,
+                status: status.FAILURE,
                 errors: action.payload
             }
         case AUTH_LOGIN_SUCCESS:
             return {
                 ...state,
                 authenticated: true,
-                requestStatus: status.SUCCESS,
+                status: status.SUCCESS,
                 errors: []
             }
         case AUTH_LOGOUT_REQUEST:
             return {
                 ...state,
-                requestStatus: status.FETCHING,
+                status: status.FETCHING,
                 errors: []
             }
         case AUTH_LOGOUT_FAILURE:
             return {
                 ...state,
-                requestStatus: status.FAILURE,
+                status: status.FAILURE,
                 errors: action.payload
             }
         case AUTH_LOGOUT_SUCCESS:
             return {
                 ...state,
                 authenticated: false,
-                requestStatus: status.SUCCESS,
+                status: status.SUCCESS,
                 errors: [],
             }
         case AUTH_CHECK_REQUEST:
             return {
                 ...state,
-                requestStatus: status.FETCHING,
+                status: status.FETCHING,
                 errors: []
             }
         case AUTH_CHECK_FAILURE:
             return {
                 ...state,
                 authenticated: false,
-                requestStatus: status.FAILURE,
+                status: status.FAILURE,
                 errors: action.payload
             }
         case AUTH_CHECK_SUCCESS:
             return {
                 ...state,
                 authenticated: true,
-                requestStatus: status.SUCCESS,
+                status: status.SUCCESS,
                 errors: [],
             }
         default:
