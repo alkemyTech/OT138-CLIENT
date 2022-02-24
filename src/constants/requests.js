@@ -1,4 +1,7 @@
-export const REQUEST_STATUS_NOT_FETCHED = 'REQUEST_STATUS_NOT_FETCHED';
-export const REQUEST_STATUS_FETCHING    = 'REQUEST_STATUS_FETCHING';
-export const REQUEST_STATUS_SUCCESS     = 'REQUEST_STATUS_SUCCESS';
-export const REQUEST_STATUS_FAILURE     = 'REQUEST_STATUS_FAILURE';
+// Enum representing a request status
+export const status = {
+    PENDING: 'PENDING',
+    FETCHING: 'FETCHING',
+    SUCCESS: 'SUCCESS',
+    FAILURE: 'FAILURE'
+}

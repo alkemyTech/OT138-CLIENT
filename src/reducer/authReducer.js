@@ -9,16 +9,11 @@ import {
     AUTH_CHECK_SUCCESS,
     AUTH_CHECK_FAILURE
 } from '../constants/actionTypes';
-import {
-    REQUEST_STATUS_NOT_FETCHED,
-    REQUEST_STATUS_FETCHING,
-    REQUEST_STATUS_SUCCESS,
-    REQUEST_STATUS_FAILURE
-} from '../constants/requests';
+import { status } from '../constants/requests';
 
 let initialState = {
     authenticated: false,
-    requestStatus: REQUEST_STATUS_NOT_FETCHED,
+    status: status.PENDING,
     errors: [],
 };
 
@@ -27,60 +22,60 @@ export default function authReducer(state = initialState, action) {
         case AUTH_LOGIN_REQUEST:
             return {
                 ...state,
-                requestStatus: REQUEST_STATUS_FETCHING,
+                requestStatus: status.FETCHING,
                 errors: []
             }
         case AUTH_LOGIN_FAILURE:
             return {
                 ...state,
                 authenticated: false,
-                requestStatus: REQUEST_STATUS_FAILURE,
+                requestStatus: status.FAILURE,
                 errors: action.payload
             }
         case AUTH_LOGIN_SUCCESS:
             return {
                 ...state,
                 authenticated: true,
-                requestStatus: REQUEST_STATUS_SUCCESS,
+                requestStatus: status.SUCCESS,
                 errors: []
             }
         case AUTH_LOGOUT_REQUEST:
             return {
                 ...state,
-                requestStatus: REQUEST_STATUS_FETCHING,
+                requestStatus: status.FETCHING,
                 errors: []
             }
         case AUTH_LOGOUT_FAILURE:
             return {
                 ...state,
-                requestStatus: REQUEST_STATUS_FAILURE,
+                requestStatus: status.FAILURE,
                 errors: action.payload
             }
         case AUTH_LOGOUT_SUCCESS:
             return {
                 ...state,
                 authenticated: false,
-                requestStatus: REQUEST_STATUS_SUCCESS,
+                requestStatus: status.SUCCESS,
                 errors: [],
             }
         case AUTH_CHECK_REQUEST:
             return {
                 ...state,
-                requestStatus: REQUEST_STATUS_FETCHING,
+                requestStatus: status.FETCHING,
                 errors: []
             }
         case AUTH_CHECK_FAILURE:
             return {
                 ...state,
                 authenticated: false,
-                requestStatus: REQUEST_STATUS_FAILURE,
+                requestStatus: status.FAILURE,
                 errors: action.payload
             }
         case AUTH_CHECK_SUCCESS:
             return {
                 ...state,
                 authenticated: true,
-                requestStatus: REQUEST_STATUS_SUCCESS,
+                requestStatus: status.SUCCESS,
                 errors: [],
             }
         default:
