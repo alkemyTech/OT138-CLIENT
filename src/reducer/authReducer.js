@@ -9,7 +9,7 @@ import {
     AUTH_CHECK_SUCCESS,
     AUTH_CHECK_FAILURE
 } from '../constants/actionTypes';
-import { status } from '../constants/requests';
+import { status } from '../constants';
 
 let initialState = {
     authenticated: false,
