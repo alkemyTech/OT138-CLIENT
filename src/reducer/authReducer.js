@@ -12,6 +12,7 @@ import {
 import { status } from '../constants';
 
 let initialState = {
+    user: {},
     authenticated: false,
     status: status.PENDING,
     errors: [],
@@ -35,6 +36,7 @@ export default function authReducer(state = initialState, action) {
         case AUTH_LOGIN_SUCCESS:
             return {
                 ...state,
+                user: action.payload,
                 authenticated: true,
                 status: status.SUCCESS,
                 errors: []
@@ -54,6 +56,7 @@ export default function authReducer(state = initialState, action) {
         case AUTH_LOGOUT_SUCCESS:
             return {
                 ...state,
+                user: {},
                 authenticated: false,
                 status: status.SUCCESS,
                 errors: [],
@@ -74,6 +77,7 @@ export default function authReducer(state = initialState, action) {
         case AUTH_CHECK_SUCCESS:
             return {
                 ...state,
+                user: action.payload,
                 authenticated: true,
                 status: status.SUCCESS,
                 errors: [],
