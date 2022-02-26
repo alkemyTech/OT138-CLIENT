@@ -57,3 +57,59 @@ body {
   /* Titles */
   --titles-color: #ffffff;
 }
+
+/* Pagination */
+.pagination {
+  justify-content: center;
+  display: flex;
+  padding-left: 0;
+  list-style: none;
+}
+
+.page-item .page-link {
+  position: relative;
+  display: block;
+  margin: 0 2px;
+  border: 1px solid #34373b;
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: gray;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.page-item a.page-link:hover {
+  background-color: #34373b;
+}
+
+.page-item.active .page-link {
+  color: #ffffff;
+  background-color: #34373b;
+}
+
+.page-item.disabled .page-link {
+  color: #6c757d;
+  pointer-events: none;
+  cursor: auto;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.divider > .pagination {
+  margin: 6px;
+}
+.divider {
+  margin: 1rem 0 0 0;
+}
+.divider svg {
+  border-radius: 50%;
+  margin: 0 5px;
+}
