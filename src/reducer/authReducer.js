@@ -9,11 +9,12 @@ import {
   AUTH_CHECK_SUCCESS,
   AUTH_CHECK_FAILURE,
 } from "../constants/actionTypes";
+import { status } from "../constants";
 
 let initialState = {
+  user: {},
   authenticated: false,
-  isFetching: false,
-  failure: false,
+  status: status.PENDING,
   errors: [],
 };
 
@@ -22,63 +23,63 @@ export default function authReducer(state = initialState, action) {
     case AUTH_LOGIN_REQUEST:
       return {
         ...state,
-        isFetching: true,
-        failure: false,
+        status: status.FETCHING,
         errors: [],
       };
     case AUTH_LOGIN_FAILURE:
       return {
         ...state,
-        failure: true,
+        authenticated: false,
+        status: status.FAILURE,
         errors: action.payload,
       };
     case AUTH_LOGIN_SUCCESS:
       return {
         ...state,
+        user: action.payload,
         authenticated: true,
-        isFetching: false,
-        failure: false,
+        status: status.SUCCESS,
         errors: [],
       };
     case AUTH_LOGOUT_REQUEST:
       return {
         ...state,
-        isFetching: true,
-        failure: false,
+        status: status.FETCHING,
         errors: [],
       };
     case AUTH_LOGOUT_FAILURE:
       return {
         ...state,
-        failure: true,
+        status: status.FAILURE,
         errors: action.payload,
       };
     case AUTH_LOGOUT_SUCCESS:
       return {
+        ...state,
+        user: {},
         authenticated: false,
-        isFetching: false,
-        failure: false,
+        status: status.SUCCESS,
         errors: [],
       };
     case AUTH_CHECK_REQUEST:
       return {
         ...state,
-        isFetching: true,
-        failure: false,
+        status: status.FETCHING,
         errors: [],
       };
     case AUTH_CHECK_FAILURE:
       return {
         ...state,
-        isFetching: false,
-        failure: true,
+        authenticated: false,
+        status: status.FAILURE,
         errors: action.payload,
       };
     case AUTH_CHECK_SUCCESS:
       return {
+        ...state,
+        user: action.payload,
         authenticated: true,
-        isFetching: false,
-        failure: false,
+        status: status.SUCCESS,
         errors: [],
       };
     default:

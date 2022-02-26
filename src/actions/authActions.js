@@ -32,8 +32,7 @@ export const login = (credentials) => {
     const { success, data, errorMessage } = await loginRequest(credentials);
 
     if (success) {
-      window.location.href = `/`;
-      return dispatch({ type: AUTH_LOGIN_SUCCESS });
+      return dispatch({ type: AUTH_LOGIN_SUCCESS, payload: data});
     } else {
       return dispatch({ type: AUTH_LOGIN_FAILURE, payload: [errorMessage] });
     }
@@ -86,14 +85,10 @@ export const checkAuthentication = () => {
   return async (dispatch) => {
     dispatch({ type: AUTH_CHECK_REQUEST });
 
-    const {
-      success,
-      data: isAuthenticated,
-      errorMessage,
-    } = await checkAuthenticationRequest();
+    const { success, data, errorMessage } = await checkAuthenticationRequest();
 
-    if (success && isAuthenticated) {
-      return dispatch({ type: AUTH_CHECK_SUCCESS });
+    if (success) {
+      return dispatch({ type: AUTH_CHECK_SUCCESS, payload: data });
     } else {
       return dispatch({ type: AUTH_CHECK_FAILURE, payload: [errorMessage] });
     }
