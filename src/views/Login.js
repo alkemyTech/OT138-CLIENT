@@ -14,6 +14,7 @@ import { Input, Button } from "../components/Inputs";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { login } from "../actions/authActions";
+import { Toaster } from 'react-hot-toast';
 
 // Returns an object with the error messages for handled input validation
 // i.e. both fields required, correct email format and password min 6 chars length
@@ -61,6 +62,7 @@ function Login(props) {
   );
   return (
     <Container>
+      <Toaster/>
       <LoginContainer>
         <FormContainer>
           <LoginForm onSubmit={formik.handleSubmit}>
