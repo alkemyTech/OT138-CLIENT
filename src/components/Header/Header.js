@@ -57,7 +57,7 @@ function Header(props) {
         </Hamburger>
         <Link to="/">
           <Logo>
-            <img src="./logo.png" alt="ong logo" />
+            <img src="/logo.png" alt="ong logo" />
             <h2 className="logo__title">Alkemy ONG</h2>
           </Logo>
         </Link>
@@ -83,7 +83,9 @@ function Header(props) {
             <ProfileDropdown dropdownState={dropdownState}>
               <Link to={"/perfil"}>Mi Perfil</Link>
               <Link to={"/backoffice"}>BackOffice</Link>
-              <Link to={"#"}>Cerrar Sesión</Link>
+              <Link onClick={() => {}} to={"#"}>
+                Cerrar Sesión
+              </Link>
             </ProfileDropdown>
           </Avatar>
         ) : dataState !== "loading" ? (

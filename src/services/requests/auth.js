@@ -35,8 +35,12 @@ export const login = async (credentials) => {
         } else {
             result.success = true;
             
+<<<<<<< HEAD
             result.data = responseObject.data || {};
             toast.success(responseObject.message);
+=======
+            result.data = responseObject.user || {};
+>>>>>>> 64ff3f2a379ecc09b9c1573a6d6ca6a8955860d2
             
             // Save token to localStorage
             const {accessToken, refreshToken} = responseObject;
@@ -116,13 +120,13 @@ export const getProfileData = async () => {
  * Checks if the user is authenticated in the backend.
  * @returns An object with the following entries:
  *      - success: true if the request succeeded without errors, false otherwise
- *      - data: a boolean value, true if the user is authenticated, false otherwise
+ *      - data: user data returned from the API (may be empty), if success is true
  *      - errorMessage: a string with the error message, if success is false
  */
 export const checkAuthentication = async () => {
     const result = {
         success: false,
-        data: false,
+        data: {},
         errorMessage: ''
     }
 
@@ -132,7 +136,7 @@ export const checkAuthentication = async () => {
             result.errorMessage = responseObject.message;
         } else{
             result.success = true;
-            result.data = true;
+            result.data = responseObject.user || {};
         }
     } catch(error){
         console.log(await error);
