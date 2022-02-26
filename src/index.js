@@ -7,14 +7,27 @@ import { BrowserRouter } from "react-router-dom";
 import "animate.css";
 import "./styles/index.css";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
+
+export const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </Provider>
+    <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Provider>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

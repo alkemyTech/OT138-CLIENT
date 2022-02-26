@@ -13,9 +13,6 @@ export const ContainerStyle = styled.div`
     display: flex;
     flex-direction: column;
   }
-  @media (max-width: 960px) {
-    padding: 0 0 4rem 0;
-  }
 `;
 export const ContentStyle = styled.div`
   display: flex;
