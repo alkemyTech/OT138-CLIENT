@@ -105,7 +105,10 @@ export const ActivitiesByID = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (activities?.data && activities?.data?.error)
+        if (
+          activities?.data &&
+          activities?.data?.result?.activities?.length <= 0
+        )
           return navigate("/actividades");
       } catch (error) {
         console.log(error);
