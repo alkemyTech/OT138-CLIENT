@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { useHistory, useNavigate } from "react-router-dom";
 import { Navigate, useParams, useSearchParams } from "react-router-dom";
-
+import Pagination from "react-responsive-pagination";
 import Activity from "../components/Activities/Cards";
 import Article from "../components/Article";
 import { Footer } from "../components/Footer";
@@ -17,15 +17,27 @@ import {
 import { ActivitiesContainer, TitleBanner } from "../styles/Activities";
 
 export default function Activities() {
+  let totalPages;
+  const [currentPage, setCurrentPage] = useState(1);
+  const limit = 15;
   const {
     data: activities,
     isLoading,
     isFetching,
     isError,
-  } = useQuery(["activities"], () => getActivities(), {
-    retry: false,
-  });
+    refetch,
+  } = useQuery(
+    ["activities", limit, currentPage],
+    () => getActivities(limit, currentPage),
+    {
+      retry: false,
+    }
+  );
+  useEffect(() => {
+    refetch();
+  }, [currentPage]);
 
+  totalPages = Math.ceil(activities?.data?.result?.count / limit);
   return (
     <Container>
       <Header />
@@ -41,7 +53,7 @@ export default function Activities() {
         <ActivitiesContainer>
           {!isLoading ? (
             !activities?.data?.error && !isError ? (
-              activities?.data?.activities?.rows?.map((activity) => {
+              activities?.data?.result?.activities?.map((activity) => {
                 const { id, name, image, content } = activity;
                 return (
                   <Activity
@@ -65,6 +77,16 @@ export default function Activities() {
             <Loading />
           )}
         </ActivitiesContainer>
+        {!isLoading && (
+          <div className="divider">
+            <Pagination
+              current={currentPage}
+              total={totalPages}
+              onPageChange={setCurrentPage}
+              style={{ justifySelf: "end" }}
+            />
+          </div>
+        )}
       </Content>
       <Footer />
     </Container>
@@ -97,7 +119,7 @@ export const ActivitiesByID = () => {
     <Container>
       <Header />
       <Content>
-        {activities?.data?.activities?.rows?.map((activity) => {
+        {activities?.data?.result?.activities?.map((activity) => {
           const { id, name, image, content } = activity;
           return (
             <Article

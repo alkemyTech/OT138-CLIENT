@@ -7,14 +7,19 @@ import { ActivitiesContainer, ActivitiesContent } from "./styles";
 
 export default function Activities() {
   const limit = 4;
+  const currentPage = 1;
   const {
     data: activities,
     isLoading,
     isFetching,
     isError,
-  } = useQuery(["activities", limit], () => getActivities(limit), {
-    retry: false,
-  });
+  } = useQuery(
+    ["activities", limit, currentPage],
+    () => getActivities(limit, currentPage),
+    {
+      retry: false,
+    }
+  );
   return (
     <>
       {!isError && (
@@ -26,7 +31,7 @@ export default function Activities() {
           <ActivitiesContent>
             {!isLoading ? (
               !activities?.data.error && !isError ? (
-                activities?.data?.activities?.rows?.map((activity) => {
+                activities?.data?.result?.activities?.map((activity) => {
                   const { id, name, image, content } = activity;
                   return (
                     <Activity
