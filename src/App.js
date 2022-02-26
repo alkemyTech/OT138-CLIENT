@@ -11,6 +11,7 @@ import Profile from "./views/Profile";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { checkAuthentication as checkAuthenticationAction } from "./actions/authActions";
+import Protected from "./components/Routes/Protected";
 
 function App({ checkAuthentication }) {
   useEffect(() => {
@@ -26,7 +27,14 @@ function App({ checkAuthentication }) {
         <Route path="/login" element={<Login />} />
         <Route path="/contact-form" element={<FormContacto />} />
         <Route path="/perfil" element={<Profile />} />
-        <Route path="/backoffice" element={<Backoffice />} />
+        <Route
+          path="/backoffice"
+          element={
+            <Protected isAdmin>
+              <Backoffice />
+            </Protected>
+          }
+        />
       </Routes>
     </>
   );
