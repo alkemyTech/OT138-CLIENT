@@ -5,7 +5,6 @@ import Signup from "./views/Signup";
 import FormContacto from "./views/Form_contact";
 import { Route, Routes } from "react-router-dom";
 import "./styles/App.css";
-import { Footer } from "./components/Footer";
 import Backoffice from "./views/Backoffice";
 import Profile from "./views/Profile";
 import { connect } from "react-redux";

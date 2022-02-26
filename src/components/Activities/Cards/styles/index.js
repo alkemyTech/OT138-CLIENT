@@ -5,7 +5,9 @@ export const ActivityCard = styled.div`
   flex-direction: column;
   align-items: center;
   max-width: 260px;
+  min-width: 260px;
   height: 360px;
+  min-height: 360px;
   border-radius: 10px;
   background: #fff;
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 10%), 0 4px 6px -2px rgb(0 0 0 / 5%);
@@ -14,6 +16,9 @@ export const ActivityCard = styled.div`
   .thumbnail {
     border-radius: 10px 10px 0 0;
     width: 100%;
+    min-height: 180px;
+    max-height: 180px;
+    object-fit: cover;
   }
   &:hover {
     transition: zoom 0.5s ease-out 0s;
@@ -25,6 +30,7 @@ export const ActivityDetails = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 0 0.5rem;
+  width: 100%;
   flex: 1;
   .activity__title {
     margin: 1rem 0 10px 0;
@@ -35,6 +41,7 @@ export const ActivityDetails = styled.div`
     margin: 0;
     font-size: 14.5px;
     height: 100%;
+    width: 100%;
   }
 
   .activity__readmore {
