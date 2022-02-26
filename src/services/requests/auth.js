@@ -10,6 +10,7 @@
      API_AUTH_CHECK
  } from '../../constants/urls';
  import localStorageService from '../localStorage';
+ import toast from 'react-hot-toast';
  
  /**
   * Makes a POST request to the API's login endpoint.
@@ -30,9 +31,10 @@
          
          if(responseObject.error) {
              result.errorMessage = responseObject.message;
+             toast.error(responseObject.message)
          } else {
              result.success = true;
-             
+             toast.success(responseObject.message);
              result.data = responseObject.user || {};
              
              // Save token to localStorage
@@ -46,6 +48,7 @@
          }
      } catch(error) {
          result.errorMessage = 'Found an unexpected error during the request';
+         toast.error(result.errorMessage)
      }
  
      return result;
