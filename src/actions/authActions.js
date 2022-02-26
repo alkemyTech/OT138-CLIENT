@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import {
   AUTH_LOGIN_REQUEST,
   AUTH_LOGIN_SUCCESS,
@@ -32,6 +33,10 @@ export const login = (credentials) => {
     const { success, data, errorMessage } = await loginRequest(credentials);
 
     if (success) {
+      const navigation = useNavigate();
+      setTimeout(()=>{
+        navigation("/")
+      },1500);
       return dispatch({ type: AUTH_LOGIN_SUCCESS });
     } else {
       return dispatch({ type: AUTH_LOGIN_FAILURE, payload: [errorMessage] });

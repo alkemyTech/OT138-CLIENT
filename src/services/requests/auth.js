@@ -10,6 +10,7 @@ import {
     API_AUTH_CHECK
 } from '../../constants/urls';
 import localStorageService from '../localStorage';
+import toast from 'react-hot-toast';
 
 /**
  * Makes a POST request to the API's login endpoint.
@@ -30,10 +31,12 @@ export const login = async (credentials) => {
         
         if(responseObject.error) {
             result.errorMessage = responseObject.message;
+            toast.error(responseObject.message);
         } else {
             result.success = true;
             
             result.data = responseObject.data || {};
+            toast.success(responseObject.message);
             
             // Save token to localStorage
             const {accessToken, refreshToken} = responseObject;
