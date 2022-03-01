@@ -13,6 +13,47 @@ const Container = styled.div`
 width:900px;
 height:auto;
 margin:auto;
+@media(max-width:1000px){
+width:100%;
+}
+
+@media(max-width:600px){
+table{
+width:100%;
+}
+
+table td[data-titulo]{
+text-align:left;
+}
+
+table td[data-titulo]::before{
+content: attr(data-titulo);
+margin-right:5px;
+color:#69DADB;
+font-weight:bold;
+}
+
+
+table tr{
+display:flex;
+flex-direction:column;
+border:2px solid #1F1D36;
+border-radius:5px;
+padding:1em;
+margin:10px;
+margin-bottom:1em;
+background-color:#191A19;
+color:#fff;
+}
+
+table td{
+border:none;
+background:none !important;
+}
+
+table thead{
+display:none;
+}}
 `;
 
 const Form = styled.form`
@@ -198,6 +239,8 @@ if(!values.order){
   errores.order = "Specify an order"
 }
 
+
+//VALIDATE ORGANIZATION-ID
 if(!values.organizationID){
   errores.organizationID = "there is no ID"
 }
