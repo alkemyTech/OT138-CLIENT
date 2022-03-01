@@ -32,7 +32,7 @@ export const login = (credentials) => {
     const { success, data, errorMessage } = await loginRequest(credentials);
 
     if (success) {
-      return dispatch({ type: AUTH_LOGIN_SUCCESS, payload: data});
+      return dispatch({ type: AUTH_LOGIN_SUCCESS });
     } else {
       return dispatch({ type: AUTH_LOGIN_FAILURE, payload: [errorMessage] });
     }
@@ -85,10 +85,14 @@ export const checkAuthentication = () => {
   return async (dispatch) => {
     dispatch({ type: AUTH_CHECK_REQUEST });
 
-    const { success, data, errorMessage } = await checkAuthenticationRequest();
+    const {
+      success,
+      data: isAuthenticated,
+      errorMessage,
+    } = await checkAuthenticationRequest();
 
-    if (success) {
-      return dispatch({ type: AUTH_CHECK_SUCCESS, payload: data });
+    if (success && isAuthenticated) {
+      return dispatch({ type: AUTH_CHECK_SUCCESS });
     } else {
       return dispatch({ type: AUTH_CHECK_FAILURE, payload: [errorMessage] });
     }
