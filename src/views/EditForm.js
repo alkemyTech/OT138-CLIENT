@@ -1,132 +1,12 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import styled from '@emotion/styled';
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/js/bootstrap.bundle';
 import axios from 'axios';
 import {Formik } from 'formik';
-import { FiEdit,FiSave,FiTrash2,FiArrowRightCircle} from 'react-icons/fi';
+import { FiEdit,FiSave,FiTrash2,FiXSquare} from 'react-icons/fi';
 import toast,{Toaster} from 'react-hot-toast';
-
-
-
-const Container = styled.div`
-width:900px;
-height:auto;
-margin:auto;
-@media(max-width:1000px){
-width:100%;
-}
-
-@media(max-width:600px){
-table{
-width:100%;
-}
-
-table td[data-titulo]{
-text-align:left;
-}
-
-table td[data-titulo]::before{
-content: attr(data-titulo);
-margin-right:5px;
-color:#69DADB;
-font-weight:bold;
-}
-
-
-table tr{
-display:flex;
-flex-direction:column;
-border:2px solid #1F1D36;
-border-radius:5px;
-padding:1em;
-margin:10px;
-margin-bottom:1em;
-background-color:#191A19;
-color:#fff;
-}
-
-table td{
-border:none;
-background:none !important;
-}
-
-table thead{
-display:none;
-}}
-`;
-
-const Form = styled.form`
-padding:30px;
-width:100%;
-border-radius:0px 10px 10px 0px;
-background-color:#fff;
-@media (max-width:1298px){
-width:100%;
-border-radius:0px 0px 10px 10px;
-}
-`;
-
-const Input = styled.input`
-border:none;
-display:block;
-width:100%;
-padding:15px;
-margin-top:20px;
-outline:none;
-border-radius:5px;
-background-color:#e6e6e7;
-font-size:15px;
-`;
-
-const Button = styled.button`
-border:none;
-background-color:#116530;
-color:#fff;
-padding:10px 20px;
-font-size:15px;
-border-radius:5px;
-margin-top:20px;
-cursor:pointer;
-font-family: "Open Sans", sans-serif;
-transition:500ms ease;
-&:hover{
-background-color:#357C3C;
-}
-`;
-
-const ButtonUpdate = styled.button`
-border:none;
-padding:5px 10px;
-background:#357C3C;
-border-radius:10px;
-color:#fff;
-margin:5px;
-`;
-
-
-const ButtonDelete = styled.button`
-border:none;
-padding:5px 10px;
-background:#FF1700;
-border-radius:10px;
-color:#fff;
-margin:5px;
-`;
-
-const MessageError = styled.span`
-color:#DA1212;
-font-size:12px;
-margin-left:5px;
-font-family: "Open Sans", sans-serif;
-font-weight:bold;
-display:block;
-
-`;
+import {Container,Form,Input,Button,ButtonUpdate,ButtonDelete,MessageError,Table,ContainerModal,Modal,ButtomModal} from "../styles/EditForm";
 
 
 function EditForm(){
-
 
 
 //DATA CALL 
@@ -143,6 +23,8 @@ axios("http://localhost:4000/api/slides")
 const [data,SetData] = useState([]);
 const [id,SetId] = useState();
 const [dataInitial,SetDataInitial] = useState(undefined);
+const [show,SetShow] = useState({width:"0px",height:"0px;"});
+const [containModal,SetContainModal] = useState({width:"0px",height:"0px;"});
 
 
 
@@ -168,37 +50,45 @@ window.location.reload();
 
 
 
+//SHOW MODAL
+function ShowModal(){
+  SetShow({width:"450px",height:"350px;"})
+  SetContainModal({width:"100%;",height:"100vh;"})
+}
+
+
+
+
 //DO BEGIN JXS CODE
 return (
 <Fragment>   
 <Toaster position="top-center"/>
 <Container>
-
 {data.length ? 
-<table className="table table-dark table-striped">
+<Table>
 <thead>
-<tr className='text-center'>
-<th scope="col">ID</th>
-<th scope="col">TEXT</th>
-<th scope="col">UPDATE DATE</th>
-<th scope="col">ACTIONS</th>
+<tr>
+<th>ID</th>
+<th>TEXT</th>
+<th>UPDATE DATE</th>
+<th>ACTIONS</th>
 </tr>
 </thead>
 <tbody>
 {data.map((item)=>{
 return(
-<tr key={item.id} className="text-center">
+<tr key={item.id}>
 <td>{item.id}</td>
 <td>{item.text}</td>
 <td>{item.updatedAt}</td>                     
 <td>
-<ButtonUpdate type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"onClick={()=>{SetId(item.id);SetDataInitial({...dataInitial,text:item.text,url:item.imageURL})}}><FiEdit/></ButtonUpdate> 
+<ButtonUpdate type="button" onClick={()=>{SetId(item.id);SetDataInitial({...dataInitial,text:item.text,url:item.imageURL});ShowModal()}}><FiEdit/></ButtonUpdate> 
 <ButtonDelete type="button" onClick={()=>{DeleteSlider(item.id);}}><FiTrash2/></ButtonDelete> 
 </td>
 </tr>)
 } )}   
 </tbody>
-</table>
+</Table>
 :
 
 <Formik initialValues={{imageURL:"",text:"",url:"",order:"",organizationID:""}}
@@ -268,16 +158,9 @@ return errores;
 </Formik>
 
 }
-
-
-
-<div className="modal fade" id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
-<div className="modal-dialog">
-<div className="modal-content">
-<div className="modal-header">
-<h5 className="modal-title" id="exampleModalLabel">UPDATE SLIDER</h5>
-</div>
-<div className="modal-body">
+</Container>
+<ContainerModal width={containModal.width} height={containModal.height}>
+<Modal width={show.width} height={show.height}>
 
 {data.length && dataInitial &&
 <Formik initialValues={{text:dataInitial.text,url:dataInitial.url}}
@@ -317,20 +200,14 @@ return errores;
 <MessageError>{touched.text &&  errors.text}</MessageError>
 <Input name="url" type="text" placeholder='New url' value={values.url} onChange={handleChange} onBlur={handleBlur}/>
 <MessageError>{touched.url && errors.url}</MessageError>
-<Button type='submit'><FiSave/> Update</Button>
+<Button type='submit'><FiSave/>UPDATE</Button>
+<ButtomModal onClick={()=>{SetDataInitial(undefined);SetShow({width:"0px",height:"0px;"});SetContainModal({width:"0px",height:"0px;"})}}><FiXSquare/>CLOSE</ButtomModal>
 </Form>
 )}  
 </Formik>
 }
-
-</div>
-<div className="modal-footer">
-<button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={()=>{SetDataInitial(undefined)}}><FiArrowRightCircle/></button>
-</div>
-</div>
-</div>
-</div>
-</Container>
+</Modal>
+</ContainerModal>
 </Fragment>
 );
 }
