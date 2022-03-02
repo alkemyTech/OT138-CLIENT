@@ -16,6 +16,9 @@ export default function Categories() {
                 <tbody>
                     <tr>
                         <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                     </tr>
                 </tbody>
             </Table>
