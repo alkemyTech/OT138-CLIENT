@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
 import { Formik } from "formik";
 import { createContact } from "../services/requests/contacts";
@@ -177,6 +177,7 @@ function FormContacto() {
         description={alert.description}
         type={alert.type}
       />
+
       <ContainColumn>
         <Colum>
           <h1>It's time to bring your business online.</h1>
