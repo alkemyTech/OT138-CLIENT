@@ -5,6 +5,7 @@ import {
   TextAreaContainer,
   LabelContainer,
   ButtonContainer,
+  ButtonGroup as ButtonGroupStyle
 } from "./styles";
 export const Input = ({
   placeholder,
@@ -102,3 +103,11 @@ export const Button = ({ children, name, type, onChange, onClick, style }) => {
     </ButtonContainer>
   );
 };
+
+export const ButtonGroup = ({alignEnd, children}) => {
+    return (
+        <ButtonGroupStyle alignEnd={alignEnd}>
+            {children}
+        </ButtonGroupStyle>
+    )
+}

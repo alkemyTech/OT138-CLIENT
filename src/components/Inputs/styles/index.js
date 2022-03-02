@@ -81,3 +81,9 @@ export const ButtonContainer = styled.button`
     transform: scale(1.02);
   }
 `;
+
+export const ButtonGroup = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: ${props => props.alignEnd ? 'flex-end' : 'flex-start'};
+`;
