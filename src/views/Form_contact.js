@@ -114,7 +114,6 @@ function FormContacto() {
   const [alert, setAlert] = useState({});
   const submitForm = async (values, { resetForm }) => {
     resetForm();
-    console.log(values);
     try {
       const response = await createContact(values);
       if (!response.error) {
@@ -141,6 +140,35 @@ function FormContacto() {
       });
     }
   };
+
+  const dataValidation = (values) => {
+    let errores = {};
+
+    //VALIDATION NAME
+    if (!values.name || values.name.length < 4) {
+      errores.name = "Please enter a name";
+    } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.name)) {
+      errores.name = "The name can only contain letters and spaces";
+    }
+
+    //VALIDATION EMAIL
+    if (
+      !/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(values.email)
+    ) {
+      errores.email = "Enter a valid email";
+    }
+
+    //VALIDATION Phone
+    if (!values.phone) {
+      errores.phone = "Please enter a phone number";
+    }
+    //VALIDATION MESSAGE
+    if (values.message.length < 30) {
+      errores.message = "The message is very short";
+    }
+
+    return errores;
+  };
   return (
     <Container>
       <Alert
@@ -161,36 +189,7 @@ function FormContacto() {
             phone: "",
           }}
           onSubmit={submitForm}
-          validate={(values) => {
-            let errores = {};
-
-            //VALIDATION NAME
-            if (!values.name || values.name.length < 4) {
-              errores.name = "Please enter a name";
-            } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.name)) {
-              errores.name = "The name can only contain letters and spaces";
-            }
-
-            //VALIDATION EMAIL
-            if (
-              !/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(
-                values.email
-              )
-            ) {
-              errores.email = "Enter a valid email";
-            }
-
-            //VALIDATION Phone
-            if (!values.phone) {
-              errores.phone = "Please enter a phone number";
-            }
-            //VALIDATION MESSAGE
-            if (values.message.length < 30) {
-              errores.message = "The message is very short";
-            }
-
-            return errores;
-          }}>
+          validate={dataValidation}>
           {({
             values,
             handleSubmit,
