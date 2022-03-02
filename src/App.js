@@ -20,7 +20,7 @@ import NewsID from "./views/NewsID";
 function App({ checkAuthentication }) {
   useEffect(() => {
     checkAuthentication();
-  }, []);
+  }, [checkAuthentication]);
 
   return (
     <>
