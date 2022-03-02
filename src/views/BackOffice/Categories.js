@@ -12,9 +12,9 @@ export default function Categories() {
     }, []);
 
     async function fetchData() {
-        const {success, data: categories, errorMessage} = await getCategories();
-        
-        if(success) {
+        const { success, data: categories, errorMessage } = await getCategories();
+
+        if (success) {
             setCategories(categories);
         } else {
             toast.error('Error fetching categories: ' + errorMessage);
@@ -28,8 +28,7 @@ export default function Categories() {
                     <tr>
                         <th>Nombre</th>
                         <th>Descripción</th>
-                        <th>Fecha creación</th>
-                        <th>Fecha actualización</th>
+                        <th>Actualizada</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,10 +38,9 @@ export default function Categories() {
                                 <tr key={index}>
                                     <td>{item.name}</td>
                                     <td>{item.description}</td>
-                                    <td>{item.createdAt ? moment(item.createdAt).format('DD/MM/YY') : ''}</td>
                                     <td>{item.updatedAt ? moment(item.updatedAt).format('DD/MM/YY') : ''}</td>
                                 </tr>
-                            )
+                            );
                         })
                     }
                 </tbody>
