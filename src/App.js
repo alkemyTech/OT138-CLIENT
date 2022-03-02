@@ -33,7 +33,7 @@ function App({ checkAuthentication }) {
         <Route path="/actividades/:id" element={<ActivitiesByID />} />
         <Route path="/form-edition" element={<EditForm/>} />
         <Route
-          path="/backoffice"
+          path="/backoffice/*"
           element={
             <Protected isAdmin>
               <Backoffice />
