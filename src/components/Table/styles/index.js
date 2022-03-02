@@ -7,6 +7,7 @@ export const Table = styled.table`
     border-collapse: separate
     border-style: hidden;
     width: 100%;
+    overflow-x: auto;
     table-layout: fixed;
 
     thead th {
@@ -15,11 +16,19 @@ export const Table = styled.table`
     }
     
     tbody td {
-        padding: 15px;
+        padding: 10px;
         word-wrap: break-word;
     }
 
     tbody tr:nth-child(odd) {
         background: #eee;
+    }
+
+    tbody tr:last-child {
+        border-bottom: 2px solid #ddd;
+    }
+
+    @media (min-width: 850px) {
+        table-layout: auto;
     }
 `;
