@@ -1,4 +1,5 @@
 import api from "../../config/api";
+import { API_CATEGORIES } from '../../constants/urls';
 
 export async function getCategories() {
     const result = {
@@ -7,7 +8,7 @@ export async function getCategories() {
         errorMessage: ''
     };
     try {
-        const { data: resObj } = await api.get('/categories');
+        const { data: resObj } = await api.get(API_CATEGORIES);
         if(resObj.error === false) {
             result.success = true;
             result.data = resObj.data;
