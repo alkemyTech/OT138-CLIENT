@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Table from "../../components/Table";
+import moment from 'moment';
 import { getCategories } from '../../services/requests/categories';
 import toast from 'react-hot-toast';
 
@@ -38,8 +39,8 @@ export default function Categories() {
                                 <tr key={index}>
                                     <td>{item.name}</td>
                                     <td>{item.description}</td>
-                                    <td>{item.createdAt}</td>
-                                    <td>{item.updatedAt}</td>
+                                    <td>{item.createdAt ? moment(item.createdAt).format('DD/MM/YY') : ''}</td>
+                                    <td>{item.updatedAt ? moment(item.updatedAt).format('DD/MM/YY') : ''}</td>
                                 </tr>
                             )
                         })
