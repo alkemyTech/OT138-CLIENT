@@ -15,6 +15,7 @@ import Activities from "./views/Activities";
 import { ActivitiesByID } from "./views/Activities";
 import EditForm from "./views/EditForm";
 import News from "./views/News";
+import NewsID from "./views/NewsID";
 
 function App({ checkAuthentication }) {
   useEffect(() => {
@@ -34,6 +35,7 @@ function App({ checkAuthentication }) {
         <Route path="/actividades/:id" element={<ActivitiesByID />} />
         <Route path="/form-edition" element={<EditForm/>} />
         <Route path="/novedades" element={<News/>}/>
+        <Route path="/novedades/:id" element={<NewsID/>}/>
         <Route
           path="/backoffice"
           element={

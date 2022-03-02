@@ -1,11 +1,15 @@
-import React, { Fragment } from 'react';
-import Header from "../components/Header/Landing";
-import {Link} from "react-router-dom";
-import {Container,Card,CardHead,CardBody,ButtonView} from "../styles/News";
+import React from 'react';
+import { useParams } from 'react-router-dom';
+import {Box1,Container,Section1} from "../styles/News";
 
 
-function News(){
+function NewsID(){
 
+    const {id} = useParams();
+ 
+
+  
+    
    //DATABASE SIMULATION
    const data = [
         
@@ -36,27 +40,18 @@ function News(){
 
 ];
 
+
     return(
-    <Fragment>
-    <Header/>
-    <Container> 
-    {data.map((item)=>{
-    return (
-    <Card>
-    <ButtonView><Link to={""+item.id}>Watch</Link></ButtonView>
-    <CardHead fondo={item.imagen}/>
-    <CardBody>
-    <h3>{item.titulo}</h3>
-    </CardBody>    
-    </Card>
-
-    )})}
-
-   </Container>
-   </Fragment> 
-    );
+      <Container>
+      <Section1>
+      <Box1>
+      <h1>{data[id-1].titulo}</h1>
+      <p>{data[id-1].texto}</p>
+      </Box1>      
+      <img src={data[id-1].imagen}  width="500px" alt="imagen"/>
+      </Section1>
+      </Container> 
+    )
 }
 
-
-
-export default News;
+export default NewsID;
