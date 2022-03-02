@@ -112,9 +112,35 @@ const MessageError = styled.span`
 
 function FormContacto() {
   const [alert, setAlert] = useState({});
-  useEffect(() => {
-    console.log(alert);
-  }, [alert]);
+  const submitForm = async (values, { resetForm }) => {
+    resetForm();
+    console.log(values);
+    try {
+      const response = await createContact(values);
+      if (!response.error) {
+        setAlert({
+          type: "success",
+          show: true,
+          title: "Created contact correctly",
+          description: "",
+        });
+      } else {
+        setAlert({
+          type: "error",
+          show: true,
+          title: "Error creating contact",
+          description: response.message,
+        });
+      }
+    } catch (error) {
+      setAlert({
+        type: "error",
+        show: true,
+        title: "Error creating contact",
+        description: error.message,
+      });
+    }
+  };
   return (
     <Container>
       <Alert
@@ -134,35 +160,7 @@ function FormContacto() {
             message: "",
             phone: "",
           }}
-          onSubmit={async (values, { resetForm }) => {
-            resetForm();
-            console.log(values);
-            try {
-              const response = await createContact(values);
-              if (!response.error) {
-                setAlert({
-                  type: "success",
-                  show: true,
-                  title: "Created contact correctly",
-                  description: "",
-                });
-              } else {
-                setAlert({
-                  type: "error",
-                  show: true,
-                  title: "Error creating contact",
-                  description: response.message,
-                });
-              }
-            } catch (error) {
-              setAlert({
-                type: "error",
-                show: true,
-                title: "Error creating contact",
-                description: error.message,
-              });
-            }
-          }}
+          onSubmit={submitForm}
           validate={(values) => {
             let errores = {};
 
