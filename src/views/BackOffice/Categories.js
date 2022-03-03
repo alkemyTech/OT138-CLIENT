@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Table from "../../components/Table";
 import moment from 'moment';
-import { getCategories } from '../../services/requests/categories';
+import {
+    getCategories as getCategoriesService,
+    deleteCategory as deleteCategoryService
+} from '../../services/requests/categories';
 import toast from 'react-hot-toast';
 import { Button, ButtonGroup } from "../../components/Inputs";
 import { CategoriesContainer } from '../../styles/Categories';
@@ -11,16 +14,26 @@ export default function Categories() {
     const [categories, setCategories] = useState([]);
 
     useEffect(() => {
-        fetchData();
+        getCategories();
     }, []);
 
-    async function fetchData() {
-        const { success, data: categories, errorMessage } = await getCategories();
+    async function getCategories() {
+        const { success, data: categories, errorMessage } = await getCategoriesService();
 
         if (success) {
             setCategories(categories);
         } else {
             toast.error('Error fetching categories: ' + errorMessage);
+        }
+    }
+
+    async function deleteCategory(id) {
+        const { success, errorMessage } = await deleteCategoryService();
+
+        if (success) {
+            setCategories(state => state.filter(category => category.id !== id)); // Remove deleted category from categories array.
+        } else {
+            toast.error('Error deleting category: ' + errorMessage);
         }
     }
 
