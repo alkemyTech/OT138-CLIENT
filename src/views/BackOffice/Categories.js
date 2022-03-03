@@ -31,7 +31,8 @@ export default function Categories() {
         const { success, errorMessage } = await deleteCategoryService();
 
         if (success) {
-            setCategories(state => state.filter(category => category.id !== id)); // Remove deleted category from categories array.
+            // Remove deleted category from categories array.
+            setCategories(state => state.filter(category => category.id !== id));
         } else {
             toast.error('Error deleting category: ' + errorMessage);
         }
@@ -60,7 +61,12 @@ export default function Categories() {
                                     <td>
                                         <ButtonGroup alignEnd>
                                             <Button style={editButtonStyle}>{<FaEdit />}</Button>
-                                            <Button style={deleteButtonStyle}><FaTrash /></Button>
+                                            <Button
+                                                style={deleteButtonStyle}
+                                                onClick={() => deleteCategory(item.id)}
+                                            >
+                                                <FaTrash />
+                                            </Button>
                                         </ButtonGroup>
                                     </td>
                                 </tr>
