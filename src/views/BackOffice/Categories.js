@@ -9,9 +9,11 @@ import toast from 'react-hot-toast';
 import { Button, ButtonGroup } from "../../components/Inputs";
 import { CategoriesContainer } from '../../styles/Categories';
 import { FaEdit, FaTrash } from 'react-icons/fa';
+import { TailSpin } from "react-loader-spinner";
 
 export default function Categories() {
     const [categories, setCategories] = useState([]);
+    const [lockedCategoryIds, setLockedCategoryIds] = useState([]);
 
     useEffect(() => {
         getCategories();
@@ -28,7 +30,9 @@ export default function Categories() {
     }
 
     async function deleteCategory(id) {
-        const { success, errorMessage } = await deleteCategoryService();
+        setLockedCategoryIds(state => [...state, id]);
+
+        const { success, errorMessage } = await deleteCategoryService(id);
 
         if (success) {
             // Remove deleted category from categories array.
@@ -36,6 +40,8 @@ export default function Categories() {
         } else {
             toast.error('Error deleting category: ' + errorMessage);
         }
+
+        setLockedCategoryIds(state => state.filter(categoryId => categoryId !== id));
     }
 
     return (
@@ -59,14 +65,27 @@ export default function Categories() {
                                     <td>{item.description}</td>
                                     <td>{item.updatedAt ? moment(item.updatedAt).format('DD/MM/YY') : ''}</td>
                                     <td>
-                                        <ButtonGroup alignEnd>
-                                            <Button style={editButtonStyle}>{<FaEdit />}</Button>
-                                            <Button
-                                                style={deleteButtonStyle}
-                                                onClick={() => deleteCategory(item.id)}
-                                            >
-                                                <FaTrash />
-                                            </Button>
+                                        <ButtonGroup align="center">
+                                            {
+                                                lockedCategoryIds.includes(item.id)
+                                                    ?
+                                                    <TailSpin height="40" width="40" color="grey" />
+                                                    :
+                                                    <>
+                                                        <Button
+                                                            style={editButtonStyle}
+                                                        >
+                                                            <FaEdit />
+                                                        </Button>
+                                                        <Button
+                                                            style={deleteButtonStyle}
+                                                            onClick={() => deleteCategory(item.id)}
+                                                        >
+                                                            <FaTrash />
+                                                        </Button>
+                                                    </>
+                                            }
+
                                         </ButtonGroup>
                                     </td>
                                 </tr>
