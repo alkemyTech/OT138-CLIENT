@@ -13,6 +13,7 @@ import { checkAuthentication as checkAuthenticationAction } from "./actions/auth
 import Protected from "./components/Routes/Protected";
 import Activities from "./views/Activities";
 import { ActivitiesByID } from "./views/Activities";
+import ActivityEditor from './views/ActivityEditor';
 import EditForm from "./views/EditForm";
 
 function App({ checkAuthentication }) {
@@ -40,6 +41,17 @@ function App({ checkAuthentication }) {
             </Protected>
           }
         />
+        <Route path="/backoffice/actividades/nueva" element={
+          <Protected isAdmin>
+            <ActivityEditor />
+          </Protected>
+        }
+        />
+        <Route path="/backoffice/actividades/editar/:id" element={
+          <Protected isAdmin>
+            <ActivityEditor />
+          </Protected>
+        } />
       </Routes>
     </>
   );
