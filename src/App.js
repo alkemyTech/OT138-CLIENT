@@ -16,6 +16,7 @@ import { ActivitiesByID } from "./views/Activities";
 import ActivityEditor from './views/BackOffice/ActivityEditor';
 import NewsEditor from './views/BackOffice/NewsEditor';
 import EditForm from "./views/EditForm";
+import News, { NewsByID } from "./views/News";
 
 function App({ checkAuthentication }) {
   useEffect(() => {
@@ -33,7 +34,9 @@ function App({ checkAuthentication }) {
         <Route path="/perfil" element={<Profile />} />
         <Route path="/actividades" element={<Activities />} />
         <Route path="/actividades/:id" element={<ActivitiesByID />} />
-        <Route path="/form-edition" element={<EditForm/>} />
+        <Route path="/novedades" element={<News />} />
+        <Route path="/novedades/:id" element={<NewsByID />} />
+        <Route path="/form-edition" element={<EditForm />} />
         <Route
           path="/backoffice/*"
           element={
