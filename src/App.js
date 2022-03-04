@@ -14,6 +14,7 @@ import Protected from "./components/Routes/Protected";
 import Activities from "./views/Activities";
 import { ActivitiesByID } from "./views/Activities";
 import ActivityEditor from './views/BackOffice/ActivityEditor';
+import NewsEditor from './views/BackOffice/NewsEditor';
 import EditForm from "./views/EditForm";
 
 function App({ checkAuthentication }) {
@@ -50,6 +51,17 @@ function App({ checkAuthentication }) {
         <Route path="/backoffice/actividades/editar/:id" element={
           <Protected isAdmin>
             <ActivityEditor />
+          </Protected>
+        } />
+        <Route path="/backoffice/novedades/nueva" element={
+          <Protected isAdmin>
+            <NewsEditor />
+          </Protected>
+        }
+        />
+        <Route path="/backoffice/novedades/editar/:id" element={
+          <Protected isAdmin>
+            <NewsEditor />
           </Protected>
         } />
       </Routes>
