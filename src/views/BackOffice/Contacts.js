@@ -37,32 +37,28 @@ export default function Contacts() {
     return (
         <SectionWrapper>
             <SectionTitle>Contactos</SectionTitle>
-            <Table>
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Teléfono</th>
-                        <th>Email</th>
-                        <th>Mensaje</th>
-                        <th>Actualizado</th>
-                    </tr>
-                </thead>
-                <tbody>
+            <Table
+                headers={['Nombre', 'Teléfono', 'Email', 'Mensaje', 'Actualizado']}
+                data={contacts}
+                accessors={[
                     {
-                        contacts.map((item, index) => {
-                            return (
-                                <tr key={index}>
-                                    <td>{item.name}</td>
-                                    <td>{item.phone}</td>
-                                    <td>{item.email}</td>
-                                    <td>{item.message}</td>
-                                    <td>{item.updatedAt ? moment(item.updatedAt).format('DD/MM/YY') : ''}</td>
-                                </tr>
-                            );
-                        })
+                        name: 'name'
+                    },
+                    {
+                        name: 'phone'
+                    },
+                    {
+                        name: 'email'
+                    },
+                    {
+                        name: 'message'
+                    },
+                    {
+                        name: 'updatedAt',
+                        applyFunction: (item) => moment(item).format('DD/MM/YY')
                     }
-                </tbody>
-            </Table>
+                ]}
+            />
             {
                 pagination &&
                 <Pagination onPageChange={goToPage} totalPages={pagination.pages} />

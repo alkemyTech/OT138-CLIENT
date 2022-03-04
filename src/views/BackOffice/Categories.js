@@ -47,53 +47,52 @@ export default function Categories() {
     return (
         <SectionWrapper>
             <h2>Categorías</h2>
-            <Table>
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Descripción</th>
-                        <th>Actualizada</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        categories.map((item, index) => {
-                            return (
-                                <tr key={index}>
-                                    <td>{item.name}</td>
-                                    <td>{item.description}</td>
-                                    <td>{item.updatedAt ? moment(item.updatedAt).format('DD/MM/YY') : ''}</td>
-                                    <td>
-                                        <ButtonGroup align="center">
-                                            {
-                                                lockedCategoryIds.includes(item.id)
-                                                    ?
-                                                    <TailSpin height="40" width="40" color="grey" />
-                                                    :
-                                                    <>
-                                                        <Button
-                                                            style={editButtonStyle}
-                                                        >
-                                                            <FaEdit />
-                                                        </Button>
-                                                        <Button
-                                                            style={deleteButtonStyle}
-                                                            onClick={() => deleteCategory(item.id)}
-                                                        >
-                                                            <FaTrash />
-                                                        </Button>
-                                                    </>
-                                            }
-
-                                        </ButtonGroup>
-                                    </td>
-                                </tr>
-                            );
-                        })
+            <Table
+                headers={['Nombre', 'Descripción', 'Actualizado', '']}
+                data={categories.map(c => {
+                    return {
+                        ...c,
+                        buttons: (
+                            <ButtonGroup align="center">
+                                {
+                                    lockedCategoryIds.includes(c.id)
+                                        ?
+                                        <TailSpin height="40" width="40" color="grey" />
+                                        :
+                                        <>
+                                            <Button
+                                                style={editButtonStyle}
+                                            >
+                                                <FaEdit />
+                                            </Button>
+                                            <Button
+                                                style={deleteButtonStyle}
+                                                onClick={() => deleteCategory(c.id)}
+                                            >
+                                                <FaTrash />
+                                            </Button>
+                                        </>
+                                }
+                            </ButtonGroup>
+                        )
                     }
-                </tbody>
-            </Table>
+                })}
+                accessors={[
+                    {
+                        name: 'name'
+                    },
+                    {
+                        name: 'description'
+                    },
+                    {
+                        name: 'updatedAt',
+                        applyFunction: (item) => moment(item).format('DD/MM/YY')
+                    },
+                    {
+                        name: 'buttons'
+                    }
+                ]}
+            />
         </SectionWrapper>
     )
 }

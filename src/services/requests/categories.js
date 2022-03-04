@@ -43,7 +43,6 @@ export async function deleteCategory(categoryId) {
     };
     try {
         const { data: resObj } = await api.delete(`${API_CATEGORIES}/${categoryId}`);
-        console.log(resObj)
         if (resObj.error === false) {
             result.success = true;
         } else {
