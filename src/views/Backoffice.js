@@ -5,6 +5,7 @@ import { Route, Routes } from "react-router-dom";
 import { Container } from "../components/Wrappers/Containers";
 import Root from './BackOffice/Root';
 import Categories from './BackOffice/Categories';
+import Contacts from './BackOffice/Contacts';
 
 export default function Backoffice() {
     return (
@@ -14,6 +15,7 @@ export default function Backoffice() {
             <Routes>
                 <Route path="/" element={<Root />} />
                 <Route path="/categories" element={<Categories />} />
+                <Route path="/contacts" element={<Contacts />} />
             </Routes>
         </Container>
     );
