@@ -17,6 +17,7 @@ import {
 import { ActivitiesContainer } from "../styles/Activities";
 import Banner from "../components/Banner";
 
+
 export default function Activities() {
   let totalPages;
   const [currentPage, setCurrentPage] = useState(1);

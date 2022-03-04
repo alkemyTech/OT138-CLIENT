@@ -23,3 +23,4 @@ export const updateActivity = async (id, data) => {
     content: data.content
   }).then((res) => res);
 }
+
