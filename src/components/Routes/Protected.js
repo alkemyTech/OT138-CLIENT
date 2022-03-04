@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
-
 import { connect } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { bindActionCreators } from "redux";
 import { login } from "../../actions/authActions";
 import Loading from "../../components/Loading";
+
 function ProtectedRoute({ authStatus, children, user, isAdmin }) {
   useEffect(() => {
     console.log(user);
