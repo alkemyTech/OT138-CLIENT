@@ -13,7 +13,7 @@ import { checkAuthentication as checkAuthenticationAction } from "./actions/auth
 import Protected from "./components/Routes/Protected";
 import Activities from "./views/Activities";
 import { ActivitiesByID } from "./views/Activities";
-import ActivityEditor from './views/ActivityEditor';
+import ActivityEditor from './views/BackOffice/ActivityEditor';
 import EditForm from "./views/EditForm";
 
 function App({ checkAuthentication }) {
