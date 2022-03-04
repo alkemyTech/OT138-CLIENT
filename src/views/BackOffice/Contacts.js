@@ -19,7 +19,7 @@ export default function Contacts() {
         const { success, data: contactsData, errorMessage } = await getContactsService();
 
         if (success) {
-            const {items, ...pagination} = contactsData;
+            const { items, ...pagination } = contactsData;
             setContacts(items);
             setPagination(pagination);
         } else {
