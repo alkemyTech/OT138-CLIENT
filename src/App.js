@@ -30,7 +30,7 @@ function App({ checkAuthentication }) {
         <Route path="/services" element={<h1>Services</h1>} />
         <Route path="/registro" element={<Signup />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/contact-form" element={<FormContacto />} />
+        <Route path="/contacto" element={<FormContacto />} />
         <Route path="/perfil" element={<Profile />} />
         <Route path="/actividades" element={<Activities />} />
         <Route path="/actividades/:id" element={<ActivitiesByID />} />

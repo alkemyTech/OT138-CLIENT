@@ -17,7 +17,10 @@ import {
 import { FaBars, FaCaretDown, FaCaretUp } from "react-icons/fa";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { getProfileData } from "../../actions/authActions";
+import { 
+    getProfileData, 
+    logout as logoutAction 
+} from "../../actions/authActions";
 
 function Header(props) {
   const [dataState, setDataState] = useState("loading");
@@ -83,7 +86,7 @@ function Header(props) {
             <ProfileDropdown dropdownState={dropdownState}>
               <Link to={"/perfil"}>Mi Perfil</Link>
               <Link to={"/backoffice"}>BackOffice</Link>
-              <Link onClick={() => {}} to={"#"}>
+              <Link onClick={() => props.logout()} to={"#"}>
                 Cerrar Sesión
               </Link>
             </ProfileDropdown>
@@ -111,6 +114,7 @@ const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(
     {
       getProfileData,
+      logout: logoutAction
     },
     dispatch
   );
