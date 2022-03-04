@@ -32,7 +32,7 @@ export const login = (credentials) => {
     const { success, data, errorMessage } = await loginRequest(credentials);
 
     if (success) {
-      return dispatch({ type: AUTH_LOGIN_SUCCESS, payload: data});
+      return dispatch({ type: AUTH_LOGIN_SUCCESS, payload: data });
     } else {
       return dispatch({ type: AUTH_LOGIN_FAILURE, payload: [errorMessage] });
     }

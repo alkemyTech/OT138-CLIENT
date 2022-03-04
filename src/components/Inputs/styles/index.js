@@ -81,3 +81,33 @@ export const ButtonContainer = styled.button`
     transform: scale(1.02);
   }
 `;
+
+export const ButtonGroup = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: ${props => props.alignEnd ? 'flex-end' : 'flex-start'};
+`;
+
+export const SelectContainer = styled.select`
+  min-width: 180px;
+  width: 100%;
+  background: #edf2f7;
+  border: none;
+  font-size: 1rem;
+  height: 48px;
+  padding: 0 0.5rem;
+  border-radius: 0.25rem;
+  border: 2px solid transparent;
+  transition: all 0.2s ease 0s;
+  outline: none;
+  margin: 0 0 0.5rem 0;
+`
+
+export const TextEditorContainer = styled.div`
+  .ck-editor{
+    width: 100%;
+    margin-bottom: 20px;
+    background-color: #edf2f7;
+  }
+
+`;

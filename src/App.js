@@ -10,8 +10,13 @@ import Profile from "./views/Profile";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { checkAuthentication as checkAuthenticationAction } from "./actions/authActions";
-import { Protected } from "./components/Routes";
-import Activities, { ActivitiesByID } from "./views/Activities";
+import Protected from "./components/Routes/Protected";
+import Activities from "./views/Activities";
+import { ActivitiesByID } from "./views/Activities";
+import ActivityEditor from './views/BackOffice/ActivityEditor';
+import NewsEditor from './views/BackOffice/NewsEditor';
+import EditForm from "./views/EditForm";
+import News, { NewsByID } from "./views/News";
 
 function App({ checkAuthentication }) {
   useEffect(() => {
@@ -26,24 +31,42 @@ function App({ checkAuthentication }) {
         <Route path="/registro" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/contact-form" element={<FormContacto />} />
+        <Route path="/perfil" element={<Profile />} />
         <Route path="/actividades" element={<Activities />} />
         <Route path="/actividades/:id" element={<ActivitiesByID />} />
+        <Route path="/novedades" element={<News />} />
+        <Route path="/novedades/:id" element={<NewsByID />} />
+        <Route path="/form-edition" element={<EditForm />} />
         <Route
-          path="/perfil"
+          path="/backoffice/*"
           element={
-            <Protected>
-              <Profile />
-            </Protected>
-          }
-        />
-        <Route
-          path="/backoffice"
-          element={
-            <Protected>
+            <Protected isAdmin>
               <Backoffice />
             </Protected>
           }
         />
+        <Route path="/backoffice/actividades/nueva" element={
+          <Protected isAdmin>
+            <ActivityEditor />
+          </Protected>
+        }
+        />
+        <Route path="/backoffice/actividades/editar/:id" element={
+          <Protected isAdmin>
+            <ActivityEditor />
+          </Protected>
+        } />
+        <Route path="/backoffice/novedades/nueva" element={
+          <Protected isAdmin>
+            <NewsEditor />
+          </Protected>
+        }
+        />
+        <Route path="/backoffice/novedades/editar/:id" element={
+          <Protected isAdmin>
+            <NewsEditor />
+          </Protected>
+        } />
       </Routes>
     </>
   );

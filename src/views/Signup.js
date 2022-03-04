@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-
+import toast, { Toaster } from 'react-hot-toast';
 import { useFormik } from "formik";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Container } from "../components/Wrappers/Containers";
+import axios from "axios";
 import {
   FormContainer,
   Label,
@@ -47,6 +48,8 @@ const photos = [
   "login__5.jpg",
 ];
 function Signup(props) {
+
+  const navigation = useNavigate();
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -61,16 +64,30 @@ function Signup(props) {
     },
   });
 
-  const attemptSignup = ({ name, lastname, email, password }) => {
-    // Code signup function
-    console.log("Signup attempt");
+  const attemptSignup = async ({ name, lastname, email, password }) => {
+  
+    await axios.post("http://localhost:4000/api/auth/register",{firstName:name,lastName:lastname,email:email,password:password})
+    .then((response)=>{
+    if(response.data.status === "200"){
+    toast.success(response.data.message);
+    setTimeout(()=>{
+    navigation("/")
+    },1500)
+        
+    }else if(response.data.status === "409"){
+    toast.error(response.data.message);
+    } 
+    })
+    .catch((error)=>{toast.error(error.data.message);})
   };
 
   const [source, setSource] = useState(
     photos[Math.floor(Math.random() * photos.length)]
   );
   return (
+    
     <Container>
+      <Toaster/>
       <LoginContainer>
         <FormContainer>
           <LoginForm onSubmit={formik.handleSubmit}>

@@ -1,15 +1,6 @@
 import styled from "@emotion/styled";
 
-export const ActivitiesContainer = styled.section`
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  width: 100%;
-  flex: 1;
-  padding: 1.5rem 0;
-`;
-
-export const TitleBanner = styled.div`
+export const BannerContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -27,4 +18,3 @@ export const TitleBanner = styled.div`
     height: 250px;
   }
 `;
-

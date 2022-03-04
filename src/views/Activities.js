@@ -14,7 +14,9 @@ import {
   getActivities,
   getActivitiesById,
 } from "../services/requests/activities";
-import { ActivitiesContainer, TitleBanner } from "../styles/Activities";
+import { ActivitiesContainer } from "../styles/Activities";
+import Banner from "../components/Banner";
+
 
 export default function Activities() {
   let totalPages;
@@ -42,14 +44,10 @@ export default function Activities() {
     <Container>
       <Header />
       <Content>
-        <TitleBanner>
-          <img
-            src={"/activities__banner.jpg"}
-            alt="portada"
-            className="activity__thumbnail"
-          ></img>
-          <h1 className="activity__title">Listado de Actividades</h1>
-        </TitleBanner>
+        <Banner
+          title={"Lista de Actividades"}
+          thumbnail={"/activities__banner.jpg"}
+        />
         <ActivitiesContainer>
           {!isLoading ? (
             !activities?.data?.error && !isError ? (
@@ -105,7 +103,10 @@ export const ActivitiesByID = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (activities?.data && activities?.data?.error)
+        if (
+          activities?.data &&
+          activities?.data?.result?.activities?.length <= 0
+        )
           return navigate("/actividades");
       } catch (error) {
         console.log(error);
