@@ -5,12 +5,15 @@ import { getContacts as getContactsService } from "../../services/requests/conta
 import toast from "react-hot-toast";
 import { SectionTitle } from "../../styles/BackOffice";
 import Pagination from "../../components/Pagination";
+import { Link } from "react-router-dom";
 import { Content } from "../../components/Wrappers/Containers";
+import Alert from "../../components/Alert";
 
 export default function Contacts() {
   const [contacts, setContacts] = useState([]);
   const [pagination, setPagination] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
+  const [popUpMessage, setPopUpMessage] = useState({ message: "", show: false});
 
   useEffect(() => {
     getContacts(currentPage);
@@ -39,10 +42,25 @@ export default function Contacts() {
 
   return (
     <Content>
+      <Alert 
+        show={popUpMessage.show} 
+        onConfirm={() => setPopUpMessage(state => ({...state, show: false}))} 
+        description={popUpMessage.message}
+        confirmButtonText="Cerrar" 
+    />
       <SectionTitle>Contactos</SectionTitle>
       <Table
         headers={["Nombre", "Teléfono", "Email", "Mensaje", "Actualizado"]}
-        data={contacts}
+        data={contacts.map((item) => {
+          return {
+            ...item,
+            message: (
+              <Link to="#" onClick={() => setPopUpMessage({show: true, message: item.message})}>
+                Ver mensaje
+              </Link>
+            ),
+          };
+        })}
         accessors={[
           {
             name: "name",
@@ -62,7 +80,9 @@ export default function Contacts() {
           },
         ]}
       />
-      {pagination && <Pagination onPageChange={goToPage} totalPages={pagination.pages} />}
+      {pagination && (
+        <Pagination onPageChange={goToPage} totalPages={pagination.pages} />
+      )}
     </Content>
   );
 }
