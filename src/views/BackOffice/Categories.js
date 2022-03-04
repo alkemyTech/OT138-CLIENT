@@ -7,7 +7,7 @@ import {
 } from '../../services/requests/categories';
 import toast from 'react-hot-toast';
 import { Button, ButtonGroup } from "../../components/Inputs";
-import { CategoriesContainer } from '../../styles/Categories';
+import { SectionWrapper } from '../../styles/BackOffice';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { TailSpin } from "react-loader-spinner";
 
@@ -45,7 +45,7 @@ export default function Categories() {
     }
 
     return (
-        <CategoriesContainer>
+        <SectionWrapper>
             <h2>Categorías</h2>
             <Table>
                 <thead>
@@ -94,7 +94,7 @@ export default function Categories() {
                     }
                 </tbody>
             </Table>
-        </CategoriesContainer>
+        </SectionWrapper>
     )
 }
 
