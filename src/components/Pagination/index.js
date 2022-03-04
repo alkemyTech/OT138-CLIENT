@@ -11,7 +11,7 @@ export default function Pagination({ onPageChange, totalPages }) {
     return (
         <StyledPagination
             onPageChange={handlePageChange}
-            pageRangeDisplayed={5}
+            pageRangeDisplayed={1}
             pageCount={totalPages}
             breakLabel="..."
             activeClassName="activePage"
@@ -23,6 +23,7 @@ export default function Pagination({ onPageChange, totalPages }) {
 
 const StyledPagination = styled(ReactPaginate)`
     display: flex;
+    flex-wrap: wrap;
     padding: 0;
     list-style: none;
     justify-content: center;
