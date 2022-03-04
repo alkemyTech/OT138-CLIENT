@@ -108,9 +108,9 @@ export const Button = ({ children, name, type, onChange, onClick, style }) => {
   );
 };
 
-export const ButtonGroup = ({alignEnd, children}) => {
+export const ButtonGroup = ({align, children}) => {
     return (
-        <ButtonGroupStyle alignEnd={alignEnd}>
+        <ButtonGroupStyle align={align}>
             {children}
         </ButtonGroupStyle>
     )

@@ -85,7 +85,7 @@ export const ButtonContainer = styled.button`
 export const ButtonGroup = styled.div`
     display: flex;
     flex-direction: row;
-    justify-content: ${props => props.alignEnd ? 'flex-end' : 'flex-start'};
+    justify-content: ${props => props.align === "center" ? 'center' : props.align === "end" ? "flex-end" : 'flex-start'};
 `;
 
 export const SelectContainer = styled.select`
