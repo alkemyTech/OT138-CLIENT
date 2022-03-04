@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-export const CategoriesContainer = styled.div`
+export const SectionWrapper = styled.div`
     width: 100%;
     max-width: 1280px;
     margin: 0 auto;
@@ -8,4 +8,8 @@ export const CategoriesContainer = styled.div`
     flex-direction: column;
     gap: 10px;
     padding-top: 10px;
+`;
+
+export const SectionTitle = styled.h1`
+    padding-left: 10px;
 `;
