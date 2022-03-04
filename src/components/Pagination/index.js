@@ -2,7 +2,7 @@ import React from 'react';
 import ReactPaginate from 'react-paginate';
 import styled from '@emotion/styled';
 
-export default function Pagination({ onPageChange, totalPages, currentPage }) {
+export default function Pagination({ onPageChange, totalPages }) {
 
     function handlePageChange(event) {
         onPageChange(event.selected+1);
