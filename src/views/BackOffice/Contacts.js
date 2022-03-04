@@ -6,7 +6,7 @@ import {
 } from '../../services/requests/contacts';
 import toast from 'react-hot-toast';
 import { SectionWrapper, SectionTitle } from '../../styles/BackOffice';
-import Pagination from '../../components/Pagination';
+import Pagination from "../../components/Pagination";
 
 export default function Contacts() {
     const [contacts, setContacts] = useState([]);
@@ -66,11 +66,7 @@ export default function Contacts() {
                 </Table>
                 {
                     pagination &&
-                    <Pagination 
-                        currentPage={currentPage} 
-                        totalPages={pagination.pages} 
-                        onPageChange={goToPage} 
-                    />
+                    <Pagination onPageChange={goToPage} totalPages={pagination.pages} />
                 }
             </div>
         </SectionWrapper>
