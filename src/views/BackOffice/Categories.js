@@ -16,6 +16,8 @@ export default function Categories() {
 
     async function fetchData() {
         const { success, data: categories, errorMessage } = await getCategories();
+        const result = await getCategories();
+        window.alert(JSON.stringify(result));
 
         if (success) {
             setCategories(categories);
