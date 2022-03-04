@@ -1,22 +1,11 @@
-import React, {useState, useEffect} from 'react';
-import Loading from '../../components/Loading'
-import {
-    EditorContainer,
-    EditorContent,
-    EntryType,
-    Message
-} from './styles';
-import {
-    Input,
-    Label,
-    Button,
-    TextArea,
-    TextEditor,
-    Select,
-} from '../Inputs';
+import React, { useState, useEffect } from "react";
+import Loading from "../../components/Loading";
+import { EditorContainer, EditorContent, EntryType, Message } from "./styles";
+import { Input, Label, Button, TextArea, TextEditor, Select } from "../Inputs";
+import { Content } from "../Wrappers/Containers";
 
 /**
- * 
+ *
  * @param {integer} [id] The entry id. If not provided, the function assumes that it will create a new entry
  * @param {string} state The loading state. Must be "loading", "ready" or "error"
  * @param {string} entryType The entry type ('Actividades', 'Novedades', etc.). Must start with uppercase.
@@ -30,133 +19,116 @@ import {
  * @returns {component} EntryEditor, a React component that renders a form for loading, creating and/or updating entries
  */
 
-function EntryEditor({id, state, entryType, get, save, data, fields}){
+function EntryEditor({ id, state, entryType, get, save, data, fields }) {
+  const [formData, setFormData] = useState({});
 
-    const [formData, setFormData] = useState({});
+  useEffect(() => {
+    setFormData({
+      ...data,
+    });
+  }, [data]);
 
-    useEffect(() => {
-        setFormData({
-            ...data
-        })  
-    }, [data])
-
-    return(
-        <EditorContainer>
-            {
-                state === 'loading' &&
-                <EditorContent>
-                    <Loading />
-                </EditorContent>
-            }
-            {
-                state === 'ready' &&
-            <EditorContent>
-                { 
-                    id &&
-                    <span><h1>Editar entrada</h1> <EntryType>{entryType}</EntryType></span>
-                }
-                {
-                    !id &&
-                    <span><h1>Crear entrada</h1><EntryType>{entryType}</EntryType></span>
-
-                }
-                {
-                    fields.map(field => {
-                        return(
-                            <div key={`field-${field.name}`}>
-                                <Label>{field.title}</Label>
-                                {
-                                    field.type === 'text' &&
-                                        <Input
-                                            type = 'text'
-                                            value={formData[field.name] || ''}
-                                            name={field.name}
-                                            onChange={
-                                                ({ target: {name, value}}) => {
-                                                    setFormData({
-                                                        ...formData,
-                                                        [name]: value
-                                                    })
-                                                }
-                                            }
-                                        />
-                                }
-                                {
-                                    field.type === 'textarea' &&
-                                    <TextArea
-                                    value={formData[field.name] || ''}
-                                    name={field.name}
-                                    onChange={
-                                        ({ target: {name, value}}) => {
-                                            setFormData({
-                                                ...formData,
-                                                [name]: value
-                                            })
-                                        }
-                                    }
-                                    />
-                                }
-                                {
-                                    field.type === 'select' &&
-                                        <Select
-                                            value={formData[field.name] || ""}
-                                            name={field.name} 
-                                            onChange={
-                                                ({ target: {name, value}}) => {
-                                                    setFormData({
-                                                        ...formData,
-                                                        [name]: value
-                                                    })
-                                                }
-                                            }
-                                            >
-                                                <option value={null}></option>
-                                            {
-                                                field.options.map((option,index) => {
-                                                    return(
-                                                        <option 
-                                                            value={option.value} 
-                                                            key={`option-${index}`}
-                                                        >{option.text}</option>
-                                                    )
-                                                })
-                                            }
-                                        </Select>
-                                }
-                                {
-                                    field.type === 'content' &&
-                                        <TextEditor
-                                            name={field.name}
-                                            data={formData[field.name]}
-                                            onChange={
-                                                (event, editor) => {
-                                                    const data = editor.getData();
-                                                    setFormData({
-                                                        ...formData,
-                                                        [field.name]: data
-                                                    })
-                                                }
-                                            }
-                                        />
-                                }
-                            </div>
-                        )
-                    })
-                }
-                <Button onClick={() => save(formData)} children={"Guardar"}/>
-            </EditorContent>
-            }
-            {
-                state === 'load_error' &&
-                <EditorContent>
-                    <Message alert>
-                        <span>Error al cargar los datos</span>
-                        <Button onClick={get} children={"Cargar de nuevo"}/>
-                    </Message>
-                </EditorContent>
-            }
-        </EditorContainer>
-    )
+  return (
+    <>
+      {state === "loading" && (
+        <EditorContent>
+          <Loading />
+        </EditorContent>
+      )}
+      {state === "ready" && (
+        <EditorContent>
+          {id && (
+            <span>
+              <h1>Editar entrada</h1> <EntryType>{entryType}</EntryType>
+            </span>
+          )}
+          {!id && (
+            <span>
+              <h1>Crear entrada</h1>
+              <EntryType>{entryType}</EntryType>
+            </span>
+          )}
+          {fields.map((field) => {
+            return (
+              <div key={`field-${field.name}`}>
+                <Label>{field.title}</Label>
+                {field.type === "text" && (
+                  <Input
+                    type="text"
+                    value={formData[field.name] || ""}
+                    name={field.name}
+                    onChange={({ target: { name, value } }) => {
+                      setFormData({
+                        ...formData,
+                        [name]: value,
+                      });
+                    }}
+                  />
+                )}
+                {field.type === "textarea" && (
+                  <TextArea
+                    value={formData[field.name] || ""}
+                    name={field.name}
+                    onChange={({ target: { name, value } }) => {
+                      setFormData({
+                        ...formData,
+                        [name]: value,
+                      });
+                    }}
+                  />
+                )}
+                {field.type === "select" && (
+                  <Select
+                    value={formData[field.name] || ""}
+                    name={field.name}
+                    onChange={({ target: { name, value } }) => {
+                      setFormData({
+                        ...formData,
+                        [name]: value,
+                      });
+                    }}
+                  >
+                    <option value={null}></option>
+                    {field.options.map((option, index) => {
+                      return (
+                        <option value={option.value} key={`option-${index}`}>
+                          {option.text}
+                        </option>
+                      );
+                    })}
+                  </Select>
+                )}
+                {field.type === "content" && (
+                  <TextEditor
+                    name={field.name}
+                    data={formData[field.name]}
+                    onChange={(event, editor) => {
+                      const data = editor.getData();
+                      setFormData({
+                        ...formData,
+                        [field.name]: data,
+                      });
+                    }}
+                  />
+                )}
+              </div>
+            );
+          })}
+          <Button onClick={() => save(formData)}>
+            <b>GUARDAR</b>
+          </Button>
+        </EditorContent>
+      )}
+      {state === "load_error" && (
+        <EditorContent>
+          <Message alert>
+            <span>Error al cargar los datos</span>
+            <Button onClick={get} children={"Cargar de nuevo"} />
+          </Message>
+        </EditorContent>
+      )}
+    </>
+  );
 }
 
 export default EntryEditor;
