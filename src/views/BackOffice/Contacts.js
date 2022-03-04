@@ -5,28 +5,28 @@ import {
     getContacts as getContactsService,
 } from '../../services/requests/contacts';
 import toast from 'react-hot-toast';
-import { SectionWrapper } from '../../styles/BackOffice';
+import { SectionWrapper, SectionTitle } from '../../styles/BackOffice';
 
-export default function Categories() {
+export default function Contacts() {
     const [contacts, setContacts] = useState([]);
 
     useEffect(() => {
-        getCategories();
+        getContacts();
     }, []);
 
-    async function getCategories() {
+    async function getContacts() {
         const { success, data: contacts, errorMessage } = await getContactsService();
 
         if (success) {
             setContacts(contacts);
         } else {
-            toast.error('Error fetching categories: ' + errorMessage);
+            toast.error('Error fetching contacts: ' + errorMessage);
         }
     }
 
     return (
         <SectionWrapper>
-            <h2>Categorías</h2>
+            <SectionTitle>Contactos</SectionTitle>
             <Table>
                 <thead>
                     <tr>

@@ -9,3 +9,7 @@ export const SectionWrapper = styled.div`
     gap: 10px;
     padding-top: 10px;
 `;
+
+export const SectionTitle = styled.h1`
+    padding-left: 10px;
+`;
