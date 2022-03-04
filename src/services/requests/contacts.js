@@ -18,7 +18,7 @@ export async function getContacts() {
         const { data: resObj } = await api.get(API_CONTACTS);
         if (resObj.error === false) {
             result.success = true;
-            result.data = resObj.data;
+            result.data = resObj.result;
         } else {
             result.errorMessage = resObj.message;
         }

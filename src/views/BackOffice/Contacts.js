@@ -9,16 +9,19 @@ import { SectionWrapper, SectionTitle } from '../../styles/BackOffice';
 
 export default function Contacts() {
     const [contacts, setContacts] = useState([]);
+    const [pagination, setPagination] = useState({});
 
     useEffect(() => {
         getContacts();
     }, []);
 
     async function getContacts() {
-        const { success, data: contacts, errorMessage } = await getContactsService();
+        const { success, data: contactsData, errorMessage } = await getContactsService();
 
         if (success) {
-            setContacts(contacts);
+            const {items, ...pagination} = contactsData;
+            setContacts(items);
+            setPagination(pagination);
         } else {
             toast.error('Error fetching contacts: ' + errorMessage);
         }
@@ -45,6 +48,7 @@ export default function Contacts() {
                                     <td>{item.name}</td>
                                     <td>{item.phone}</td>
                                     <td>{item.email}</td>
+                                    <td>{item.message}</td>
                                     <td>{item.updatedAt ? moment(item.updatedAt).format('DD/MM/YY') : ''}</td>
                                 </tr>
                             );
