@@ -20,7 +20,7 @@ export const Table = styled.table`
         word-wrap: break-word;
     }
 
-    tbody tr:nth-child(odd) {
+    tbody tr:nth-of-type(odd) {
         background: #eee;
     }
 
