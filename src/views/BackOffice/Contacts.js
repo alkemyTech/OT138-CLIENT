@@ -62,7 +62,7 @@ export default function Contacts() {
           },
         ]}
       />
-      {pagination && <Pagination onPageChange={goToPage} totalPages={50} />}
+      {pagination && <Pagination onPageChange={goToPage} totalPages={pagination.pages} />}
     </Content>
   );
 }
