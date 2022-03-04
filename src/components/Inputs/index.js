@@ -1,11 +1,15 @@
 import React from "react";
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 import {
   InputContainer,
   TextAreaContainer,
   LabelContainer,
   ButtonContainer,
-  ButtonGroup as ButtonGroupStyle
+  ButtonGroup as ButtonGroupStyle,
+  SelectContainer,
+  TextEditorContainer
 } from "./styles";
 export const Input = ({
   placeholder,
@@ -110,4 +114,28 @@ export const ButtonGroup = ({alignEnd, children}) => {
             {children}
         </ButtonGroupStyle>
     )
+}
+
+export const TextEditor = ({  name, data, onChange}) => {
+  return(
+    <TextEditorContainer>
+      <CKEditor
+        editor={ClassicEditor}
+        name={name}
+        data={data}
+        onChange={onChange}
+      />
+    </TextEditorContainer>
+  )
+}
+
+export const Select = ({children, name, onChange, value, defaultValue}) => {
+  return(
+    <SelectContainer 
+      name={name}
+      onChange={onChange}
+      value={value}
+      defaultValue={defaultValue}
+    >{children}</SelectContainer>
+  )
 }
