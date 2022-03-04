@@ -23,8 +23,8 @@ export default function Pagination({ onPageChange, totalPages }) {
 
 const StyledPagination = styled(ReactPaginate)`
     display: flex;
+    padding: 0;
     list-style: none;
-    gap: 10px;
     justify-content: center;
 
     li {

@@ -3,9 +3,9 @@ import Table from "../../components/Table";
 import moment from "moment";
 import { getContacts as getContactsService } from "../../services/requests/contacts";
 import toast from "react-hot-toast";
-import { SectionWrapper, SectionTitle } from "../../styles/BackOffice";
+import { SectionTitle } from "../../styles/BackOffice";
 import Pagination from "../../components/Pagination";
-import { Container, Content } from "../../components/Wrappers/Containers";
+import { Content } from "../../components/Wrappers/Containers";
 
 export default function Contacts() {
   const [contacts, setContacts] = useState([]);
