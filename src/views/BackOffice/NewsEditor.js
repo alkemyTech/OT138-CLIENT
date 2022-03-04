@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Header from '../components/Header/BackOffice';
-import {Footer} from '../components/Footer';
-import EntryEditor from '../components/EntryEditor';
-import { createActivity, getActivitiesById, updateActivity } from '../services/requests/activities';
+import Header from '../../components/Header/BackOffice';
+import {Footer} from '../../components/Footer';
+import EntryEditor from '../../components/EntryEditor';
+import { getNew, createNew, updateNew } from '../../services/requests/news';
 import toast, { Toaster } from 'react-hot-toast';
 
-function ActivityEditor(){
+function NewsEditor(){
 
     const {id} = useParams();
     const [data, setData] = useState({});
@@ -15,15 +15,15 @@ function ActivityEditor(){
 
     useEffect(() => {
         if(id){
-            getActivity();
+            get();
         }
     }, [])
 
-    const getActivity = async () => {
+    const get = async () => {
         setState('loading');
-        getActivitiesById(id).then(response => {
+        getNew(id).then(response => {
             if(!response.data.error){
-                setData(response.data.result.activities[0])
+                setData(response.data.data)
             } else {
                 toast.error("No se pudo cargar los datos")
             }
@@ -31,10 +31,11 @@ function ActivityEditor(){
         })
     }
 
-    const saveActivity = async (formData) => {
+    const save = async (formData) => {
         if(id){
-            // If there is an existing ID, then the form has to update the existing data on activity
-            updateActivity(id, formData).then(response => {
+            // If there is an existing ID, then the form has to update the existing data on new
+            updateNew(id, formData).then(response => {
+                console.log(response)
                 if(response.data.error){
                     toast.error("Error al intentar guardar");
                 } else{
@@ -44,8 +45,8 @@ function ActivityEditor(){
                 toast.error("Error al intentar guardar")
             })
         } else{
-            // Else, the form has to create a new activity
-            createActivity(formData).then(response => {
+            // Else, the form has to create a new new
+            createNew(formData).then(response => {
                 if(response.data.error){
                     toast.error("Error al intentar crear la entrada");
                 } else{
@@ -64,9 +65,9 @@ function ActivityEditor(){
             <EntryEditor 
                 id={id}
                 state={state}
-                entryType={"Actividades"}
-                getEntry={getActivitiesById}
-                save={saveActivity}
+                entryType={"Novededes"}
+                get={get}
+                save={save}
                 data={data}
                 fields={[
                     {
@@ -84,6 +85,13 @@ function ActivityEditor(){
                         title: 'Contenido',
                         type: 'content'
                     },
+                    {
+                        name: 'categoryId',
+                        title: 'Categoría',
+                        type: 'select',
+                        defaultValue: 1,
+                        options: categoriesOptions
+                    }
                 ]}
             />
         <Footer />
@@ -91,4 +99,15 @@ function ActivityEditor(){
     )
 }
 
-export default ActivityEditor;
+export default NewsEditor;
+
+const categoriesOptions = [
+    {
+        value: 1,
+        text: "General"
+    },
+    {
+        value: 2,
+        text: "Actualidad"
+    }
+]
