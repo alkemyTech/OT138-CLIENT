@@ -12,7 +12,6 @@ import {
     Button,
     TextArea,
     TextEditor,
-    Selector,
     Select,
 } from '../Inputs';
 
@@ -100,7 +99,7 @@ function EntryEditor({id, state, entryType, get, save, data, fields}){
                                 {
                                     field.type === 'select' &&
                                         <Select
-                                            value={formData[field.name] || ''}
+                                            value={formData[field.name] || ""}
                                             name={field.name} 
                                             onChange={
                                                 ({ target: {name, value}}) => {
@@ -111,10 +110,14 @@ function EntryEditor({id, state, entryType, get, save, data, fields}){
                                                 }
                                             }
                                             >
+                                                <option value={null}></option>
                                             {
-                                                field.options.map(option => {
+                                                field.options.map((option,index) => {
                                                     return(
-                                                        <option value={option.value}>{option.text}</option>
+                                                        <option 
+                                                            value={option.value} 
+                                                            key={`option-${index}`}
+                                                        >{option.text}</option>
                                                     )
                                                 })
                                             }
