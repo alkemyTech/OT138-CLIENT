@@ -5,3 +5,4 @@ export const API_PUBLIC_DATA = "/organizations/1/public";
 export const API_AUTH_CHECK = "/auth/imloggedin";
 export const API_CATEGORIES =  "/categories";
 export const API_CONTACTS = "/contacts";
+export const API_USERS = "/users";
