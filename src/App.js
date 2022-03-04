@@ -13,6 +13,8 @@ import { checkAuthentication as checkAuthenticationAction } from "./actions/auth
 import Protected from "./components/Routes/Protected";
 import Activities from "./views/Activities";
 import { ActivitiesByID } from "./views/Activities";
+import ActivityEditor from './views/BackOffice/ActivityEditor';
+import NewsEditor from './views/BackOffice/NewsEditor';
 import EditForm from "./views/EditForm";
 
 function App({ checkAuthentication }) {
@@ -33,13 +35,35 @@ function App({ checkAuthentication }) {
         <Route path="/actividades/:id" element={<ActivitiesByID />} />
         <Route path="/form-edition" element={<EditForm/>} />
         <Route
-          path="/backoffice"
+          path="/backoffice/*"
           element={
             <Protected isAdmin>
               <Backoffice />
             </Protected>
           }
         />
+        <Route path="/backoffice/actividades/nueva" element={
+          <Protected isAdmin>
+            <ActivityEditor />
+          </Protected>
+        }
+        />
+        <Route path="/backoffice/actividades/editar/:id" element={
+          <Protected isAdmin>
+            <ActivityEditor />
+          </Protected>
+        } />
+        <Route path="/backoffice/novedades/nueva" element={
+          <Protected isAdmin>
+            <NewsEditor />
+          </Protected>
+        }
+        />
+        <Route path="/backoffice/novedades/editar/:id" element={
+          <Protected isAdmin>
+            <NewsEditor />
+          </Protected>
+        } />
       </Routes>
     </>
   );
