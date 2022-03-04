@@ -1,19 +1,24 @@
 import React from "react";
+import { Toaster } from "react-hot-toast";
 import Header from "../components/Header/BackOffice";
-import Loading from "../components/Loading";
+import { Route, Routes } from "react-router-dom";
 import { Container } from "../components/Wrappers/Containers";
+import Root from "./BackOffice/Root";
+import Categories from "./BackOffice/Categories";
+import Contacts from "./BackOffice/Contacts";
+import Users from "./BackOffice/Users";
 
 export default function Backoffice() {
   return (
     <Container>
       <Header />
-      <h1 style={{ textAlign: "center", margin: "5px 0" }}>
-        Bienvenido/a al BackOffice de Alkemy ONG
-      </h1>
-      <p style={{ textAlign: "center", margin: "5px 0" }}>
-        ¡Sección en Construcción!
-      </p>
-      <Loading />
+      <Toaster />
+      <Routes>
+        <Route path="/" element={<Root />} />
+        <Route path="/categories" element={<Categories />} />
+        <Route path="/contacts" element={<Contacts />} />
+        <Route path="/users" element={<Users />} />
+      </Routes>
     </Container>
   );
 }

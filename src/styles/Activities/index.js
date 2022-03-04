@@ -27,3 +27,4 @@ export const TitleBanner = styled.div`
     height: 250px;
   }
 `;
+
