@@ -153,7 +153,7 @@ export const MobileNavBar = styled.div`
   align-items: center;
   position: absolute;
   top: 4rem;
-  z-index: 2;
+  z-index: 10;
   height: 300px;
   width: 100%;
   background: #fff;
