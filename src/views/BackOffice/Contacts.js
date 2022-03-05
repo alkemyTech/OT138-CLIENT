@@ -7,16 +7,12 @@ import { SectionTitle } from "../../styles/BackOffice";
 import Pagination from "../../components/Pagination";
 import { Link } from "react-router-dom";
 import { Content } from "../../components/Wrappers/Containers";
-import Alert from "../../components/Alert";
+import Swal from "sweetalert2";
 
 export default function Contacts() {
   const [contacts, setContacts] = useState([]);
   const [pagination, setPagination] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
-  const [popUpMessage, setPopUpMessage] = useState({
-    message: "",
-    show: false,
-  });
 
   useEffect(() => {
     getContacts(currentPage);
@@ -43,16 +39,18 @@ export default function Contacts() {
     getContacts(page);
   }
 
+  function showMessage(sender, message) {
+    Swal.fire({
+        showCancelButton: true,
+        showConfirmButton: false,
+        cancelButtonText: 'Cerrar',
+        title: `Mesaje de ${sender}:`,
+        text: message
+    });
+  }
+
   return (
     <Content>
-      <Alert
-        show={popUpMessage.show}
-        onConfirm={() =>
-          setPopUpMessage((state) => ({ ...state, show: false }))
-        }
-        description={popUpMessage.message}
-        confirmButtonText="Cerrar"
-      />
       <SectionTitle>Contactos</SectionTitle>
       <Table
         headers={["Nombre", "Teléfono", "Email", "Mensaje", "Actualizado"]}
@@ -60,12 +58,7 @@ export default function Contacts() {
           return {
             ...item,
             message: (
-              <Link
-                to="#"
-                onClick={() =>
-                  setPopUpMessage({ show: true, message: item.message })
-                }
-              >
+              <Link to="#" onClick={() => showMessage(item.name, item.message)}>
                 Ver mensaje
               </Link>
             ),
