@@ -13,7 +13,10 @@ export default function Contacts() {
   const [contacts, setContacts] = useState([]);
   const [pagination, setPagination] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
-  const [popUpMessage, setPopUpMessage] = useState({ message: "", show: false});
+  const [popUpMessage, setPopUpMessage] = useState({
+    message: "",
+    show: false,
+  });
 
   useEffect(() => {
     getContacts(currentPage);
@@ -42,12 +45,14 @@ export default function Contacts() {
 
   return (
     <Content>
-      <Alert 
-        show={popUpMessage.show} 
-        onConfirm={() => setPopUpMessage(state => ({...state, show: false}))} 
+      <Alert
+        show={popUpMessage.show}
+        onConfirm={() =>
+          setPopUpMessage((state) => ({ ...state, show: false }))
+        }
         description={popUpMessage.message}
-        confirmButtonText="Cerrar" 
-    />
+        confirmButtonText="Cerrar"
+      />
       <SectionTitle>Contactos</SectionTitle>
       <Table
         headers={["Nombre", "Teléfono", "Email", "Mensaje", "Actualizado"]}
@@ -55,7 +60,12 @@ export default function Contacts() {
           return {
             ...item,
             message: (
-              <Link to="#" onClick={() => setPopUpMessage({show: true, message: item.message})}>
+              <Link
+                to="#"
+                onClick={() =>
+                  setPopUpMessage({ show: true, message: item.message })
+                }
+              >
                 Ver mensaje
               </Link>
             ),
