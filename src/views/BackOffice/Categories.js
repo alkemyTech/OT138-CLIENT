@@ -10,6 +10,7 @@ import { Button, ButtonGroup } from "../../components/Inputs";
 import { Content } from "../../components/Wrappers/Containers";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { TailSpin } from "react-loader-spinner";
+import Swal from "sweetalert2";
 
 export default function Categories() {
   const [categories, setCategories] = useState([]);
@@ -34,24 +35,33 @@ export default function Categories() {
   }
 
   async function deleteCategory(id) {
-    if (window.confirm('Confirmar eliminación')) {
-      setLockedCategoryIds((state) => [...state, id]);
+    Swal.fire({
+      title: "Confirmar eliminación",
+      showCancelButton: true,
+      confirmButtonText: "Eliminar",
+      cancelButtonText: `Cancelar`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.fire("Categoría eliminada!", "", "success");
+        /*setLockedCategoryIds((state) => [...state, id]);
 
-      const { success, errorMessage } = await deleteCategoryService(id);
+        const { success, errorMessage } = await deleteCategoryService(id);
 
-      if (success) {
-        // Remove deleted category from categories array.
-        setCategories((state) =>
-          state.filter((category) => category.id !== id)
-        );
-      } else {
-        toast.error("Error deleting category: " + errorMessage);
+        if (success) {
+          // Remove deleted category from categories array.
+          setCategories((state) =>
+            state.filter((category) => category.id !== id)
+          );
+        } else {
+          toast.error("Error deleting category: " + errorMessage);
+        }
+
+        setLockedCategoryIds((state) =>
+          state.filter((categoryId) => categoryId !== id)
+        );*/
       }
-
-      setLockedCategoryIds((state) =>
-        state.filter((categoryId) => categoryId !== id)
-      );
-    }
+    });
   }
 
   return (
