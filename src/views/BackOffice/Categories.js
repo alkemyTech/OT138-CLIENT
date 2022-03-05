@@ -39,6 +39,7 @@ export default function Categories() {
       title: "Confirmar eliminación",
       showCancelButton: true,
       confirmButtonText: "Eliminar",
+      icon: 'warning',
       cancelButtonText: "Cancelar",
       confirmButtonColor: "red",
     });

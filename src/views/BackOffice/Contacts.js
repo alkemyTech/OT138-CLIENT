@@ -5,7 +5,7 @@ import { getContacts as getContactsService } from "../../services/requests/conta
 import toast from "react-hot-toast";
 import { SectionTitle } from "../../styles/BackOffice";
 import Pagination from "../../components/Pagination";
-import { Link } from "react-router-dom";
+import { Button } from "../../components/Inputs";
 import { Content } from "../../components/Wrappers/Containers";
 import Swal from "sweetalert2";
 
@@ -41,11 +41,11 @@ export default function Contacts() {
 
   function showMessage(sender, message) {
     Swal.fire({
-        showCancelButton: true,
-        showConfirmButton: false,
-        cancelButtonText: 'Cerrar',
-        title: `Mesaje de ${sender}:`,
-        text: message
+      showCancelButton: true,
+      showConfirmButton: false,
+      cancelButtonText: "Cerrar",
+      title: `Mesaje de ${sender}:`,
+      text: message,
     });
   }
 
@@ -58,9 +58,12 @@ export default function Contacts() {
           return {
             ...item,
             message: (
-              <Link to="#" onClick={() => showMessage(item.name, item.message)}>
-                Ver mensaje
-              </Link>
+              <Button
+                style={buttonStyle}
+                onClick={() => showMessage(item.name, item.message)}
+              >
+                Mostrar
+              </Button>
             ),
           };
         })}
@@ -89,3 +92,11 @@ export default function Contacts() {
     </Content>
   );
 }
+
+const buttonStyle = {
+  backgroundColor: "#2FA4FF",
+  color: "#fff",
+  fontWeight: "600",
+  height: "35px",
+  width: "auto",
+};
