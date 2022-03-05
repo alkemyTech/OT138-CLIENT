@@ -35,33 +35,32 @@ export default function Categories() {
   }
 
   async function deleteCategory(id) {
-    Swal.fire({
+    const result = await Swal.fire({
       title: "Confirmar eliminación",
       showCancelButton: true,
       confirmButtonText: "Eliminar",
-      cancelButtonText: `Cancelar`,
-    }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
-      if (result.isConfirmed) {
-        Swal.fire("Categoría eliminada!", "", "success");
-        /*setLockedCategoryIds((state) => [...state, id]);
-
-        const { success, errorMessage } = await deleteCategoryService(id);
-
-        if (success) {
-          // Remove deleted category from categories array.
-          setCategories((state) =>
-            state.filter((category) => category.id !== id)
-          );
-        } else {
-          toast.error("Error deleting category: " + errorMessage);
-        }
-
-        setLockedCategoryIds((state) =>
-          state.filter((categoryId) => categoryId !== id)
-        );*/
-      }
+      cancelButtonText: "Cancelar",
+      confirmButtonColor: "red",
     });
+    
+    if (result.isConfirmed) {
+      setLockedCategoryIds((state) => [...state, id]);
+
+      const { success, errorMessage } = await deleteCategoryService(id);
+
+      if (success) {
+        // Remove deleted category from categories array.
+        setCategories((state) =>
+          state.filter((category) => category.id !== id)
+        );
+      } else {
+        toast.error("Error deleting category: " + errorMessage);
+      }
+
+      setLockedCategoryIds((state) =>
+        state.filter((categoryId) => categoryId !== id)
+      );
+    }
   }
 
   return (
