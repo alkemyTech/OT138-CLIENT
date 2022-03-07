@@ -2,8 +2,17 @@ import api from "../../config/api";
 import { API_CONTACTS } from "../../constants/urls";
 
 export const createContact = async (contact) => {
-  const response = await api.post(API_CONTACTS, contact);
-  return response.data;
+  try {
+    const response = await api.post(API_CONTACTS, contact);
+    return response.data;
+  } catch (error) {
+    return {
+      error: true,
+      errorCode: "REQ001",
+      status: "404",
+      message: "Unexpected error during fetching",
+    };
+  }
 };
 
 /**
@@ -14,22 +23,24 @@ export const createContact = async (contact) => {
  *      - errorMessage: a string with the error message, if success is false
  */
 export async function getContacts(page = 1, limit = 10) {
-    const result = {
-        success: false,
-        data: [],
-        errorMessage: ''
-    };
-    try {
-        const { data: resObj } = await api.get(`${API_CONTACTS}?page=${page}&limit=${limit}`);
-        if (resObj.error === false) {
-            result.success = true;
-            result.data = resObj.result;
-        } else {
-            result.errorMessage = resObj.message;
-        }
-    } catch (err) {
-        result.errorMessage = 'Unexpected error during fetching';
+  const result = {
+    success: false,
+    data: [],
+    errorMessage: "",
+  };
+  try {
+    const { data: resObj } = await api.get(
+      `${API_CONTACTS}?page=${page}&limit=${limit}`
+    );
+    if (resObj.error === false) {
+      result.success = true;
+      result.data = resObj.result;
+    } else {
+      result.errorMessage = resObj.message;
     }
+  } catch (err) {
+    result.errorMessage = "Unexpected error during fetching";
+  }
 
-    return result;
+  return result;
 }
