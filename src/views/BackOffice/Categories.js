@@ -74,7 +74,7 @@ export default function Categories() {
           <h3>Crear categoría</h3>
         </ModalHeader>
         <ModalBody>
-          
+          <CategoryForm />
         </ModalBody>
       </Modal>
       <h2>Categorías</h2>
@@ -121,6 +121,28 @@ export default function Categories() {
         ]}
       />
     </Content>
+  );
+}
+
+function CategoryForm({ instance = {} }) {
+  return (
+    <Form
+      fields={[
+        {
+          name: "name",
+          type: "text",
+          placeholder: "Nombre",
+          label: "Nombre",
+        },
+        {
+          name: "description",
+          type: "text",
+          placeholder: "Descripción",
+          label: "Descripción",
+        },
+      ]}
+      instance={instance}
+    />
   );
 }
 

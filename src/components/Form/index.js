@@ -1,20 +1,26 @@
 import React, { useEffect, useState } from "react";
-import { Button, Input, Label } from "../../components/Inputs";
+import { Button, ButtonGroup, Input, Label } from "../../components/Inputs";
+import { FormStyle, CancelButton, SubmitButton } from './styles';
 
-export default function Form({ fields = [], data = {}, onSubmit, onCancel }) {
+export default function Form({
+  fields = [],
+  instance = {},
+  onSubmit,
+  onCancel,
+}) {
   const [fieldsData, setFieldsData] = useState({});
 
   useEffect(() => {
-    if (data) {
+    if (instance) {
       const dataCopy = {};
 
       fields.forEach((field) => {
-        dataCopy[field.name] = data[field.name] ?? "";
+        dataCopy[field.name] = instance[field.name] ?? "";
       });
 
       setFieldsData(dataCopy);
     }
-  }, [data]);
+  }, [instance]);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -31,7 +37,7 @@ export default function Form({ fields = [], data = {}, onSubmit, onCancel }) {
   }
 
   return (
-    <form>
+    <FormStyle>
       {fields.map((field, index) => {
         return (
           <div key={index}>
@@ -46,12 +52,20 @@ export default function Form({ fields = [], data = {}, onSubmit, onCancel }) {
           </div>
         );
       })}
-      <Button type="submit" onClick={handleSubmit}>
-        {data ? "Actualizar" : "Envíar"}
-      </Button>
-      <Button type="button" onClick={onCancel}>
-        Cerrar
-      </Button>
-    </form>
+      <ButtonGroup align="center" gap="5px">
+        <SubmitButton
+          type="submit"
+          onClick={handleSubmit}
+        >
+          {instance ? "Actualizar" : "Envíar"}
+        </SubmitButton>
+        <CancelButton
+          type="button"
+          onClick={onCancel}
+        >
+          Cerrar
+        </CancelButton>
+      </ButtonGroup>
+    </FormStyle>
   );
 }
