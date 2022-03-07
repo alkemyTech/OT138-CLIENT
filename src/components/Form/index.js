@@ -6,9 +6,15 @@ import {
   Label,
   TextArea,
 } from "../../components/Inputs";
-import { FormStyle, CancelButton, SubmitButton } from "./styles";
+import { FormStyle, CancelButton, SubmitButton, InputFeedback } from "./styles";
 
-export default function Form({ fields = [], instance, onSubmit, onCancel }) {
+export default function Form({
+  fields = [],
+  instance,
+  onSubmit,
+  onCancel,
+  errors,
+}) {
   const [fieldsData, setFieldsData] = useState({});
 
   useEffect(() => {
@@ -49,6 +55,9 @@ export default function Form({ fields = [], instance, onSubmit, onCancel }) {
               value={fieldsData[field.name] ?? ""}
               onChange={(event) => updateField(event)}
             />
+            <InputFeedback type="error">
+              {errors && errors[field.name]}
+            </InputFeedback>
           </div>
         );
       })}

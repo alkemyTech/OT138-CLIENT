@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Table from "../../components/Table";
 import moment from "moment";
 import {
@@ -8,7 +8,7 @@ import {
   createCategory,
 } from "../../services/requests/categories";
 import toast from "react-hot-toast";
-import { Button, ButtonGroup, Input, Label } from "../../components/Inputs";
+import { Button, ButtonGroup } from "../../components/Inputs";
 import { Content } from "../../components/Wrappers/Containers";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { TailSpin } from "react-loader-spinner";
@@ -19,6 +19,8 @@ import Form from "../../components/Form";
 export default function Categories() {
   const [categories, setCategories] = useState([]);
   const [lockedCategoryIds, setLockedCategoryIds] = useState([]);
+
+  // CategoryForm metadata
   const [formData, setFormData] = useState({
     display: false,
     instance: null,
@@ -38,7 +40,7 @@ export default function Categories() {
     if (success) {
       setCategories(categories);
     } else {
-      toast.error("Error fetching categories: " + errorMessage);
+      toast.error("Error al obtener categorías");
     }
   }
 
@@ -63,7 +65,7 @@ export default function Categories() {
           state.filter((category) => category.id !== id)
         );
       } else {
-        toast.error("Error deleting category: " + errorMessage);
+        toast.error("Error al eliminar categoría");
       }
 
       setLockedCategoryIds((state) =>
@@ -72,44 +74,47 @@ export default function Categories() {
     }
   }
 
-  function onEditCategory(category) {
+  function onEditCategoryClick(category) {
     setFormData({
       display: true,
       instance: category,
     });
   }
 
-  function onCreateCategory() {
+  function onCreateCategoryClick() {
     setFormData({
       display: true,
       instance: null,
     });
   }
 
-  function onHideForm() {
+  function hideForm() {
     setFormData({
       display: false,
       instance: null,
     });
   }
 
+  // Update categories array after CategoryForm's onSuccess callback is triggered.
   function onCategoryUpdated(instance) {
-    onHideForm();
+    hideForm();
     const categoriesCopy = [...categories];
     const index = categoriesCopy.findIndex(
       (category) => category.id === instance.id
     );
     if (index >= 0) {
+      // Category was updated
       categoriesCopy[index] = instance;
     } else {
+      // Category was created
       categoriesCopy.push(instance);
     }
     setCategories(categoriesCopy);
   }
 
   return (
-    <Content>
-      <Modal show={formData.display} onClose={() => onHideForm()}>
+    <>
+      <Modal show={formData.display} onClose={() => hideForm()}>
         <ModalHeader>
           <h3>
             {formData.instance === null ? "Crear" : "Actualizar"} categoría
@@ -119,58 +124,60 @@ export default function Categories() {
           <CategoryForm
             instance={formData.instance}
             onSuccess={(instance) => onCategoryUpdated(instance)}
-            onCancel={() => onHideForm()}
+            onCancel={() => hideForm()}
           />
         </ModalBody>
       </Modal>
-      <h2>Categorías</h2>
-      <Button onClick={onCreateCategory}>Nueva</Button>
-      <Table
-        headers={["Nombre", "Descripción", "Actualizado", ""]}
-        data={categories.map((category) => {
-          return {
-            ...category,
-            buttons: (
-              <ButtonGroup align="center">
-                {lockedCategoryIds.includes(category.id) ? (
-                  <TailSpin height="40" width="40" color="grey" />
-                ) : (
-                  <>
-                    <Button
-                      style={editButtonStyle}
-                      onClick={() => onEditCategory(category)}
-                    >
-                      <FaEdit />
-                    </Button>
-                    <Button
-                      style={deleteButtonStyle}
-                      onClick={() => onDeleteCategory(category.id)}
-                    >
-                      <FaTrash />
-                    </Button>
-                  </>
-                )}
-              </ButtonGroup>
-            ),
-          };
-        })}
-        accessors={[
-          {
-            name: "name",
-          },
-          {
-            name: "description",
-          },
-          {
-            name: "updatedAt",
-            applyFunction: (item) => moment(item).format("DD/MM/YY"),
-          },
-          {
-            name: "buttons",
-          },
-        ]}
-      />
-    </Content>
+      <Content>
+        <h2>Categorías</h2>
+        <Button onClick={onCreateCategoryClick}>Nueva</Button>
+        <Table
+          headers={["Nombre", "Descripción", "Actualizado", ""]}
+          data={categories.map((category) => {
+            return {
+              ...category,
+              buttons: (
+                <ButtonGroup align="center">
+                  {lockedCategoryIds.includes(category.id) ? (
+                    <TailSpin height="40" width="40" color="grey" />
+                  ) : (
+                    <>
+                      <Button
+                        style={editButtonStyle}
+                        onClick={() => onEditCategoryClick(category)}
+                      >
+                        <FaEdit />
+                      </Button>
+                      <Button
+                        style={deleteButtonStyle}
+                        onClick={() => onDeleteCategory(category.id)}
+                      >
+                        <FaTrash />
+                      </Button>
+                    </>
+                  )}
+                </ButtonGroup>
+              ),
+            };
+          })}
+          accessors={[
+            {
+              name: "name",
+            },
+            {
+              name: "description",
+            },
+            {
+              name: "updatedAt",
+              applyFunction: (item) => moment(item).format("DD/MM/YY"),
+            },
+            {
+              name: "buttons",
+            },
+          ]}
+        />
+      </Content>
+    </>
   );
 }
 
@@ -179,13 +186,15 @@ export default function Categories() {
  * @param {*} props Receives:
  *      - instance: (optional) existing category. If null, the component will render a form to create a category
  *      - onCancel: (required) Callback function to run after clicking the cancel button
- *      - onSuccess: (optional) Callback function to run after a successful update or create. 
+ *      - onSuccess: (optional) Callback function to run after a successful update or create.
  *          Sends the new or updated instance as the first argument of the function.
  */
 function CategoryForm({ instance, onCancel, onSuccess }) {
+  const [errors, setErrors] = useState({});
+
   async function handleSubmit(values) {
     if (instance !== null) {
-      const { success, data, errorMessage } = await updateCategory(
+      const { success, data, errorMessage, errorFields } = await updateCategory(
         instance.id,
         values
       );
@@ -193,13 +202,17 @@ function CategoryForm({ instance, onCancel, onSuccess }) {
         if (onSuccess) onSuccess(data);
       } else {
         toast.error("Error al actualizar categoría: " + errorMessage);
+        setErrors(errorFields);
       }
     } else {
-      const { success, data, errorMessage } = await createCategory(values);
+      const { success, data, errorMessage, errorFields } = await createCategory(
+        values
+      );
       if (success) {
         if (onSuccess) onSuccess(data);
       } else {
         toast.error("Error al crear categoría: " + errorMessage);
+        setErrors(errorFields);
       }
     }
   }
@@ -223,6 +236,7 @@ function CategoryForm({ instance, onCancel, onSuccess }) {
       instance={instance}
       onSubmit={handleSubmit}
       onCancel={onCancel}
+      errors={errors}
     />
   );
 }

@@ -15,3 +15,8 @@ export const SubmitButton = styled(ButtonContainer)`
 export const CancelButton = styled(ButtonContainer)`
   background: rgb(110, 110, 110);
 `;
+
+export const InputFeedback = styled.div`
+    color: ${props => props.type === 'error' ? 'rgb(240,0,0)' : '#000'};
+    font-size: 0.9em;
+`;
