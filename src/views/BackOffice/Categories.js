@@ -6,7 +6,7 @@ import {
   deleteCategory as deleteCategoryService,
 } from "../../services/requests/categories";
 import toast from "react-hot-toast";
-import { Button, ButtonGroup } from "../../components/Inputs";
+import { Button, ButtonGroup, Input, Label } from "../../components/Inputs";
 import { Content } from "../../components/Wrappers/Containers";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { TailSpin } from "react-loader-spinner";
@@ -16,6 +16,7 @@ import Modal, { ModalBody, ModalHeader } from "../../components/Modal";
 export default function Categories() {
   const [categories, setCategories] = useState([]);
   const [lockedCategoryIds, setLockedCategoryIds] = useState([]);
+  const [showForm, setShowForm] = useState(true);
 
   useEffect(() => {
     getCategories();
@@ -40,11 +41,11 @@ export default function Categories() {
       title: "Confirmar eliminación",
       showCancelButton: true,
       confirmButtonText: "Eliminar",
-      icon: 'warning',
+      icon: "warning",
       cancelButtonText: "Cancelar",
       confirmButtonColor: "red",
     });
-    
+
     if (result.isConfirmed) {
       setLockedCategoryIds((state) => [...state, id]);
 
@@ -67,14 +68,30 @@ export default function Categories() {
 
   return (
     <Content>
-        <Modal>
-            <ModalHeader>
-                <h3>Crear categoría</h3>
-            </ModalHeader>
-            <ModalBody>
-                <p>test</p>
-            </ModalBody>
-        </Modal>
+      <Modal show={showForm} onClose={() => setShowForm(false)}>
+        <ModalHeader>
+          <h3>Crear categoría</h3>
+        </ModalHeader>
+        <ModalBody>
+          <form>
+            <Label>Nombre</Label>
+            <Input type="text" name="name" />
+            <Label>Descripción</Label>
+            <Input type="text" name="description" />
+            <Button
+              type="submit"
+              onClick={(e) => {
+                e.preventDefault();
+              }}
+            >
+              Enviar
+            </Button>
+            <Button type="button" onClick={() => setShowForm(false)}>
+              Cerrar
+            </Button>
+          </form>
+        </ModalBody>
+      </Modal>
       <h2>Categorías</h2>
       <Table
         headers={["Nombre", "Descripción", "Actualizado", ""]}

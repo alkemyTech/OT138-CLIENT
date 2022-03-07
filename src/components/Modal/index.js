@@ -1,21 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   ModalContainer,
   ModalWrapper,
   ModalBody as ModalBodyStyle,
   ModalHeader as ModalHeaderStyle,
+  CloseButton
 } from "./styles";
 
 export default function ({ children, show = false, onClose }) {
-  function handleBackdropClick() {
-    if (onClose) {
-      onClose();
-    }
-  }
-
   return (
-    <ModalWrapper show={show} onClick={handleBackdropClick}>
-      <ModalContainer>{children}</ModalContainer>
+    <ModalWrapper show={show}>
+      <ModalContainer>
+        <CloseButton onClick={onClose}>✕</CloseButton>
+        {children}
+      </ModalContainer>
     </ModalWrapper>
   );
 }
