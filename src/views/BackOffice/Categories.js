@@ -87,10 +87,10 @@ export default function Categories() {
   }
 
   function onHideForm() {
-    setFormData((state) => ({
+    setFormData({
       display: false,
       instance: null,
-    }));
+    });
   }
 
   function onCategoryUpdated(instance) {
