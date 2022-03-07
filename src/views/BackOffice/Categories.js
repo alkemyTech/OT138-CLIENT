@@ -74,7 +74,7 @@ export default function Categories() {
           <h3>Crear categoría</h3>
         </ModalHeader>
         <ModalBody>
-          <CategoryForm />
+          <CategoryForm onCancel={() => setShowForm(false)} />
         </ModalBody>
       </Modal>
       <h2>Categorías</h2>
@@ -124,7 +124,11 @@ export default function Categories() {
   );
 }
 
-function CategoryForm({ instance = {} }) {
+function CategoryForm({ instance = {}, onCancel }) {
+  function handleSubmit(values) {
+    console.log(values);
+  }
+
   return (
     <Form
       fields={[
@@ -136,12 +140,14 @@ function CategoryForm({ instance = {} }) {
         },
         {
           name: "description",
-          type: "text",
+          type: "textarea",
           placeholder: "Descripción",
           label: "Descripción",
         },
       ]}
       instance={instance}
+      onSubmit={handleSubmit}
+      onCancel={onCancel}
     />
   );
 }

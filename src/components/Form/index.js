@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Button, ButtonGroup, Input, Label } from "../../components/Inputs";
-import { FormStyle, CancelButton, SubmitButton } from './styles';
+import {
+  Button,
+  ButtonGroup,
+  Input,
+  Label,
+  TextArea,
+} from "../../components/Inputs";
+import { FormStyle, CancelButton, SubmitButton } from "./styles";
 
 export default function Form({
   fields = [],
@@ -24,10 +30,11 @@ export default function Form({
 
   function handleSubmit(event) {
     event.preventDefault();
-    onSubmit();
+    onSubmit(fieldsData);
   }
 
   function updateField(event) {
+    event.persist();
     setFieldsData((state) => {
       return {
         ...state,
@@ -53,16 +60,10 @@ export default function Form({
         );
       })}
       <ButtonGroup align="center" gap="5px">
-        <SubmitButton
-          type="submit"
-          onClick={handleSubmit}
-        >
+        <SubmitButton type="submit" onClick={handleSubmit}>
           {instance ? "Actualizar" : "Envíar"}
         </SubmitButton>
-        <CancelButton
-          type="button"
-          onClick={onCancel}
-        >
+        <CancelButton type="button" onClick={onCancel}>
           Cerrar
         </CancelButton>
       </ButtonGroup>

@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
+import { ButtonContainer } from "../../Inputs/styles";
 
 export const FormStyle = styled.form`
     display: flex;
@@ -7,19 +8,10 @@ export const FormStyle = styled.form`
     gap: 10px;
 `;
 
-const Button = styled.button`
-  padding: 12px;
-  border: 0;
-  border-radius: 5px;
-  color: #fff;
-  font-size: 1.05em;
-  min-width: 100px;
-`;
-
-export const SubmitButton = styled(Button)`
+export const SubmitButton = styled(ButtonContainer)`
   background: rgb(0, 150, 0);
 `;
 
-export const CancelButton = styled(Button)`
+export const CancelButton = styled(ButtonContainer)`
   background: rgb(110, 110, 110);
 `;
