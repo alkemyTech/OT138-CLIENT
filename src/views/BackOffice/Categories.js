@@ -124,7 +124,7 @@ export default function Categories() {
   );
 }
 
-function CategoryForm({ instance = {}, onCancel }) {
+function CategoryForm({ instance, onCancel }) {
   function handleSubmit(values) {
     console.log(values);
   }

@@ -10,7 +10,7 @@ import { FormStyle, CancelButton, SubmitButton } from "./styles";
 
 export default function Form({
   fields = [],
-  instance = {},
+  instance,
   onSubmit,
   onCancel,
 }) {
