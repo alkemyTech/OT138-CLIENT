@@ -1,34 +1,44 @@
 import styled from "@emotion/styled";
 
+export const TableContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow-x: auto;
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
 export const Table = styled.table`
-    margin-top: 2px;
-    box-sizing: border-box;
-    text-align: center;
-    border-collapse: separate
-    border-style: hidden;
-    width: 100%;
-    overflow-x: auto;
-    table-layout: fixed;
+  border-radius: 5px;
+  min-width: 350px;
+  width: 100%;
+  text-align: center;
+  border-collapse: collapse;
+  th {
+    padding: 10px;
+    background: #ddd;
+  }
+  td {
+    padding: 10px;
+    white-space: pre
+  }
+  tr:nth-of-type(odd) {
+    background: #eee;
+  }
+  tbody tr:last-child {
+    border-bottom: 2px solid #ddd;
+  }
+  @media (max-width: 768px) {
+    border-radius: 0;
+  }
+`;
 
-    thead th {
-        padding: 10px;
-        background: #ddd;
-    }
-    
-    tbody td {
-        padding: 10px;
-        word-wrap: break-word;
-    }
-
-    tbody tr:nth-of-type(odd) {
-        background: #eee;
-    }
-
-    tbody tr:last-child {
-        border-bottom: 2px solid #ddd;
-    }
-
-    @media (min-width: 850px) {
-        table-layout: auto;
-    }
+export const TableScroll = styled.div`
+  overflow-x: auto;
+  border-radius: 4px;
 `;
