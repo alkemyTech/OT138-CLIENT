@@ -8,24 +8,17 @@ import {
 } from "../../components/Inputs";
 import { FormStyle, CancelButton, SubmitButton } from "./styles";
 
-export default function Form({
-  fields = [],
-  instance,
-  onSubmit,
-  onCancel,
-}) {
+export default function Form({ fields = [], instance, onSubmit, onCancel }) {
   const [fieldsData, setFieldsData] = useState({});
 
   useEffect(() => {
-    if (instance) {
-      const dataCopy = {};
+    const dataCopy = {};
 
-      fields.forEach((field) => {
-        dataCopy[field.name] = instance[field.name] ?? "";
-      });
+    fields.forEach((field) => {
+      dataCopy[field.name] = instance && instance[field.name];
+    });
 
-      setFieldsData(dataCopy);
-    }
+    setFieldsData(dataCopy);
   }, [instance]);
 
   function handleSubmit(event) {

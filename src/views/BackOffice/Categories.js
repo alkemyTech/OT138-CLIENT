@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Table from "../../components/Table";
 import moment from "moment";
 import {
   getCategories as getCategoriesService,
   deleteCategory as deleteCategoryService,
+  updateCategory,
+  createCategory,
 } from "../../services/requests/categories";
 import toast from "react-hot-toast";
 import { Button, ButtonGroup, Input, Label } from "../../components/Inputs";
@@ -17,7 +19,10 @@ import Form from "../../components/Form";
 export default function Categories() {
   const [categories, setCategories] = useState([]);
   const [lockedCategoryIds, setLockedCategoryIds] = useState([]);
-  const [showForm, setShowForm] = useState(true);
+  const [formData, setFormData] = useState({
+    display: false,
+    instance: null,
+  });
 
   useEffect(() => {
     getCategories();
@@ -37,7 +42,7 @@ export default function Categories() {
     }
   }
 
-  async function deleteCategory(id) {
+  async function onDeleteCategory(id) {
     const result = await Swal.fire({
       title: "Confirmar eliminación",
       showCancelButton: true,
@@ -67,34 +72,79 @@ export default function Categories() {
     }
   }
 
+  function onEditCategory(category) {
+    setFormData({
+      display: true,
+      instance: category,
+    });
+  }
+
+  function onCreateCategory() {
+    setFormData({
+      display: true,
+      instance: null,
+    });
+  }
+
+  function onHideForm() {
+    setFormData((state) => ({
+      display: false,
+      instance: null,
+    }));
+  }
+
+  function onCategoryUpdated(instance) {
+    onHideForm();
+    const categoriesCopy = [...categories];
+    const index = categoriesCopy.findIndex(
+      (category) => category.id === instance.id
+    );
+    if (index >= 0) {
+      categoriesCopy[index] = instance;
+    } else {
+      categoriesCopy.push(instance);
+    }
+    setCategories(categoriesCopy);
+  }
+
   return (
     <Content>
-      <Modal show={showForm} onClose={() => setShowForm(false)}>
+      <Modal show={formData.display} onClose={() => onHideForm()}>
         <ModalHeader>
-          <h3>Crear categoría</h3>
+          <h3>
+            {formData.instance === null ? "Crear" : "Actualizar"} categoría
+          </h3>
         </ModalHeader>
         <ModalBody>
-          <CategoryForm onCancel={() => setShowForm(false)} />
+          <CategoryForm
+            instance={formData.instance}
+            onSuccess={(instance) => onCategoryUpdated(instance)}
+            onCancel={() => onHideForm()}
+          />
         </ModalBody>
       </Modal>
       <h2>Categorías</h2>
+      <Button onClick={onCreateCategory}>Nueva</Button>
       <Table
         headers={["Nombre", "Descripción", "Actualizado", ""]}
-        data={categories.map((c) => {
+        data={categories.map((category) => {
           return {
-            ...c,
+            ...category,
             buttons: (
               <ButtonGroup align="center">
-                {lockedCategoryIds.includes(c.id) ? (
+                {lockedCategoryIds.includes(category.id) ? (
                   <TailSpin height="40" width="40" color="grey" />
                 ) : (
                   <>
-                    <Button style={editButtonStyle}>
+                    <Button
+                      style={editButtonStyle}
+                      onClick={() => onEditCategory(category)}
+                    >
                       <FaEdit />
                     </Button>
                     <Button
                       style={deleteButtonStyle}
-                      onClick={() => deleteCategory(c.id)}
+                      onClick={() => onDeleteCategory(category.id)}
                     >
                       <FaTrash />
                     </Button>
@@ -124,9 +174,34 @@ export default function Categories() {
   );
 }
 
-function CategoryForm({ instance, onCancel }) {
-  function handleSubmit(values) {
-    console.log(values);
+/**
+ * Form component to create or update a category.
+ * @param {*} props Receives:
+ *      - instance: (optional) existing category. If null, the component will render a form to create a category
+ *      - onCancel: (required) Callback function to run after clicking the cancel button
+ *      - onSuccess: (optional) Callback function to run after a successful update or create. 
+ *          Sends the new or updated instance as the first argument of the function.
+ */
+function CategoryForm({ instance, onCancel, onSuccess }) {
+  async function handleSubmit(values) {
+    if (instance !== null) {
+      const { success, data, errorMessage } = await updateCategory(
+        instance.id,
+        values
+      );
+      if (success) {
+        if (onSuccess) onSuccess(data);
+      } else {
+        toast.error("Error al actualizar categoría: " + errorMessage);
+      }
+    } else {
+      const { success, data, errorMessage } = await createCategory(values);
+      if (success) {
+        if (onSuccess) onSuccess(data);
+      } else {
+        toast.error("Error al crear categoría: " + errorMessage);
+      }
+    }
   }
 
   return (
