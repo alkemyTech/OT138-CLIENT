@@ -11,6 +11,7 @@ import { Content } from "../../components/Wrappers/Containers";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { TailSpin } from "react-loader-spinner";
 import Swal from "sweetalert2";
+import Modal, { ModalBody, ModalHeader } from "../../components/Modal";
 
 export default function Categories() {
   const [categories, setCategories] = useState([]);
@@ -66,6 +67,14 @@ export default function Categories() {
 
   return (
     <Content>
+        <Modal>
+            <ModalHeader>
+                <h3>Crear categoría</h3>
+            </ModalHeader>
+            <ModalBody>
+                <p>test</p>
+            </ModalBody>
+        </Modal>
       <h2>Categorías</h2>
       <Table
         headers={["Nombre", "Descripción", "Actualizado", ""]}
