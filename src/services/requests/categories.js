@@ -23,7 +23,7 @@ export async function getCategories() {
             result.errorMessage = resObj.message;
         }
     } catch (err) {
-        result.errorMessage = 'Unexpected error during fetching';
+        result.errorMessage = 'Unexpected error';
     }
 
     return result;
@@ -49,7 +49,64 @@ export async function deleteCategory(categoryId) {
             result.errorMessage = resObj.message;
         }
     } catch (err) {
-        result.errorMessage = 'Unexpected error during fetching';
+        result.errorMessage = 'Unexpected error';
+    }
+
+    return result;
+}
+
+/**
+ * Updates and existing category
+ * @param {*} categoryId Id of the category to update
+ * @returns An object with the following entries:
+ *      - success: true if the request succeeded without errors, false otherwise
+ *      - data: the updated category.
+ *      - errorMessage: a string with the error message, if success is false
+ */
+export async function updateCategory(categoryId) {
+    const result = {
+        success: false,
+        data: {},
+        errorMessage: ''
+    };
+    try {
+        const { data: resObj } = await api.put(`${API_CATEGORIES}/${categoryId}`);
+        if (resObj.error === false) {
+            result.data = resObj.data;
+            result.success = true;
+        } else {
+            result.errorMessage = resObj.message;
+        }
+    } catch (err) {
+        result.errorMessage = 'Unexpected error';
+    }
+
+    return result;
+}
+
+/**
+ * Creates a new category
+ * @returns An object with the following entries:
+ *      - success: true if the request succeeded without errors, false otherwise
+ *      - data: the created category.
+ *      - errorMessage: a string with the error message, if success is false
+ */
+ export async function createCategory() {
+    const result = {
+        success: false,
+        data: {},
+        errorMessage: ''
+    };
+    try {
+        const { data: resObj } = await api.post(`${API_CATEGORIES}`);
+        if (resObj.error === false) {
+            result.data = resObj.data;
+            result.success = true;
+        } else {
+            result.errorMessage = resObj.message;
+        }
+    } catch (err) {
+        result.errorMessage = 'Unexpected error';
     }
 
     return result;
