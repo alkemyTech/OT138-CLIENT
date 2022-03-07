@@ -12,6 +12,7 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import { TailSpin } from "react-loader-spinner";
 import Swal from "sweetalert2";
 import Modal, { ModalBody, ModalHeader } from "../../components/Modal";
+import Form from "../../components/Form";
 
 export default function Categories() {
   const [categories, setCategories] = useState([]);
@@ -73,23 +74,7 @@ export default function Categories() {
           <h3>Crear categoría</h3>
         </ModalHeader>
         <ModalBody>
-          <form>
-            <Label>Nombre</Label>
-            <Input type="text" name="name" />
-            <Label>Descripción</Label>
-            <Input type="text" name="description" />
-            <Button
-              type="submit"
-              onClick={(e) => {
-                e.preventDefault();
-              }}
-            >
-              Enviar
-            </Button>
-            <Button type="button" onClick={() => setShowForm(false)}>
-              Cerrar
-            </Button>
-          </form>
+          
         </ModalBody>
       </Modal>
       <h2>Categorías</h2>
