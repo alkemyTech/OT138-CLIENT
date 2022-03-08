@@ -42,3 +42,9 @@ export const CloseButton = styled.button`
   font-size: 1.3rem;
   cursor: pointer;
 `;
+
+export const ModalTitle = styled.h1`
+    margin: 0;
+    font-size: 1.3rem;
+    text-align: center;
+`;

@@ -4,7 +4,8 @@ import {
   ModalWrapper,
   ModalBody as ModalBodyStyle,
   ModalHeader as ModalHeaderStyle,
-  CloseButton
+  ModalTitle as ModalTitleStyle,
+  CloseButton,
 } from "./styles";
 
 export default function ({ children, show = false, onClose }) {
@@ -24,4 +25,8 @@ export function ModalHeader({ children }) {
 
 export function ModalBody({ children }) {
   return <ModalBodyStyle>{children}</ModalBodyStyle>;
+}
+
+export function ModalTitle({ children }) {
+  return <ModalTitleStyle>{children}</ModalTitleStyle>;
 }

@@ -13,8 +13,9 @@ import { Content } from "../../components/Wrappers/Containers";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { TailSpin } from "react-loader-spinner";
 import Swal from "sweetalert2";
-import Modal, { ModalBody, ModalHeader } from "../../components/Modal";
+import Modal, { ModalBody, ModalHeader, ModalTitle } from "../../components/Modal";
 import Form from "../../components/Form";
+import { HeaderButtons, AddButton } from '../../styles/BackOffice';
 
 export default function Categories() {
   const [categories, setCategories] = useState([]);
@@ -116,9 +117,9 @@ export default function Categories() {
     <>
       <Modal show={formData.display} onClose={() => hideForm()}>
         <ModalHeader>
-          <h3>
+          <ModalTitle>
             {formData.instance === null ? "Crear" : "Actualizar"} categoría
-          </h3>
+          </ModalTitle>
         </ModalHeader>
         <ModalBody>
           <CategoryForm
@@ -130,7 +131,9 @@ export default function Categories() {
       </Modal>
       <Content>
         <h2>Categorías</h2>
-        <Button onClick={onCreateCategoryClick}>Nueva</Button>
+        <HeaderButtons>
+          <AddButton onClick={onCreateCategoryClick} style={{background: 'green'}}>Agregar</AddButton>
+        </HeaderButtons>
         <Table
           headers={["Nombre", "Descripción", "Actualizado", ""]}
           data={categories.map((category) => {
