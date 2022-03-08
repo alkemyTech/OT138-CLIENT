@@ -75,8 +75,8 @@ function FormContacto() {
   };
   return (
     <Fragment>
+      <Header />
       <Container>
-        <Header />
         <Alert
           show={alert.show}
           title={alert.title}
