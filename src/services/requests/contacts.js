@@ -4,13 +4,15 @@ import { API_CONTACTS } from "../../constants/urls";
 export const createContact = async (contact) => {
   try {
     const response = await api.post(API_CONTACTS, contact);
+    if (response.data.error === undefined)
+      throw new Error("Incorrect response form server");
     return response.data;
   } catch (error) {
     return {
       error: true,
       errorCode: "REQ001",
       status: "404",
-      message: "Unexpected error during fetching",
+      message: `Unexpected error during fetching: ${error.message}`,
     };
   }
 };

@@ -33,7 +33,7 @@ export default function News() {
     refetch();
   }, [currentPage]);
 
-  totalPages = Math.ceil(news?.data?.data?.count / limit);
+  totalPages = Math.ceil(news?.data?.result?.count / limit);
   return (
     <Container>
       <Header />
@@ -42,7 +42,7 @@ export default function News() {
         <NewsContainer>
           {!isLoading ? (
             !news?.data?.error && !isError ? (
-              news?.data?.data?.rows?.map((news_item) => {
+              news?.data?.result?.items?.map((news_item) => {
                 const { id, name, image, content } = news_item;
                 return (
                   <New
@@ -91,7 +91,7 @@ export const NewsByID = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if ((news?.data && news?.data?.data?.length) <= 0 || isError)
+        if ((news?.data && news?.data?.result?.length) <= 0 || isError)
           return navigate("/novedades");
       } catch (error) {
         console.log(error);
@@ -108,9 +108,9 @@ export const NewsByID = () => {
         <Article
           key={id}
           id={id}
-          title={news?.data?.data?.name}
-          content={news?.data?.data?.content}
-          thumbnail={news?.data?.data?.image}
+          title={news?.data?.result?.name}
+          content={news?.data?.result?.content}
+          thumbnail={news?.data?.result?.image}
         />
       </Content>
       <Footer />

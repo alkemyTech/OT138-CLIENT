@@ -9783,6 +9783,11 @@
     "sweetalert2" "^8.5.0"
     "warning" "^4.0.3"
 
+"sweetalert2@^11.4.4":
+  "integrity" "sha512-9yYWQuRT1v9JNI/paPTSYV+68MHwe9C+HQ/I2jtfaFzoJgYRftWXOs4JqmDSjT7m2m4r8ebMMn8LcxD1Wq9B/w=="
+  "resolved" "https://registry.npmjs.org/sweetalert2/-/sweetalert2-11.4.4.tgz"
+  "version" "11.4.4"
+
 "sweetalert2@^8.5.0":
   "integrity" "sha512-nFL++N3bitkEkd487Tv4i5ZxusmnoAAXHjtk7lp603Opxb8wlvVnz3hqa7qiIw6QFL04JC810E6qVQNf8s0vYQ=="
   "resolved" "https://registry.npmjs.org/sweetalert2/-/sweetalert2-8.19.0.tgz"

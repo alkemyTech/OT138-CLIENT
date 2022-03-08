@@ -8,21 +8,21 @@ export const getNews = (limit, currentPage) =>
 export const getNewsById = (id) => api.get(`/news/${id}`).then((res) => res);
 
 export const getNew = async (id) => {
-    return api.get(`/news/${id}`)
-    .then( res => res );
+  return api.get(`/news/${id}`).then((res) => res);
 };
 
 export const createNew = async (data) => {
-    return api.post(`/news`, {
-        ...data
+  return api
+    .post(`/news`, {
+      ...data,
     })
-    .then( res => res );
-}
+    .then((res) => res);
+};
 
 export const updateNew = async (id, data) => {
-    return api.put(`/news/${id}`, {
-        ...data
+  return api
+    .put(`/news/${id}`, {
+      ...data,
     })
-    .then( res => res)
-}
-
+    .then((res) => res);
+};

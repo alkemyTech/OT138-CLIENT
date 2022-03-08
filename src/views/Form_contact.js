@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
+import { Formik } from "formik";
+import Header from "../components/Header/Landing";
 import {
   Container,
   ContainColumn,
@@ -8,8 +10,7 @@ import {
   Textarea,
   Button,
   MessageError,
-} from "../styles/Contacts";
-import { Formik } from "formik";
+} from "../styles/FormContact";
 import { createContact } from "../services/requests/contacts";
 import Alert from "../components/Alert";
 
@@ -73,77 +74,81 @@ function FormContacto() {
     return errores;
   };
   return (
-    <Container>
-      <Alert
-        show={alert.show}
-        title={alert.title}
-        description={alert.description}
-        type={alert.type}
-      />
+    <Fragment>
+      <Container>
+        <Header />
+        <Alert
+          show={alert.show}
+          title={alert.title}
+          description={alert.description}
+          type={alert.type}
+        />
 
-      <ContainColumn>
-        <Colum>
-          <h1>It's time to bring your business online.</h1>
-        </Colum>
-        <Formik
-          initialValues={{
-            name: "",
-            email: "",
-            message: "",
-            phone: "",
-          }}
-          onSubmit={submitForm}
-          validate={dataValidation}>
-          {({
-            values,
-            handleSubmit,
-            handleChange,
-            handleBlur,
-            errors,
-            touched,
-          }) => (
-            <Form onSubmit={handleSubmit}>
-              <Input
-                name="name"
-                type="text"
-                placeholder="Full name"
-                value={values.name}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-              <MessageError>{touched.name && errors.name}</MessageError>
-              <Input
-                name="email"
-                type="email"
-                placeholder="Email"
-                value={values.email}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-              <MessageError>{touched.email && errors.email}</MessageError>
-              <Input
-                name="phone"
-                type="phone"
-                placeholder="Phone"
-                value={values.phone}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-              <MessageError>{touched.phone && errors.phone}</MessageError>
-              <Textarea
-                name="message"
-                placeholder="Message"
-                value={values.message}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-              <MessageError>{touched.message && errors.message}</MessageError>
-              <Button type="submit">Send form</Button>
-            </Form>
-          )}
-        </Formik>
-      </ContainColumn>
-    </Container>
+        <ContainColumn>
+          <Colum>
+            <h1>It's time to bring your business online.</h1>
+          </Colum>
+          <Formik
+            initialValues={{
+              name: "",
+              email: "",
+              message: "",
+              phone: "",
+            }}
+            onSubmit={submitForm}
+            validate={dataValidation}
+          >
+            {({
+              values,
+              handleSubmit,
+              handleChange,
+              handleBlur,
+              errors,
+              touched,
+            }) => (
+              <Form onSubmit={handleSubmit}>
+                <Input
+                  name="name"
+                  type="text"
+                  placeholder="Full name"
+                  value={values.name}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+                <MessageError>{touched.name && errors.name}</MessageError>
+                <Input
+                  name="email"
+                  type="email"
+                  placeholder="Email"
+                  value={values.email}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+                <MessageError>{touched.email && errors.email}</MessageError>
+                <Input
+                  name="phone"
+                  type="phone"
+                  placeholder="Phone"
+                  value={values.phone}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+                <MessageError>{touched.phone && errors.phone}</MessageError>
+                <Textarea
+                  name="message"
+                  placeholder="Message"
+                  value={values.message}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+                <MessageError>{touched.message && errors.message}</MessageError>
+                <Button type="submit">Send form</Button>
+              </Form>
+            )}
+          </Formik>
+        </ContainColumn>
+      </Container>
+    </Fragment>
   );
 }
 
