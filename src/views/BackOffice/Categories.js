@@ -8,14 +8,24 @@ import {
   createCategory,
 } from "../../services/requests/categories";
 import toast from "react-hot-toast";
-import { Button, ButtonGroup } from "../../components/Inputs";
+import { Input, Button, ButtonGroup, Label } from "../../components/Inputs";
 import { Content } from "../../components/Wrappers/Containers";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { TailSpin } from "react-loader-spinner";
 import Swal from "sweetalert2";
-import Modal, { ModalBody, ModalHeader, ModalTitle } from "../../components/Modal";
+import Modal, {
+  ModalBody,
+  ModalHeader,
+  ModalTitle,
+} from "../../components/Modal";
 import Form from "../../components/Form";
-import { HeaderButtons, AddButton } from '../../styles/BackOffice';
+import {
+  SubmitButton,
+  CancelButton,
+  InputFeedback,
+} from "../../components/Form/styles";
+import { HeaderButtons, AddButton } from "../../styles/BackOffice";
+import { useFormik } from "formik";
 
 export default function Categories() {
   const [categories, setCategories] = useState([]);
@@ -132,7 +142,12 @@ export default function Categories() {
       <Content>
         <h2>Categorías</h2>
         <HeaderButtons>
-          <AddButton onClick={onCreateCategoryClick} style={{background: 'green'}}>Agregar</AddButton>
+          <AddButton
+            onClick={onCreateCategoryClick}
+            style={{ background: "green" }}
+          >
+            Agregar
+          </AddButton>
         </HeaderButtons>
         <Table
           headers={["Nombre", "Descripción", "Actualizado", ""]}
@@ -194,8 +209,16 @@ export default function Categories() {
  */
 function CategoryForm({ instance, onCancel, onSuccess }) {
   const [errors, setErrors] = useState({});
+  const [values, setValues] = useState({});
 
-  async function handleSubmit(values) {
+  useEffect(() => {
+    if (instance) {
+        setValues(instance);
+    }
+  }, [instance])
+
+  async function handleSubmit(event) {
+    event.preventDefault();
     if (instance !== null) {
       const { success, data, errorMessage, errorFields } = await updateCategory(
         instance.id,
@@ -220,27 +243,45 @@ function CategoryForm({ instance, onCancel, onSuccess }) {
     }
   }
 
+  function updateField(event) {
+    event.persist();
+    setValues((state) => {
+      return {
+        ...state,
+        [event.target.name]: event.target.value,
+      };
+    });
+  }
+
   return (
-    <Form
-      fields={[
-        {
-          name: "name",
-          type: "text",
-          placeholder: "Nombre",
-          label: "Nombre",
-        },
-        {
-          name: "description",
-          type: "textarea",
-          placeholder: "Descripción",
-          label: "Descripción",
-        },
-      ]}
-      instance={instance}
-      onSubmit={handleSubmit}
-      onCancel={onCancel}
-      errors={errors}
-    />
+    <Form onSubmit={handleSubmit} onCancel={onCancel} errors={errors}>
+      <Label>Nombre</Label>
+      <Input
+        type="text"
+        name="name"
+        placeholder="Nombre"
+        value={values.name ?? ""}
+        onChange={(event) => updateField(event)}
+      />
+      <InputFeedback type="error">{errors && errors.name}</InputFeedback>
+      <Label>Descripción</Label>
+      <Input
+        type="text"
+        name="description"
+        placeholder="Descripción"
+        value={values.description ?? ""}
+        onChange={(event) => updateField(event)}
+      />
+      <InputFeedback type="error">{errors && errors.description}</InputFeedback>
+      <ButtonGroup align="center" gap="5px">
+        <SubmitButton type="submit" onClick={handleSubmit}>
+          {instance ? "Actualizar" : "Enviar"}
+        </SubmitButton>
+        <CancelButton type="button" onClick={onCancel}>
+          Cerrar
+        </CancelButton>
+      </ButtonGroup>
+    </Form>
   );
 }
 
