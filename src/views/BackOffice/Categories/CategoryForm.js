@@ -78,12 +78,12 @@ export default function ({ instance, onCancel, onSuccess }) {
                 onChange={formik.handleChange}
             />
             {
-                backendValidationErrors.name &&
-                <InputFeedback type='error'>{backendValidationErrors.name}</InputFeedback>
+                formik.touched.name && formik.errors.name &&
+                <InputFeedback type='error'>{formik.errors.name}</InputFeedback>
             }
             {
-                backendValidationErrors.description &&
-                <InputFeedback type='error'>{backendValidationErrors.description}</InputFeedback>
+                backendValidationErrors.name &&
+                <InputFeedback type='error'>{backendValidationErrors.name}</InputFeedback>
             }
 
             <Label>Descripción</Label>
@@ -97,6 +97,10 @@ export default function ({ instance, onCancel, onSuccess }) {
             {
                 formik.touched.description && formik.errors.description &&
                 <InputFeedback type='error'>{formik.errors.description}</InputFeedback>
+            }
+            {
+                backendValidationErrors.description &&
+                <InputFeedback type='error'>{backendValidationErrors.description}</InputFeedback>
             }
 
             <ButtonGroup align='center' gap='5px'>
