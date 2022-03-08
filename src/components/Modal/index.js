@@ -8,10 +8,10 @@ import {
   CloseButton,
 } from "./styles";
 
-export default function ({ children, show = false, onClose }) {
+export default function ({ children, show = false, onClose, size }) {
   return (
     <ModalWrapper show={show}>
-      <ModalContainer>
+      <ModalContainer size={size}>
         <CloseButton onClick={onClose}>✕</CloseButton>
         {children}
       </ModalContainer>

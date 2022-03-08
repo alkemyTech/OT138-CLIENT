@@ -1,9 +1,9 @@
 import React from "react";
 import { FormStyle } from "./styles";
 
-export default function Form({children}) {
+export default function Form({children, ...rest}) {
   return (
-    <FormStyle>
+    <FormStyle {...rest}>
         {children}
     </FormStyle>
   );

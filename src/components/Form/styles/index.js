@@ -6,6 +6,7 @@ export const FormStyle = styled.form`
     display: flex;
     flex-direction: column;
     gap: 10px;
+    width: 100%;
 `;
 
 export const SubmitButton = styled(ButtonContainer)`

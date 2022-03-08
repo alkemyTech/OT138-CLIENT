@@ -19,9 +19,21 @@ export const ModalWrapper = styled.div`
 export const ModalContainer = styled.div`
   position: relative;
   background-color: #fff;
-  min-width: 230px;
-  min-height: 200px;
+  width: 100%;
   border-radius: 10px;
+  margin: 10px;
+
+  @media (min-width: 480px) {
+    max-width: 480px;
+  }
+
+  @media (min-width: 768px) {
+    max-width: ${props => props.size === 'sm' ? '480px' : '768px'};
+  }
+
+  @media (min-width: 1024px) {
+    max-width: ${props => props.size === 'sm' ? '480px' : props.size === 'md' ? '768px' : '1024px'};
+  }
 `;
 
 export const ModalBody = styled.div`
