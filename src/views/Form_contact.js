@@ -24,14 +24,14 @@ function FormContacto() {
         setAlert({
           type: "success",
           show: true,
-          title: "Created contact correctly",
+          title: "Contacto enviado correctamente.",
           description: "",
         });
       } else {
         setAlert({
           type: "error",
           show: true,
-          title: "Error creating contact",
+          title: "Error al intentar enviar el contacto.",
           description: response.message,
         });
       }
@@ -39,7 +39,7 @@ function FormContacto() {
       setAlert({
         type: "error",
         show: true,
-        title: "Error creating contact",
+        title: "Error al intentar enviar el contacto.",
         description: error.message,
       });
     }
@@ -50,25 +50,25 @@ function FormContacto() {
 
     //VALIDATION NAME
     if (!values.name || values.name.length < 4) {
-      errores.name = "Please enter a name";
+      errores.name = "Ingrese un nombre.";
     } else if (!/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(values.name)) {
-      errores.name = "The name can only contain letters and spaces";
+      errores.name = "El nombres solo puede contener letras y espacios.";
     }
 
     //VALIDATION EMAIL
     if (
       !/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(values.email)
     ) {
-      errores.email = "Enter a valid email";
+      errores.email = "Ingrese un email válido.";
     }
 
     //VALIDATION Phone
     if (!values.phone) {
-      errores.phone = "Please enter a phone number";
+      errores.phone = "Ingrese un numero de teléfono.";
     }
     //VALIDATION MESSAGE
     if (values.message.length < 30) {
-      errores.message = "The message is very short";
+      errores.message = "El mensaje debe contener más de 30 caracteres.";
     }
 
     return errores;
@@ -86,7 +86,7 @@ function FormContacto() {
 
         <ContainColumn>
           <Colum>
-            <h1>It's time to bring your business online.</h1>
+            <h1>Es hora de poner su negocio en línea.</h1>
           </Colum>
           <Formik
             initialValues={{
@@ -110,7 +110,7 @@ function FormContacto() {
                 <Input
                   name="name"
                   type="text"
-                  placeholder="Full name"
+                  placeholder="Nombre y Apellido"
                   value={values.name}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -128,7 +128,7 @@ function FormContacto() {
                 <Input
                   name="phone"
                   type="phone"
-                  placeholder="Phone"
+                  placeholder="Teléfono"
                   value={values.phone}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -136,13 +136,13 @@ function FormContacto() {
                 <MessageError>{touched.phone && errors.phone}</MessageError>
                 <Textarea
                   name="message"
-                  placeholder="Message"
+                  placeholder="Mensaje"
                   value={values.message}
                   onChange={handleChange}
                   onBlur={handleBlur}
                 />
                 <MessageError>{touched.message && errors.message}</MessageError>
-                <Button type="submit">Send form</Button>
+                <Button type="submit">Enviar</Button>
               </Form>
             )}
           </Formik>
