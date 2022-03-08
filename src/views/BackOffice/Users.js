@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Table from "../../components/Table";
 import { getUsers } from "../../services/requests/users";
-import { SectionWrapper as UsersContainer } from "../../styles/BackOffice";
 import { Button, ButtonGroup } from "../../components/Inputs";
 import toast from "react-hot-toast";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import { Content } from "../../components/Wrappers/Containers";
 
 export default function Users() {
   const [users, setUsers] = useState([]);
@@ -45,7 +45,7 @@ export default function Users() {
   }
 
   return (
-    <UsersContainer>
+    <Content>
       <h2>Usuarios</h2>
       <Table
         headers={["Nombre", "Apellido", "Email", ""]}
@@ -79,6 +79,6 @@ export default function Users() {
           },
         ]}
       />
-    </UsersContainer>
+    </Content>
   );
 }
