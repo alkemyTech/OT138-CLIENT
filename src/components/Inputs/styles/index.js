@@ -83,9 +83,15 @@ export const ButtonContainer = styled.button`
 `;
 
 export const ButtonGroup = styled.div`
+    gap: ${(props) => props.gap ?? 0};
     display: flex;
     flex-direction: row;
-    justify-content: ${props => props.align === "center" ? 'center' : props.align === "end" ? "flex-end" : 'flex-start'};
+    justify-content: ${(props) =>
+      props.align === "center"
+        ? "center"
+        : props.align === "end"
+        ? "flex-end"
+        : "flex-start"};
 `;
 
 export const SelectContainer = styled.select`
@@ -101,13 +107,12 @@ export const SelectContainer = styled.select`
   transition: all 0.2s ease 0s;
   outline: none;
   margin: 0 0 0.5rem 0;
-`
+`;
 
 export const TextEditorContainer = styled.div`
-  .ck-editor{
+  .ck-editor {
     width: 100%;
     margin-bottom: 20px;
     background-color: #edf2f7;
   }
-
 `;
