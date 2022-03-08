@@ -69,7 +69,7 @@ export default function Form({
       })}
       <ButtonGroup align="center" gap="5px">
         <SubmitButton type="submit" onClick={handleSubmit}>
-          {instance ? "Actualizar" : "Envíar"}
+          {instance ? "Actualizar" : "Enviar"}
         </SubmitButton>
         <CancelButton type="button" onClick={onCancel}>
           Cerrar
