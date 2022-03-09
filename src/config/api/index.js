@@ -46,16 +46,18 @@ api.interceptors.response.use(async (response) => {
         const refreshToken = localStorageService.getRefreshToken();
         try {
             const res = await axios.post(API_AUTH_REFRESH, {refreshToken}, axiosConfig);
-            localStorageService.setAccessToken(res.data.accessToken);
+            const newToken = res.data.accessToken;
+            localStorageService.setAccessToken(newToken);
             
             const updatedConfig = {
                 ...response.config,
                 headers: {
                     ...response.config.headers,
-                    Authorization: `Bearer ${res.data.accessToken}`
+                    Authorization: `Bearer ${newToken}`
                 }
-            }
-            return api.request(updatedConfig);
+            };
+            
+            return axios.request(updatedConfig);
         } catch(err) {}
         return Promise.reject();
     }
