@@ -1,14 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { getPublicData } from "../../services/requests/publicData";
 import { FooterStyle } from "./styles";
+
+const webLinks = [
+  { name: "Inicio", url: "/" },
+  { name: "Actividades", url: "/actividades" },
+  { name: "Novedades", url: "/novedades" },
+  { name: "Nosotros", url: "/nosotros" },
+  { name: "Testimonios", url: "/testimonios" },
+  { name: "Contacto", url: "/contacto" },
+  { name: "Iniciar Sesión", url: "/login" },
+];
 export function Footer() {
   const [publicData, setPublicData] = useState();
   useEffect(() => {
     getPublicData().then((res) => {
-      if (res.success) {
-        setPublicData(res.data);
+      if (!res.data.error && res.data.error !== undefined) {
+        setPublicData(res.data.result);
       } else {
-        console.log(res.errorMessage);
+        console.log(res.data.error);
       }
     });
   }, []);
@@ -23,7 +33,7 @@ export function Footer() {
         <div>
           <p>Links</p>
           <ul>
-            {publicData.webLinks.map((link, index) => {
+            {webLinks.map((link, index) => {
               return (
                 <li key={index}>
                   <a href={link.url}>{link.name}</a>
@@ -35,9 +45,9 @@ export function Footer() {
         <div>
           <p>Redes Sociales</p>
           <ul>
-            {publicData.socialMediaLinks.map((link, index) => {
+            {publicData.Links.map((link, index) => {
               return (
-                <li key={index}>
+                <li key={link.id}>
                   <a href={link.url}>{link.name}</a>
                 </li>
               );
