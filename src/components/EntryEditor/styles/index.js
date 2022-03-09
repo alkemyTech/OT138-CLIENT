@@ -1,6 +1,9 @@
 import styled from "@emotion/styled";
 
-export const EditorContent = styled.div`
+export const EditorContent = styled.form`
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: stretch;

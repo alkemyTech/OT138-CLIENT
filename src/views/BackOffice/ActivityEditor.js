@@ -9,7 +9,7 @@ import {
   updateActivity,
 } from "../../services/requests/activities";
 import toast, { Toaster } from "react-hot-toast";
-import { Container, Content } from "../../components/Wrappers/Containers";
+import { Container, Content } from '../../components/Wrappers/Containers'; 
 
 function ActivityEditor() {
   const { id } = useParams();
