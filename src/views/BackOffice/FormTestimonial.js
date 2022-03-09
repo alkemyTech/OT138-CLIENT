@@ -97,7 +97,7 @@ function FormTestimonial({id,SetAnimation}){
     }}/>
     <MessageError>{message.content}</MessageError>
     <ButtonGroup>
-    <Button style={saveButtonStyle} type='submit'>{!id ? "Guardar testimonio" : "Actualizar testimonio"} </Button>
+    <Button style={saveButtonStyle} type='submit'>{!id ? "Guardar" : "Actualizar"} </Button>
     {id && <Button style={closeButtonStyle} type='button' onClick={()=>{SetAnimation({opacity:"0",index:"-1"})}}>Cerrar</Button>} 
     </ButtonGroup>
     </Form>
