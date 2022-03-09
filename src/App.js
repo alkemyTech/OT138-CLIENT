@@ -15,6 +15,7 @@ import Activities from "./views/Activities";
 import { ActivitiesByID } from "./views/Activities";
 import ActivityEditor from './views/BackOffice/ActivityEditor';
 import NewsEditor from './views/BackOffice/NewsEditor';
+import UserEditor from './views/BackOffice/UserEditor';
 import EditForm from "./views/EditForm";
 import News, { NewsByID } from "./views/News";
 
@@ -65,6 +66,11 @@ function App({ checkAuthentication }) {
         <Route path="/backoffice/novedades/editar/:id" element={
           <Protected isAdmin>
             <NewsEditor />
+          </Protected>
+        } />
+        <Route path="/backoffice/usuarios/editar/:id" element={
+          <Protected isAdmin>
+            <UserEditor />
           </Protected>
         } />
       </Routes>
