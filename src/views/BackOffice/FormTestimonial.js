@@ -12,7 +12,7 @@ function FormTestimonial({id,SetAnimation}){
     //STATES
     const [inputs,SetInputs] = useState({name:"",image:"",content:""});
     const [ckeditor,SetCeditor] = useState(inputs.content);
-    const [message,SetMessage] = useState("");
+    const [message,SetMessage] = useState({name:"",image:"",content:""});
     
 
 
@@ -44,9 +44,13 @@ function FormTestimonial({id,SetAnimation}){
     //SEND DATA
     async function OnSubmitData(e){
     e.preventDefault();
-    if (!inputs.name || !inputs.image || !ckeditor){
-    SetMessage("Llena todos los campos por favor!");
-    }else{
+    if (!inputs.name){
+    SetMessage({name:"Campo obligatorio",image:"",content:""});
+    }else if(!inputs.image){  
+    SetMessage({name:"",image:"Campo obligatorio",content:""});
+   }else if(!ckeditor){
+    SetMessage({name:"",image:"",content:"Campo obligatorio"});
+   }else{
     SetMessage("");
     if(!id){
     inputs.content = ckeditor;
@@ -77,22 +81,21 @@ function FormTestimonial({id,SetAnimation}){
 
 
 
-
-
-
     return(
     <Fragment>
     <Toaster/>
     <Form onSubmit={OnSubmitData}>
     <h1>Formulario de testimonio</h1>
     <Input type='text' name='name' placeholder='Nombre' value={inputs.name} onChange={OnChangeData}/>
+    <MessageError>{message.name}</MessageError>
     <Input type='text' name='image' placeholder='Imagen' value={inputs.image} onChange={OnChangeData}/>
+    <MessageError>{message.image}</MessageError>
     <Label>Contenido</Label>
     <CKEditor editor={ ClassicEditor } data={inputs.content}  onChange={ ( event, editor ) => {
     const data = editor.getData();
     SetCeditor(data)
     }}/>
-    <MessageError>{message}</MessageError>
+    <MessageError>{message.content}</MessageError>
     <ButtonGroup>
     <Button style={saveButtonStyle} type='submit'>{!id ? "Guardar testimonio" : "Actualizar testimonio"} </Button>
     {id && <Button style={closeButtonStyle} type='button' onClick={()=>{SetAnimation({opacity:"0",index:"-1"})}}>Cerrar</Button>} 

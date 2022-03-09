@@ -5,6 +5,7 @@ import FormTestimonial from "./FormTestimonial";
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import {deleteTestimony} from "../../services/requests/form_testimonial";
 import {toast,Toaster} from 'react-hot-toast';
+import Header from "../../components/Header/BackOffice";
 
 
 
@@ -39,7 +40,8 @@ function Table_Testimonial(){
 
 
     async function DeleteTestimony(id){
-
+    const confirmation = window.confirm("Deseas eliminar este testimonio");  
+    if(confirmation){
     const {successMessage,success,errorMessage} = await deleteTestimony(id);
     if(success){
     toast.success(successMessage);
@@ -48,8 +50,8 @@ function Table_Testimonial(){
     },1200)
     }else{
     toast.error(errorMessage);
-    }}
-
+    }}}
+  
     
     return(
 
@@ -58,8 +60,9 @@ function Table_Testimonial(){
     <Fragment>
     <Toaster/>
     <ContainerModal opacity={animation.opacity} index={animation.index}>
-    <FormTestimonial id={Id} SetAnimation={SetAnimation}/>
+    {Id ? <FormTestimonial id={Id} SetAnimation={SetAnimation}/> :  <FormTestimonial SetAnimation={SetAnimation}/>} 
     </ContainerModal>
+    <Header/>
     <Container>
     <h1>Testimonios</h1>
     <Table>
@@ -86,7 +89,11 @@ function Table_Testimonial(){
     </Table>
     </Container>
     </Fragment>
-    :<FormTestimonial/>
+    :
+    <Fragment>
+     <Header/>
+    <FormTestimonial />
+    </Fragment>
     );
 
 }

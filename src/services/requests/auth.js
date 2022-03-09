@@ -31,19 +31,16 @@
          
          if(responseObject.error) {
              result.errorMessage = responseObject.message;
-             toast.error(responseObject.message)
+             toast.error(responseObject.message);
          } else {
              result.success = true;
              toast.success(responseObject.message);
              result.data = responseObject.user || {};
              
              // Save token to localStorage
-             const {accessToken, refreshToken} = responseObject;
+             const {accessToken} = responseObject;
              if(accessToken) {
                  localStorageService.setAccessToken(accessToken);
-             }
-             if(refreshToken){
-                 localStorageService.setRefreshToken(refreshToken);
              }
          }
      } catch(error) {
@@ -72,12 +69,12 @@
              result.errorMessage = responseObject.message;
          } else {
              result.success = true;
-             localStorageService.removeAccessToken();
-             localStorageService.removeRefreshToken();
          }
      } catch(error) {
          result.errorMessage = 'Found an unexpected error during the request';
      }
+     
+     localStorageService.removeAccessToken();
  
      return result;
  }
@@ -130,12 +127,14 @@
          const{data: responseObject} = await api.post(API_AUTH_CHECK);
          if(responseObject.error){
              result.errorMessage = responseObject.message;
+             localStorageService.removeAccessToken();
          } else{
              result.success = true;
              result.data = responseObject.user || {};
          }
      } catch(error){
          console.log(await error);
+         localStorageService.removeAccessToken();
          result.errorMessage = 'Found and unexpected error during the request';
      }
  

@@ -9,6 +9,8 @@ font-family: "Open Sans", sans-serif;
 border-radius:10px;
 margin:auto;
 margin-top:100px;
+-webkit-box-shadow: 0px 2px 15px 2px #000000; 
+box-shadow: 0px 2px 15px 2px #000000;
 @media (max-width:500px){
 width:100%;
 margin-top:20px;

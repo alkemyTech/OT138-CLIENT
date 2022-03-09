@@ -10,26 +10,26 @@ import {
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { getProfileData } from "../actions/authActions";
+import { getProfileData, logout } from "../actions/authActions";
+import { saveProfileData, deleteProfile } from "../services/requests/profile";
 import Loading from "../components/Loading";
 import { Container } from "../components/Wrappers/Containers";
 import { Input, Button } from "../components/Inputs";
 import { Label } from "../styles/Login";
+import { toast, Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 function Profile(props) {
   const [editing, setEditing] = useState(false);
   const [saving, setSaving] = useState(false);
   const [dataState, setDataState] = useState("loading");
+  const [userId, setUserId] = useState(null);
+  const [image, setImage] = useState(null);
   const [name, setName] = useState(null);
   const [lastname, setLastName] = useState(null);
   const [email, setEmail] = useState(null);
 
-  const [profileData, setProfileData] = useState({
-    image: "",
-    firstName: "",
-    lastName: "",
-    email: "",
-  });
+  const navigate = useNavigate();
 
   function switchMode() {
     editing ? setEditing(false) : setEditing(true);
@@ -42,31 +42,55 @@ function Profile(props) {
   const getProfileData = async () => {
     let data = await props.getProfileData();
     if (data.payload.success) {
-      let { image, firstName, lastName, email } = data.payload.user;
+      let { id, image, firstName, lastName, email } = data.payload.user;
+      setUserId(id);
+      setImage(image);
       setName(firstName);
       setLastName(lastName);
       setEmail(email);
-      setProfileData({
-        image: image,
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-      });
       setDataState("loaded");
     } else {
       setDataState("error");
     }
   };
 
-  async function save() {
+  const save = async () => {
     setSaving(true);
-    // saving login
-    setTimeout(() => {
-      // this emulate the saving lapse - delete after implement the actual saving
-      setSaving(false);
+    saveProfileData({
+      id: userId, firstName: name, lastName: lastname
+    }).then(response => {
+      console.log(response)
+      if(response.data.error){
+        toast.error("No se pudo guardar");
+      }
+      toast.success("Los datos se guardaron correctamente");
       switchMode();
-    }, 2000);
+    }).catch(err => {
+      toast.error("No se pudo guardar");
+      console.log(err);
+    })
+    setSaving(false);
+  };
+
+  const deleteData = async () => {
+    if(window.confirm("¿Está seguro de que quiere eliminar su cuenta?")){
+      deleteProfile(userId).then(response => {
+        console.log(response)
+        if(!response.error){
+          toast.success("Cuenta eliminada con éxito");
+          props.logout();
+          navigate('/login');
+        } else{
+          toast.error("No se pudo eliminar la cuenta");
+        }
+      })
+      .catch( err => {
+        toast.error("No se pudo eliminar la cuenta")
+        console.log(err);
+      })
+    }
   }
+
 
   return (
     <Container>
@@ -74,9 +98,10 @@ function Profile(props) {
       {dataState === "loading" && <Loading />}
       {dataState === "loaded" && (
         <ProfileContent>
+          <Toaster />
           <Form onSubmit={(e) => e.preventDefault()}>
             <Image>
-              <img src={profileData?.image ? profileData?.image : ""} />
+              <img src={image ? image : ""} />
             </Image>
             <h2>Mis Datos Personales</h2>
             <Label>Nombres</Label>
@@ -99,9 +124,8 @@ function Profile(props) {
             <Input
               type="text"
               name="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              disabled={!editing}
+              defaultValue={email}
+              disabled={true}
             ></Input>
             <ActionsBar>
               {editing ? (
@@ -119,7 +143,9 @@ function Profile(props) {
                   <b>Modificar</b>
                 </Button>
               )}
-              <Button style={{ background: "red", margin: "0.6rem 0" }}>
+              <Button style={{ background: "red", margin: "0.6rem 0" }}
+              onClick={deleteData}
+              >
                 <b>Eliminar Cuenta</b>
               </Button>
             </ActionsBar>
@@ -142,6 +168,7 @@ const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(
     {
       getProfileData,
+      logout
     },
     dispatch
   );
