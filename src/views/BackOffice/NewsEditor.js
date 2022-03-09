@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import Header from '../../components/Header/BackOffice';
 import {Footer} from '../../components/Footer';
 import EntryEditor from '../../components/EntryEditor';
+import { Container, Content } from '../../components/Wrappers/Containers';
 import { getNew, createNew, updateNew } from '../../services/requests/news';
 import toast, { Toaster } from 'react-hot-toast';
 
@@ -59,43 +60,45 @@ function NewsEditor(){
     }
 
     return(
-        <>
-        <Header />
+        <Container>
+            <Header />
             <Toaster/>
-            <EntryEditor 
-                id={id}
-                state={state}
-                entryType={"Novededes"}
-                get={get}
-                save={save}
-                data={data}
-                fields={[
-                    {
-                        name: 'name',
-                        title: 'Nombre',
-                        type: 'text'
-                    },
-                    {
-                        name: 'image',
-                        title: 'Url de imagen',
-                        type: 'text'
-                    },
-                    {
-                        name: 'content',
-                        title: 'Contenido',
-                        type: 'content'
-                    },
-                    {
-                        name: 'categoryId',
-                        title: 'Categoría',
-                        type: 'select',
-                        defaultValue: 1,
-                        options: categoriesOptions
-                    }
-                ]}
-            />
-        <Footer />
-        </>
+            <Content>
+                <EntryEditor 
+                    id={id}
+                    state={state}
+                    entryType={"Novededes"}
+                    get={get}
+                    save={save}
+                    data={data}
+                    fields={[
+                        {
+                            name: 'name',
+                            title: 'Nombre',
+                            type: 'text'
+                        },
+                        {
+                            name: 'image',
+                            title: 'Url de imagen',
+                            type: 'text'
+                        },
+                        {
+                            name: 'content',
+                            title: 'Contenido',
+                            type: 'content'
+                        },
+                        {
+                            name: 'categoryId',
+                            title: 'Categoría',
+                            type: 'select',
+                            defaultValue: 1,
+                            options: categoriesOptions
+                        }
+                    ]}
+                />
+            </Content>
+            <Footer />
+        </Container>
     )
 }
 
