@@ -18,6 +18,7 @@ function Table_Testimonial(){
     const [animation,SetAnimation] = useState({opacity:"0",index:"-1"});
     const [Id,SetId] = useState(undefined);
    
+   
 
 
     async function GetTestimony(){
@@ -68,14 +69,16 @@ function Table_Testimonial(){
     <Table>
     <thead>
     <tr>
+    <th>ID</th>
     <th>NOMBRE</th>
-    <th>ACTUALIZAR</th>
+    <th>ACCIONES</th>
     </tr>
     </thead>
     <tbody>
     {data.map((item)=>{
     return(
     <tr key={item.id}>
+    <td>{item.id}</td>
     <td>{item.name}</td> 
     <td>
     <Button  style={editButtonStyle} onClick={()=>{UpdateTestimony(item.id)}}><FaEdit/></Button>
@@ -87,12 +90,13 @@ function Table_Testimonial(){
    
     </tbody>
     </Table>
+    <Button onClick={()=>{SetAnimation({opacity:"1",index:"2"});SetId(undefined)}}>Crear testimonio</Button>
     </Container>
     </Fragment>
     :
     <Fragment>
      <Header/>
-    <FormTestimonial />
+    <FormTestimonial data={data}/>
     </Fragment>
     );
 
