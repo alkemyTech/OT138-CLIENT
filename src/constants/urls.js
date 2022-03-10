@@ -8,3 +8,4 @@ export const API_CATEGORIES =  "/categories";
 export const API_CONTACTS = "/contacts";
 export const API_USERS = "/users";
 export const API_TESTIMONIAL = "testimonials/";
+export const API_SLIDES = "slides/";
