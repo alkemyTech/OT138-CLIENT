@@ -6,7 +6,7 @@ import {postTestimony,putTestimony,getOneTestimony} from "../../services/request
 import {toast,Toaster} from 'react-hot-toast';
 
 
-function FormTestimonial({id,SetAnimation}){
+function FormTestimonial({id,SetAnimation,data}){
 
 
     //STATES
@@ -19,6 +19,8 @@ function FormTestimonial({id,SetAnimation}){
     useEffect(()=>{
     if(id){
     Obtener()  
+    }else{
+    SetInputs({name:"",image:"",content:""});
     }},[id])
 
 
@@ -98,7 +100,7 @@ function FormTestimonial({id,SetAnimation}){
     <MessageError>{message.content}</MessageError>
     <ButtonGroup>
     <Button style={saveButtonStyle} type='submit'>{!id ? "Guardar" : "Actualizar"} </Button>
-    {id && <Button style={closeButtonStyle} type='button' onClick={()=>{SetAnimation({opacity:"0",index:"-1"})}}>Cerrar</Button>} 
+    {data === undefined  &&  <Button style={closeButtonStyle} type='button' onClick={()=>{SetAnimation({opacity:"0",index:"-1"})}}>Cerrar</Button>}  
     </ButtonGroup>
     </Form>
     </Fragment> 

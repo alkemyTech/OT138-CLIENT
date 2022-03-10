@@ -75,7 +75,7 @@ border-radius: 5px;
 font-size: 1rem;
 cursor: pointer;
 max-width: 200px;
-margin:0px 5px;
+margin:5px 5px;
 font-family: "Open Sans", sans-serif;
 &:hover {
 transform: scale(1.02);

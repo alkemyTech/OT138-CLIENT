@@ -168,8 +168,8 @@ function EditForm() {
          
           
     <Fragment>
-    <h1 className="mx-4">CREATE SLIDER</h1>
-    <Form onSubmit={(e)=>{Crear(e)}} >
+    <Form onSubmit={(e)=>{Crear(e)}}>
+    <h1>Formulario de slider</h1>
     <Input
     name="text"
     type="text"
@@ -202,7 +202,7 @@ function EditForm() {
     onChange={(e)=>{SetValues({...values,organizationID:e.target.value})}}
     />
     <MessageError>{errors.organizationID}</MessageError>         
-    <Button type="submit">Crear slider</Button>
+    <Button type="submit" style={saveButtonStyle}>Crear slider</Button>
     </Form>
     </Fragment>  
     )}   
@@ -218,6 +218,7 @@ function EditForm() {
     {id ?
     
     <Form onSubmit={(e)=>{UpdateSlider(e)}}>
+    <h1>Formulario de slider</h1>
     <Input
     name="text"
     type="text"
@@ -244,7 +245,8 @@ function EditForm() {
     </Form>
   
   
-    :<Form onSubmit={(e)=>{Crear(e)}} >
+    :<Form onSubmit={(e)=>{Crear(e)}}>
+    <h1>Formulario de slider</h1>
     <Input
     name="text"
     type="text"
