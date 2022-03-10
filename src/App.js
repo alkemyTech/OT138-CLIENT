@@ -16,7 +16,7 @@ import { ActivitiesByID } from "./views/Activities";
 import ActivityEditor from './views/BackOffice/ActivityEditor';
 import NewsEditor from './views/BackOffice/NewsEditor';
 import UserEditor from './views/BackOffice/UserEditor';
-import EditForm from "./views/EditForm";
+import EditForm from "./views/BackOffice/EditForm";
 import News, { NewsByID } from "./views/News";
 import TableTestimonial from "./views/BackOffice/Table_testimonial";
 
@@ -38,7 +38,6 @@ function App({ checkAuthentication }) {
         <Route path="/actividades/:id" element={<ActivitiesByID />} />
         <Route path="/novedades" element={<News />} />
         <Route path="/novedades/:id" element={<NewsByID />} />
-        <Route path="/form-edition" element={<EditForm />} />
         <Route
           path="/backoffice/*"
           element={
@@ -80,6 +79,12 @@ function App({ checkAuthentication }) {
         <Route path="/backoffice/usuarios/editar/:id" element={
           <Protected isAdmin>
             <UserEditor />
+          </Protected>
+        } />
+
+        <Route path="/backoffice/slider" element={
+         <Protected isAdmin>
+           <EditForm />
           </Protected>
         } />
       </Routes>

@@ -27,6 +27,10 @@ export default function index() {
       route: "/backoffice/usuarios",
       text: "Usuarios",
     },
+    {
+      route: "/backoffice/slider",
+      text: "Slider",
+    },
   ];
   return <Header navItems={navItems} />;
 }
