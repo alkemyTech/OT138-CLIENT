@@ -7,6 +7,7 @@ import { Route, Routes } from "react-router-dom";
 import "./styles/App.css";
 import Backoffice from "./views/Backoffice";
 import Profile from "./views/Profile";
+import Members from "./views/Members";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { checkAuthentication as checkAuthenticationAction } from "./actions/authActions";
@@ -33,6 +34,7 @@ function App({ checkAuthentication }) {
         <Route path="/registro" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/contacto" element={<FormContacto />} />
+        <Route path="/nosotros" element={<Members />} />
         <Route path="/perfil" element={<Profile />} />
         <Route path="/actividades" element={<Activities />} />
         <Route path="/actividades/:id" element={<ActivitiesByID />} />
