@@ -12,6 +12,7 @@ import {
 } from '../../constants/urls';
 import { apiErrors } from '../../constants';
 import localStorageService from '../localStorage';
+import toast from 'react-hot-toast';
 
 /**
  * Makes a POST request to the API's register endpoint.
@@ -72,6 +73,7 @@ export const login = async (credentials) => {
             if (responseObject.errorCode === 'VAL001') {
                 result.errorFields = responseObject.errorFields;
             }
+            toast.error(result.errorMessage);
         } else {
             result.success = true;
             result.data = responseObject.result.user || {};
@@ -84,6 +86,7 @@ export const login = async (credentials) => {
         }
     } catch (error) {
         result.errorMessage = 'Error inesperado';
+        toast.error(result.errorMessage);
     }
 
     return result;
@@ -104,12 +107,14 @@ export const logout = async () => {
         const { data: responseObject } = await api.post(API_AUTH_LOGOUT);
 
         if (responseObject.error) {
-            result.errorMessage = apiErrors[responseObject.errorCode] ?? responseObject.message
+            result.errorMessage = apiErrors[responseObject.errorCode] ?? responseObject.message;
+            toast.error(result.errorMessage);
         } else {
             result.success = true;
         }
     } catch (error) {
         result.errorMessage = 'Error inesperado';
+        toast.error(result.errorMessage);
     }
 
     localStorageService.removeAccessToken();
@@ -140,7 +145,6 @@ export const getProfileData = async () => {
             result.data = responseObject.result;
         }
     } catch (error) {
-        console.log(await error);
         result.errorMessage = 'Error inesperado';
     }
 
@@ -171,7 +175,6 @@ export const checkAuthentication = async () => {
             result.data = responseObject.result || {};
         }
     } catch (error) {
-        console.log(await error);
         localStorageService.removeAccessToken();
         result.errorMessage = 'Error inesperado';
     }
