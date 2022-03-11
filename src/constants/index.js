@@ -14,5 +14,6 @@ export const apiErrors = Object.freeze({
     VAL001: 'Error de validación',
     REQ001: 'Recurso no encontrado',
     REQ002: 'Solicitud inválida',
+    REQ003: 'Conflicto',
     SRV001: 'Error del servidor'
 });
