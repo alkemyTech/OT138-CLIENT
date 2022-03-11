@@ -42,13 +42,13 @@ api.interceptors.request.use((config) => {
 
 api.interceptors.response.use(async (response) => {
     // If access token has expired, call the refresh endpoint
-    if(response.data.error === true && response.data.errorCode === 'AUT003') {
-        const refreshToken = localStorageService.getRefreshToken();
+    if (response.data.error === true && response.data.errorCode === 'AUT003') {
         try {
-            const res = await axios.post(API_AUTH_REFRESH, {refreshToken}, axiosConfig);
-            const newToken = res.data.accessToken;
+            const { data } = await axios.post(API_AUTH_REFRESH, {}, axiosConfig);
+            const newToken = data.result.accessToken;
+
             localStorageService.setAccessToken(newToken);
-            
+
             const updatedConfig = {
                 ...response.config,
                 headers: {
@@ -56,9 +56,9 @@ api.interceptors.response.use(async (response) => {
                     Authorization: `Bearer ${newToken}`
                 }
             };
-            
+
             return axios.request(updatedConfig);
-        } catch(err) {}
+        } catch (err) { }
         return Promise.reject();
     }
     return response;
