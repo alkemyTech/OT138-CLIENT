@@ -10,93 +10,92 @@ import { Content } from "../../components/Wrappers/Containers";
 import Swal from "sweetalert2";
 
 export default function Contacts() {
-  const [contacts, setContacts] = useState([]);
-  const [pagination, setPagination] = useState({});
-  const [currentPage, setCurrentPage] = useState(1);
+    const [contacts, setContacts] = useState([]);
+    const [pagination, setPagination] = useState({});
+    const [currentPage, setCurrentPage] = useState(1);
 
-  useEffect(() => {
-    getContacts(currentPage);
-  }, []);
+    useEffect(() => {
+        getContacts(currentPage);
+    }, []);
 
-  async function getContacts(page) {
-    const {
-      success,
-      data: contactsData,
-      errorMessage,
-    } = await getContactsService(page);
+    async function getContacts(page) {
+        const {
+            success,
+            data: contactsData,
+            errorMessage,
+        } = await getContactsService(page);
 
-    if (success) {
-      const { items, ...pagination } = contactsData;
-      setContacts(items);
-      setPagination(pagination);
-    } else {
-      toast.error("Error fetching contacts: " + errorMessage);
+        if (success) {
+            const { items, ...pagination } = contactsData;
+            setContacts(items);
+            setPagination(pagination);
+        } else {
+            toast.error("Error fetching contacts: " + errorMessage);
+        }
     }
-  }
 
-  async function goToPage(page) {
-    setCurrentPage(page);
-    getContacts(page);
-  }
+    async function goToPage(page) {
+        setCurrentPage(page);
+        getContacts(page);
+    }
 
-  function showMessage(sender, message) {
-    Swal.fire({
-      showCancelButton: true,
-      showConfirmButton: false,
-      cancelButtonText: "Cerrar",
-      title: `Mesaje de ${sender}:`,
-      text: message,
-    });
-  }
+    function showMessage(sender, message) {
+        Swal.fire({
+            showCancelButton: true,
+            showConfirmButton: false,
+            cancelButtonText: "Cerrar",
+            title: `Mesaje de ${sender}:`,
+            text: message,
+        });
+    }
 
-  return (
-    <Content>
-      <SectionTitle>Contactos</SectionTitle>
-      <Table
-        headers={["Nombre", "Teléfono", "Email", "Mensaje", "Actualizado"]}
-        data={contacts.map((item) => {
-          return {
-            ...item,
-            message: (
-              <Button
-                style={buttonStyle}
-                onClick={() => showMessage(item.name, item.message)}
-              >
-                Mostrar
-              </Button>
-            ),
-          };
-        })}
-        accessors={[
-          {
-            name: "name",
-          },
-          {
-            name: "phone",
-          },
-          {
-            name: "email",
-          },
-          {
-            name: "message",
-          },
-          {
-            name: "updatedAt",
-            applyFunction: (item) => moment(item).format("DD/MM/YY"),
-          },
-        ]}
-      />
-      {pagination && (
-        <Pagination onPageChange={goToPage} totalPages={pagination.pages} />
-      )}
-    </Content>
-  );
+    return (
+        <Content>
+            <SectionTitle>Contactos</SectionTitle>
+            <Table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Teléfono</th>
+                        <th>Email</th>
+                        <th>Mensaje</th>
+                        <th>Actualizado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        contacts.map((contact, index) => {
+                            return (
+                                <tr key={index}>
+                                    <td>{contact.name}</td>
+                                    <td>{contact.phone}</td>
+                                    <td>{contact.email}</td>
+                                    <td>
+                                        <Button
+                                            style={buttonStyle}
+                                            onClick={() => showMessage(contact.name, contact.message)}
+                                        >
+                                            Mostrar
+                                        </Button>
+                                    </td>
+                                    <td>{contact.updatedAt && moment(contact.updatedAt).format('DD/MM/YY')}</td>
+                                </tr>
+                            )
+                        })
+                    }
+                </tbody>
+            </Table>
+            {pagination && (
+                <Pagination onPageChange={goToPage} totalPages={pagination.pages || 0} />
+            )}
+        </Content>
+    );
 }
 
 const buttonStyle = {
-  backgroundColor: "#2FA4FF",
-  color: "#fff",
-  fontWeight: "600",
-  height: "35px",
-  width: "auto",
+    backgroundColor: "#2FA4FF",
+    color: "#fff",
+    fontWeight: "600",
+    height: "35px",
+    width: "auto",
 };
