@@ -141,51 +141,51 @@ export default function Categories() {
                         Agregar
                     </AddButton>
                 </HeaderButtons>
-                <Table
-                    headers={['Nombre', 'Descripción', 'Actualizado', '']}
-                    data={categories.map((category) => {
-                        return {
-                            ...category,
-                            buttons: (
-                                <ButtonGroup align='center'>
-                                    {lockedCategoryIds.includes(category.id) ? (
-                                        <TailSpin height='40' width='40' color='grey' />
-                                    ) : (
-                                        <>
-                                            <Button
-                                                style={editButtonStyle}
-                                                onClick={() => onEditCategoryClick(category)}
-                                            >
-                                                <FaEdit />
-                                            </Button>
-                                            <Button
-                                                style={deleteButtonStyle}
-                                                onClick={() => onDeleteCategory(category.id)}
-                                            >
-                                                <FaTrash />
-                                            </Button>
-                                        </>
-                                    )}
-                                </ButtonGroup>
-                            ),
-                        };
-                    })}
-                    accessors={[
+                <Table>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                            <th>Actualizado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                         {
-                            name: 'name',
-                        },
-                        {
-                            name: 'description',
-                        },
-                        {
-                            name: 'updatedAt',
-                            applyFunction: (item) => moment(item).format('DD/MM/YY'),
-                        },
-                        {
-                            name: 'buttons',
-                        },
-                    ]}
-                />
+                            categories.map((category, index) => {
+                                return (
+                                    <tr key={index}>
+                                        <td>{category.name}</td>
+                                        <td>{category.description}</td>
+                                        <td>{category.updatedAt && moment(category.updatedAt).format('DD/MM/YY')}</td>
+                                        <td>
+                                            <ButtonGroup align='center'>
+                                                {lockedCategoryIds.includes(category.id) ? (
+                                                    <TailSpin height='40' width='40' color='grey' />
+                                                ) : (
+                                                    <>
+                                                        <Button
+                                                            style={editButtonStyle}
+                                                            onClick={() => onEditCategoryClick(category)}
+                                                        >
+                                                            <FaEdit />
+                                                        </Button>
+                                                        <Button
+                                                            style={deleteButtonStyle}
+                                                            onClick={() => onDeleteCategory(category.id)}
+                                                        >
+                                                            <FaTrash />
+                                                        </Button>
+                                                    </>
+                                                )}
+                                            </ButtonGroup>
+                                        </td>
+                                    </tr>
+                                )
+                            })
+                        }
+                    </tbody>
+                </Table>
             </Content>
         </>
     );
