@@ -2,7 +2,7 @@ import api from "../../config/api";
 import { API_NEWS } from "../../constants/urls";
 import { apiErrors } from '../../constants';
 
-export const getEntries = async () => {
+export const getAllNews = async (page = 1, limit = 10) => {
     const result = {
         success: false,
         errorMessage: '',
@@ -10,7 +10,7 @@ export const getEntries = async () => {
     };
 
     try {
-        const { data: resObj } = await api.get(API_NEWS);
+        const { data: resObj } = await api.get(`${API_NEWS}?page=${page}&limit=${limit}`);
         if (resObj.error) {
             result.errorMessage = apiErrors[resObj.errorCode] ?? 'Error al obtener novedades';
         } else {
@@ -19,6 +19,26 @@ export const getEntries = async () => {
         }
     } catch (err) {
         result.errorMessage = 'Error al obtener novedades';
+    }
+
+    return result;
+}
+
+export const deleteEntry = async (id) => {
+    const result = {
+        success: false,
+        errorMessage: ''
+    };
+
+    try {
+        const { data: resObj } = await api.delete(`${API_NEWS}/${id}`);
+        if (resObj.error) {
+            result.errorMessage = apiErrors[resObj.errorCode] ?? 'Error al eliminar entrada';
+        } else {
+            result.success = true;
+        }
+    } catch (err) {
+        result.errorMessage = 'Error al eliminar entrada';
     }
 
     return result;
