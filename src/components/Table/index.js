@@ -1,13 +1,13 @@
 import React from "react";
-import { TableContainer, TableScroll, Table } from "./styles";
+import { TableContainer, TableScroll, Table as TableStyled } from "./styles";
 
-export default function ({ children }) {
+export default function Table({ children }) {
     return (
         <TableContainer>
             <TableScroll>
-                <Table>
+                <TableStyled>
                     {children}
-                </Table>
+                </TableStyled>
             </TableScroll>
         </TableContainer>
     );
