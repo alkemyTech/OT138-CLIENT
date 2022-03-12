@@ -21,13 +21,13 @@ function ActivityEditor() {
     if (id) {
       getActivity();
     }
-  }, []);
+  }, [id]);
 
   const getActivity = async () => {
     setState("loading");
     getActivitiesById(id).then((response) => {
       if (!response.data.error) {
-        setData(response.data.result.activities[0]);
+        setData(response.data.result);
       } else {
         toast.error("No se pudo cargar los datos");
       }
