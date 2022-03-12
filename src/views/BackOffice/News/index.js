@@ -70,6 +70,35 @@ export default function News() {
         });
     }
 
+    async function onDeleteEntry(id) {
+        const result = await Swal.fire({
+            title: 'Confirmar eliminación',
+            showCancelButton: true,
+            confirmButtonText: 'Eliminar',
+            icon: 'warning',
+            cancelButtonText: 'Cancelar',
+            confirmButtonColor: 'red',
+        });
+    
+        if (result.isConfirmed) {
+            setLockedEntryIds(state => [...state, id]);
+    
+            const { success, errorMessage } = await deleteEntryService(id);
+    
+            if (success) {
+                setNews((state) =>
+                    state.filter(entry => entry.id !== id)
+                );
+            } else {
+                toast.error('Error al eliminar entrada: ', errorMessage);
+            }
+    
+            setLockedEntryIds((state) =>
+                state.filter(entryId => entryId !== id)
+            );
+        }
+    }
+
     return (
         <>
             <Content>
@@ -121,7 +150,7 @@ export default function News() {
                                                         </Button>*/}
                                                         <Button
                                                             style={deleteButtonStyle}
-                                                            onClick={() => {}}
+                                                            onClick={() => onDeleteEntry(entry.id)}
                                                         >
                                                             <FaTrash />
                                                         </Button>
