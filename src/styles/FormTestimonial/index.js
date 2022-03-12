@@ -1,20 +1,9 @@
-import styled from "@emotion/styled";
+import styled from '@emotion/styled';
 
-export const Container = styled.div`
-width: 1000px;
-height: auto;
-margin: auto;
-font-family: "Open Sans", sans-serif;
-text-align:center;
-@media (max-width: 1000px) {
-width: 100%;
-}
-`;
 
 export const Form = styled.form`
 background-color:#fff;
 width:500px;
-text-align:left;
 padding:20px 20px 50px 20px;
 font-family: "Open Sans", sans-serif;
 border-radius:10px;
@@ -27,6 +16,7 @@ width:100%;
 margin-top:20px;
 }
 `;
+
 
 export const Input = styled.input`
 font-family: "Open Sans", sans-serif;
@@ -41,14 +31,29 @@ border-radius: 0.25rem;
 border: 2px solid transparent;
 transition: all 0.2s ease 0s;
 outline: none;
-margin: 10px 0px;
+margin: 0 0 0.5rem 0;
 /* Chrome, Safari, Edge, Opera */
 ::-webkit-outer-spin-button,
 ::-webkit-inner-spin-button {
 -webkit-appearance: none;
 margin: 0;
 }
+/* Firefox */
+[type="number"] {
+-moz-appearance: textfield;
+}
+input[type="date"]:after {
+content: attr(placeholder);
+}
 
+`;
+
+
+export const Label = styled.label`
+font-size:18px;
+margin:20px 0px 10px 0px;
+display:block;
+font-weight:bold;
 
 `;
 
@@ -59,7 +64,6 @@ flex-direction: row;
 width:100%;
 justify-content:center;
 `;
-
 
 
 export const Button = styled.button`
@@ -79,14 +83,24 @@ transform: scale(1.02);
 `;
 
 
-export const MessageError = styled.span`
-  color: #da1212;
-  font-size: 12px;
-  margin-left: 5px;
-  font-family: "Open Sans", sans-serif;
-  font-weight: bold;
-  display: block;
+export const MessageError = styled.p`
+color:#D82148;
+font-size:16px;
+font-family: "Open Sans", sans-serif;
 `;
+
+
+
+export const Container = styled.div`
+width: 1000px;
+height: auto;
+margin: auto;
+font-family: "Open Sans", sans-serif;
+text-align:center;
+@media (max-width: 1000px) {
+width: 100%;
+}`;
+
 
 export const Table = styled.table`
 margin-top: 2px;
@@ -119,6 +133,7 @@ border-bottom: 2px solid #ddd;
 @media (min-width: 850px) {
 table-layout: auto;
 }
+
 `;
 
 export const ContainerModal = styled.div`
@@ -137,38 +152,5 @@ opacity:${props => props.opacity && props.opacity};
 z-index:${props => props.index && props.index};
 `;
 
-export const Modal = styled.div`
-  width: ${(props) => props.width && props.width};
-  height: ${(props) => props.height && props.height};
-  background-color: #2c3333;
-  border-radius: 10px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
-  transition: 500ms ease all;
-  overflow: hidden;
-  @media (max-width: 500px) {
-    width: 100%;
-  }
-`;
 
-export const ButtomModal = styled.button`
-  border: none;
-  background-color: #da1212;
-  color: #fff;
-  padding: 10px 20px;
-  font-size: 15px;
-  border-radius: 5px;
-  margin-top: 10px;
-  cursor: pointer;
-  transition: 500ms ease;
-  * {
-    margin: 0px 5px;
-  }
-  &:hover {
-    background-color: #dd4a48;
-  }
-`;
+

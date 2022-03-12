@@ -9,7 +9,7 @@ import {
   updateActivity,
 } from "../../services/requests/activities";
 import toast, { Toaster } from "react-hot-toast";
-import { Container, Content } from "../../components/Wrappers/Containers";
+import { Container, Content } from '../../components/Wrappers/Containers'; 
 
 function ActivityEditor() {
   const { id } = useParams();
@@ -21,13 +21,13 @@ function ActivityEditor() {
     if (id) {
       getActivity();
     }
-  }, []);
+  }, [id]);
 
   const getActivity = async () => {
     setState("loading");
     getActivitiesById(id).then((response) => {
       if (!response.data.error) {
-        setData(response.data.result.activities[0]);
+        setData(response.data.result);
       } else {
         toast.error("No se pudo cargar los datos");
       }

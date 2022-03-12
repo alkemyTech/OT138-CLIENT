@@ -31,7 +31,7 @@ export default function Activities() {
           <ActivitiesContent>
             {!isLoading ? (
               !activities?.data.error && !isError ? (
-                activities?.data?.result?.activities?.map((activity) => {
+                activities?.data?.result?.items?.map((activity) => {
                   const { id, name, image, content } = activity;
                   return (
                     <Activity

@@ -7,6 +7,7 @@ import { Route, Routes } from "react-router-dom";
 import "./styles/App.css";
 import Backoffice from "./views/Backoffice";
 import Profile from "./views/Profile";
+import Members from "./views/Members";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { checkAuthentication as checkAuthenticationAction } from "./actions/authActions";
@@ -15,8 +16,10 @@ import Activities from "./views/Activities";
 import { ActivitiesByID } from "./views/Activities";
 import ActivityEditor from './views/BackOffice/ActivityEditor';
 import NewsEditor from './views/BackOffice/NewsEditor';
-import EditForm from "./views/EditForm";
+import UserEditor from './views/BackOffice/UserEditor';
+import EditForm from "./views/BackOffice/EditForm";
 import News, { NewsByID } from "./views/News";
+import TableTestimonial from "./views/BackOffice/Table_testimonial";
 
 function App({ checkAuthentication }) {
   useEffect(() => {
@@ -31,12 +34,12 @@ function App({ checkAuthentication }) {
         <Route path="/registro" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/contacto" element={<FormContacto />} />
+        <Route path="/nosotros" element={<Members />} />
         <Route path="/perfil" element={<Profile />} />
         <Route path="/actividades" element={<Activities />} />
         <Route path="/actividades/:id" element={<ActivitiesByID />} />
         <Route path="/novedades" element={<News />} />
         <Route path="/novedades/:id" element={<NewsByID />} />
-        <Route path="/form-edition" element={<EditForm />} />
         <Route
           path="/backoffice/*"
           element={
@@ -45,6 +48,14 @@ function App({ checkAuthentication }) {
             </Protected>
           }
         />
+
+      <Route path="/backoffice/testimonios" element={
+          <Protected isAdmin>
+          <TableTestimonial/> 
+          </Protected>
+        }/>
+
+
         <Route path="/backoffice/actividades/nueva" element={
           <Protected isAdmin>
             <ActivityEditor />
@@ -65,6 +76,17 @@ function App({ checkAuthentication }) {
         <Route path="/backoffice/novedades/editar/:id" element={
           <Protected isAdmin>
             <NewsEditor />
+          </Protected>
+        } />
+        <Route path="/backoffice/usuarios/editar/:id" element={
+          <Protected isAdmin>
+            <UserEditor />
+          </Protected>
+        } />
+
+        <Route path="/backoffice/slider" element={
+         <Protected isAdmin>
+           <EditForm />
           </Protected>
         } />
       </Routes>
