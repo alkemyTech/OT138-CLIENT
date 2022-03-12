@@ -20,115 +20,118 @@ import { Content } from "../Wrappers/Containers";
  */
 
 function EntryEditor({ id, state, entryType, get, save, data, fields }) {
-  const [formData, setFormData] = useState({});
+    const [formData, setFormData] = useState({});
 
-  useEffect(() => {
-    setFormData({
-      ...data,
-    });
-  }, [data]);
+    useEffect(() => {
+        setFormData({
+            ...data,
+        });
+    }, [data]);
 
-  return (
-    <>
-      {state === "loading" && (
-        <EditorContent>
-          <Loading />
-        </EditorContent>
-      )}
-      {state === "ready" && (
-        <EditorContent>
-          {id && (
-            <span>
-              <h1>Editar entrada</h1> <EntryType>{entryType}</EntryType>
-            </span>
-          )}
-          {!id && (
-            <span>
-              <h1>Crear entrada</h1>
-              <EntryType>{entryType}</EntryType>
-            </span>
-          )}
-          {fields.map((field) => {
-            return (
-              <div key={`field-${field.name}`}>
-                <Label>{field.title}</Label>
-                {field.type === "text" && (
-                  <Input
-                    type="text"
-                    value={formData[field.name] || ""}
-                    name={field.name}
-                    onChange={({ target: { name, value } }) => {
-                      setFormData({
-                        ...formData,
-                        [name]: value,
-                      });
-                    }}
-                  />
-                )}
-                {field.type === "textarea" && (
-                  <TextArea
-                    value={formData[field.name] || ""}
-                    name={field.name}
-                    onChange={({ target: { name, value } }) => {
-                      setFormData({
-                        ...formData,
-                        [name]: value,
-                      });
-                    }}
-                  />
-                )}
-                {field.type === "select" && (
-                  <Select
-                    value={formData[field.name] || ""}
-                    name={field.name}
-                    onChange={({ target: { name, value } }) => {
-                      setFormData({
-                        ...formData,
-                        [name]: value,
-                      });
-                    }}
-                  >
-                    <option value={null}></option>
-                    {field.options.map((option, index) => {
-                      return (
-                        <option value={option.value} key={`option-${index}`}>
-                          {option.text}
-                        </option>
-                      );
+    return (
+        <>
+            {state === "loading" && (
+                <EditorContent>
+                    <Loading />
+                </EditorContent>
+            )}
+            {state === "ready" && (
+                <EditorContent>
+                    {id && (
+                        <span>
+                            <h1>Editar entrada</h1> <EntryType>{entryType}</EntryType>
+                        </span>
+                    )}
+                    {!id && (
+                        <span>
+                            <h1>Crear entrada</h1>
+                            <EntryType>{entryType}</EntryType>
+                        </span>
+                    )}
+                    {fields.map((field) => {
+                        return (
+                            <div key={`field-${field.name}`}>
+                                <Label>{field.title}</Label>
+                                {field.type === "text" && (
+                                    <Input
+                                        type="text"
+                                        value={formData[field.name] || ""}
+                                        name={field.name}
+                                        onChange={({ target: { name, value } }) => {
+                                            setFormData({
+                                                ...formData,
+                                                [name]: value,
+                                            });
+                                        }}
+                                    />
+                                )}
+                                {field.type === "textarea" && (
+                                    <TextArea
+                                        value={formData[field.name] || ""}
+                                        name={field.name}
+                                        onChange={({ target: { name, value } }) => {
+                                            setFormData({
+                                                ...formData,
+                                                [name]: value,
+                                            });
+                                        }}
+                                    />
+                                )}
+                                {field.type === "select" && (
+                                    <Select
+                                        value={formData[field.name] || ""}
+                                        name={field.name}
+                                        onChange={({ target: { name, value } }) => {
+                                            setFormData({
+                                                ...formData,
+                                                [name]: value,
+                                            });
+                                        }}
+                                    >
+                                        <option value={null}></option>
+                                        {field.options.map((option, index) => {
+                                            return (
+                                                <option value={option.value} key={`option-${index}`}>
+                                                    {option.text}
+                                                </option>
+                                            );
+                                        })}
+                                    </Select>
+                                )}
+                                {field.type === "content" && (
+                                    <TextEditor
+                                        name={field.name}
+                                        data={formData[field.name]}
+                                        onChange={(event, editor) => {
+                                            const data = editor.getData();
+                                            setFormData({
+                                                ...formData,
+                                                [field.name]: data,
+                                            });
+                                        }}
+                                    />
+                                )}
+                            </div>
+                        );
                     })}
-                  </Select>
-                )}
-                {field.type === "content" && (
-                  <TextEditor
-                    name={field.name}
-                    data={formData[field.name]}
-                    onChange={(event, editor) => {
-                      const data = editor.getData();
-                      setFormData({
-                        ...formData,
-                        [field.name]: data,
-                      });
-                    }}
-                  />
-                )}
-              </div>
-            );
-          })}
-          <Button onClick={() => save(formData)}>
-            <b>GUARDAR</b>
-          </Button>
-        </EditorContent>
-      )}
-      {state === "load_error" && (
-        <EditorContent>
-          <Message alert>
-            <span>Error al cargar los datos</span>
-            <Button onClick={get} children={"Cargar de nuevo"} />
-          </Message>
-        </EditorContent>
-      )}
-    </>
-  );
+                    <Button onClick={event => {
+                        event.preventDefault();
+                        save(formData);
+                    }}>
+                        <b>GUARDAR</b>
+                    </Button>
+                </EditorContent>
+            )}
+            {state === "load_error" && (
+                <EditorContent>
+                    <Message alert>
+                        <span>Error al cargar los datos</span>
+                        <Button onClick={get} children={"Cargar de nuevo"} />
+                    </Message>
+                </EditorContent>
+            )}
+        </>
+    );
 }
 
 export default EntryEditor;
