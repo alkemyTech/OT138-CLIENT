@@ -14,9 +14,9 @@ import { checkAuthentication as checkAuthenticationAction } from "./actions/auth
 import Protected from "./components/Routes/Protected";
 import Activities from "./views/Activities";
 import { ActivitiesByID } from "./views/Activities";
-import ActivityEditor from './views/BackOffice/ActivityEditor';
-import NewsEditor from './views/BackOffice/NewsEditor';
-import UserEditor from './views/BackOffice/UserEditor';
+import ActivityEditor from "./views/BackOffice/ActivityEditor";
+import NewsEditor from "./views/BackOffice/NewsEditor";
+import UserEditor from "./views/BackOffice/UserEditor";
 import EditForm from "./views/BackOffice/EditForm";
 import News, { NewsByID } from "./views/News";
 import TableTestimonial from "./views/BackOffice/Table_testimonial";
@@ -35,7 +35,14 @@ function App({ checkAuthentication }) {
         <Route path="/login" element={<Login />} />
         <Route path="/contacto" element={<FormContacto />} />
         <Route path="/nosotros" element={<Members />} />
-        <Route path="/perfil" element={<Profile />} />
+        <Route
+          path="/perfil"
+          element={
+            <Protected>
+              <Profile />
+            </Protected>
+          }
+        />
         <Route path="/actividades" element={<Activities />} />
         <Route path="/actividades/:id" element={<ActivitiesByID />} />
         <Route path="/novedades" element={<News />} />
@@ -49,46 +56,64 @@ function App({ checkAuthentication }) {
           }
         />
 
-      <Route path="/backoffice/testimonios" element={
-          <Protected isAdmin>
-          <TableTestimonial/> 
-          </Protected>
-        }/>
-
-
-        <Route path="/backoffice/actividades/nueva" element={
-          <Protected isAdmin>
-            <ActivityEditor />
-          </Protected>
-        }
+        <Route
+          path="/backoffice/testimonios"
+          element={
+            <Protected isAdmin>
+              <TableTestimonial />
+            </Protected>
+          }
         />
-        <Route path="/backoffice/actividades/editar/:id" element={
-          <Protected isAdmin>
-            <ActivityEditor />
-          </Protected>
-        } />
-        <Route path="/backoffice/novedades/nueva" element={
-          <Protected isAdmin>
-            <NewsEditor />
-          </Protected>
-        }
-        />
-        <Route path="/backoffice/novedades/editar/:id" element={
-          <Protected isAdmin>
-            <NewsEditor />
-          </Protected>
-        } />
-        <Route path="/backoffice/usuarios/editar/:id" element={
-          <Protected isAdmin>
-            <UserEditor />
-          </Protected>
-        } />
 
-        <Route path="/backoffice/slider" element={
-         <Protected isAdmin>
-           <EditForm />
-          </Protected>
-        } />
+        <Route
+          path="/backoffice/actividades/nueva"
+          element={
+            <Protected isAdmin>
+              <ActivityEditor />
+            </Protected>
+          }
+        />
+        <Route
+          path="/backoffice/actividades/editar/:id"
+          element={
+            <Protected isAdmin>
+              <ActivityEditor />
+            </Protected>
+          }
+        />
+        <Route
+          path="/backoffice/novedades/nueva"
+          element={
+            <Protected isAdmin>
+              <NewsEditor />
+            </Protected>
+          }
+        />
+        <Route
+          path="/backoffice/novedades/editar/:id"
+          element={
+            <Protected isAdmin>
+              <NewsEditor />
+            </Protected>
+          }
+        />
+        <Route
+          path="/backoffice/usuarios/editar/:id"
+          element={
+            <Protected isAdmin>
+              <UserEditor />
+            </Protected>
+          }
+        />
+
+        <Route
+          path="/backoffice/slider"
+          element={
+            <Protected isAdmin>
+              <EditForm />
+            </Protected>
+          }
+        />
       </Routes>
     </>
   );

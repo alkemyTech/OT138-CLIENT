@@ -25,7 +25,7 @@ export const Table = styled.table`
   }
   td {
     padding: 10px;
-    white-space: pre
+    white-space: pre;
   }
   tr:nth-of-type(odd) {
     background: #eee;

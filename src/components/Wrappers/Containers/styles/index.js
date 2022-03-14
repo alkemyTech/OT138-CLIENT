@@ -18,9 +18,9 @@ export const ContentStyle = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex: 1;
   width: 100%;
   max-width: 1440px;
+  flex: 1;
   @media (max-width: 1366px) {
     max-width: 960px;
   }
