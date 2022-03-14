@@ -77,7 +77,7 @@ function Header({ navItems, logout, auth }) {
         {dataState === "loaded" && auth.authenticated ? (
           <Avatar onClick={() => setDropdownState(!dropdownState)}>
             <img
-              src={profileData?.image ? profileData?.image : ""}
+              src={profileData?.image ? profileData?.image : "/pfp_default.png"}
               alt="ong logo"
             />
             <p>
