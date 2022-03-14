@@ -17,7 +17,7 @@ import Modal, {
     ModalHeader,
     ModalTitle,
 } from '../../../components/Modal';
-import { HeaderButtons, AddButton } from '../../../styles/BackOffice';
+import { HeaderButtons, AddButton, SectionTitle } from '../../../styles/BackOffice';
 
 export default function News() {
     const [news, setNews] = useState([]);
@@ -102,7 +102,7 @@ export default function News() {
     return (
         <>
             <Content>
-                <h2>Novedades</h2>
+                <SectionTitle>Novedades</SectionTitle>
                 <Table>
                     <thead>
                         <tr>
