@@ -8,6 +8,7 @@ import {
 import toast from 'react-hot-toast';
 import { Button, ButtonGroup } from '../../../components/Inputs';
 import { Content } from '../../../components/Wrappers/Containers';
+import { SectionTitle } from '../../../styles/BackOffice';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { TailSpin } from 'react-loader-spinner';
 import Swal from 'sweetalert2';
@@ -132,7 +133,7 @@ export default function Categories() {
                 </ModalBody>
             </Modal>
             <Content>
-                <h2>Categorías</h2>
+                <SectionTitle>Categorías</SectionTitle>
                 <HeaderButtons>
                     <AddButton
                         onClick={onCreateCategoryClick}

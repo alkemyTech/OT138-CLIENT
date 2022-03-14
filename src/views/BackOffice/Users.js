@@ -5,6 +5,7 @@ import { Button, ButtonGroup } from "../../components/Inputs";
 import toast from "react-hot-toast";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { Content } from "../../components/Wrappers/Containers";
+import { SectionTitle } from "../../styles/BackOffice";
 
 export default function Users() {
     const [users, setUsers] = useState([]);
@@ -46,7 +47,7 @@ export default function Users() {
 
     return (
         <Content>
-            <h2>Usuarios</h2>
+            <SectionTitle>Usuarios</SectionTitle>
             <Table>
                 <thead>
                     <tr>
