@@ -65,6 +65,9 @@ export const NavBar = styled.nav`
   button:hover {
     background-color: rgba(0, 0, 0, 0.5);
   }
+  .active {
+    font-weight: bold;
+  }
 `;
 
 export const NavList = styled.div`
@@ -160,6 +163,9 @@ export const MobileNavBar = styled.div`
   border-radius: 0 0 5px 5px;
   @media (max-width: 960px) {
     display: ${({ menuState }) => (menuState ? "flex" : "none")};
+  }
+  .active {
+    font-weight: bold;
   }
 `;
 export const MobileItem = styled.div`
