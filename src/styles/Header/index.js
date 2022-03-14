@@ -35,7 +35,7 @@ export const Logo = styled.div`
     font-size: 1.2rem;
   }
   img {
-    height: 95%;
+    height: 75%;
     padding: 0 0.5rem;
   }
   @media (max-width: 960px) {

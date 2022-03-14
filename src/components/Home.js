@@ -5,16 +5,18 @@ import Header from "../components/Header/Landing";
 import { Footer } from "./Footer";
 import Activities from "./Activities";
 import AboutUs from "./AboutUs";
+import News from "./News";
 function Home() {
   return (
     <Container>
       <Header />
       <Slider />
       <Content>
-        <AboutUs />
         <Activities />
+        <News />
+        {/* <AboutUs /> */}
+        <Footer />
       </Content>
-      <Footer />
     </Container>
   );
 }

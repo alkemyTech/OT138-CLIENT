@@ -59,7 +59,7 @@ function Header({ navItems, logout, auth }) {
         <Link to="/">
           <Logo>
             <img src="/logo.png" alt="ong logo" />
-            <h2 className="logo__title">Alkemy ONG</h2>
+            {/* <h2 className="logo__title">Alkemy ONG</h2> */}
           </Logo>
         </Link>
         <NavBar>
