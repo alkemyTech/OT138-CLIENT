@@ -116,7 +116,7 @@ export const ButtonGroup = ({align, gap, children}) => {
     )
 }
 
-export const TextEditor = ({  name, data, onChange}) => {
+export const TextEditor = ({  name, data = {}, onChange}) => {
   return(
     <TextEditorContainer>
       <CKEditor

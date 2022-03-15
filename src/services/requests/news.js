@@ -44,7 +44,7 @@ export const deleteEntry = async (id) => {
     return result;
 }
 
-export const createEntry = async (data) => {
+export const createNewsEntry = async (data) => {
     const result = {
         success: false,
         errorMessage: '',
@@ -52,12 +52,12 @@ export const createEntry = async (data) => {
     };
 
     try {
-        const { data: resObj } = await api.get(API_NEWS, data);
+        const { data: resObj } = await api.post(API_NEWS, data);
         if (resObj.error) {
             result.errorMessage = apiErrors[resObj.errorCode] ?? 'Error al crear entrada';
         } else {
             result.success = true;
-            result.data = resObj.data;
+            result.data = resObj.result;
         }
     } catch (err) {
         result.errorMessage = 'Error al crear entrada';
@@ -74,7 +74,7 @@ export const updateEntry = async (id, data) => {
     };
 
     try {
-        const { data: resObj } = await api.get(`${API_NEWS}/${id}`, data);
+        const { data: resObj } = await api.put(`${API_NEWS}/${id}`, data);
         if (resObj.error) {
             result.errorMessage = apiErrors[resObj.errorCode] ?? 'Error al actualizar entrada';
         } else {
