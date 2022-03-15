@@ -64,10 +64,7 @@ export default function Categories() {
             const { success, errorMessage } = await deleteCategoryService(id);
 
             if (success) {
-                // Remove deleted category from categories array.
-                setCategories((state) =>
-                    state.filter((category) => category.id !== id)
-                );
+                getCategories();
             } else {
                 toast.error('Error al eliminar categoría');
             }
@@ -100,20 +97,9 @@ export default function Categories() {
     }
 
     // Update categories array after CategoryForm's onSuccess callback is triggered.
-    function onCategoryUpdated(instance) {
+    function onCategoryUpdated() {
         hideForm();
-        const categoriesCopy = [...categories];
-        const index = categoriesCopy.findIndex(
-            (category) => category.id === instance.id
-        );
-        if (index >= 0) {
-            // Category was updated
-            categoriesCopy[index] = instance;
-        } else {
-            // Category was created
-            categoriesCopy.push(instance);
-        }
-        setCategories(categoriesCopy);
+        getCategories();
     }
 
     return (
@@ -127,7 +113,7 @@ export default function Categories() {
                 <ModalBody>
                     <CategoryForm
                         instance={formData.instance}
-                        onSuccess={(instance) => onCategoryUpdated(instance)}
+                        onSuccess={(instance) => onCategoryUpdated()}
                         onCancel={() => hideForm()}
                     />
                 </ModalBody>
