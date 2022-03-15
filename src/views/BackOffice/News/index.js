@@ -24,6 +24,7 @@ export default function News() {
     const [news, setNews] = useState([]);
     const [pagination, setPagination] = useState({});
     const [currentPage, setCurrentPage] = useState(1);
+    const [resultsLimit, setResultsLimit] = useState(10);
     const [lockedEntryIds, setLockedEntryIds] = useState([]);
     const [formData, setFormData] = useState({
         display: false,
@@ -39,7 +40,7 @@ export default function News() {
             success,
             data: newsData,
             errorMessage,
-        } = await getAllNewsService(page);
+        } = await getAllNewsService(page, resultsLimit);
 
         if (success) {
             const { items, ...pagination } = newsData;
@@ -91,9 +92,7 @@ export default function News() {
             const { success, errorMessage } = await deleteEntryService(id);
 
             if (success) {
-                setNews((state) =>
-                    state.filter(entry => entry.id !== id)
-                );
+                getNews(currentPage);
             } else {
                 toast.error('Error al eliminar entrada: ', errorMessage);
             }
@@ -125,18 +124,9 @@ export default function News() {
         });
     }
 
-    function onUpdated(instance) {
+    function onUpdated() {
         hideForm();
-        const newsCopy = [...news];
-        const index = newsCopy.findIndex(
-            (item) => item.id === instance.id
-        );
-        if (index >= 0) {
-            newsCopy[index] = instance;
-        } else {
-            newsCopy.push(instance);
-        }
-        setNews(newsCopy);
+        getNews(currentPage);
     }
 
     return (
@@ -145,12 +135,20 @@ export default function News() {
                 <ModalBody>
                     <NewsEditor
                         data={formData.instance}
-                        onSuccess={(entry) => onUpdated(entry)}
+                        onSuccess={(entry) => onUpdated()}
                     />
                 </ModalBody>
             </Modal>
             <Content>
                 <SectionTitle>Novedades</SectionTitle>
+                <HeaderButtons>
+                    <AddButton
+                        onClick={onCreate}
+                        style={{ background: 'green' }}
+                    >
+                        Agregar
+                    </AddButton>
+                </HeaderButtons>
                 <Table>
                     <thead>
                         <tr>
