@@ -1,16 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import Header from '../../../components/Header/BackOffice';
-import { Footer } from '../../../components/Footer';
+import React from 'react';
 import EntryEditor from '../../../components/EntryEditor';
-import { Container, Content } from '../../../components/Wrappers/Containers';
 import { createNewsEntry, updateEntry } from '../../../services/requests/news';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 
 function NewsEditor({ data, onSuccess }) {
 
     const save = async (formData) => {
-        console.log(formData)
         if (data) {
             // If there is an existing ID, then the form has to update the existing data on new
             const { success, data: updatedEntry, errorMessage } = await updateEntry(data.id, formData);
