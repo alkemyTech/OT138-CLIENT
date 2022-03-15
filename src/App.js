@@ -20,6 +20,7 @@ import UserEditor from './views/BackOffice/UserEditor';
 import EditForm from "./views/BackOffice/EditForm";
 import News, { NewsByID } from "./views/News";
 import TableTestimonial from "./views/BackOffice/Table_testimonial";
+import Testimonials from "./views/Testimonials";
 
 function App({ checkAuthentication }) {
   useEffect(() => {
@@ -35,6 +36,7 @@ function App({ checkAuthentication }) {
         <Route path="/login" element={<Login />} />
         <Route path="/contacto" element={<FormContacto />} />
         <Route path="/nosotros" element={<Members />} />
+        <Route path="/testimonios" element={<Testimonials />} />
         <Route path="/perfil" element={<Profile />} />
         <Route path="/actividades" element={<Activities />} />
         <Route path="/actividades/:id" element={<ActivitiesByID />} />
