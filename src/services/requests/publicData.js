@@ -28,3 +28,18 @@ export async function getPublicData() {
   }
   return result;
 }
+
+export async function updatePublicData(organizationData) {
+  try {
+    const { data: response } = await api.put(API_PUBLIC_DATA, organizationData);
+    return response;
+  } catch (error) {
+    console.log(error);
+    return {
+      error: true,
+      errorCode: "SRV001",
+      status: "500",
+      message: `An unexpected error ocurred when storing data to the database. Details:  ${error.message}`,
+    };
+  }
+}
