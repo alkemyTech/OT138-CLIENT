@@ -35,7 +35,7 @@ export const Logo = styled.div`
     font-size: 1.2rem;
   }
   img {
-    height: 95%;
+    height: 75%;
     padding: 0 0.5rem;
   }
   @media (max-width: 960px) {
@@ -64,6 +64,9 @@ export const NavBar = styled.nav`
   }
   button:hover {
     background-color: rgba(0, 0, 0, 0.5);
+  }
+  .active {
+    font-weight: bold;
   }
 `;
 
@@ -160,6 +163,9 @@ export const MobileNavBar = styled.div`
   border-radius: 0 0 5px 5px;
   @media (max-width: 960px) {
     display: ${({ menuState }) => (menuState ? "flex" : "none")};
+  }
+  .active {
+    font-weight: bold;
   }
 `;
 export const MobileItem = styled.div`

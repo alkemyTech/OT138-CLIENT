@@ -9,7 +9,7 @@ export default function News() {
   const limit = 4;
   const currentPage = 1;
   const {
-    data: activities,
+    data: news,
     isLoading,
     isFetching,
     isError,
@@ -24,15 +24,15 @@ export default function News() {
     <>
       {!isError && (
         <NewsContainer>
-          <h2 className="activities__title">Nuestras Actividades</h2>
+          <h2 className="activities__title">Últimas Novedades</h2>
           <p className="activities__subtitle">
-            ¿Qué estás esperando, intégrate?
+            Enteráte de lo que está pasando en Somos Más
           </p>
           <NewsContent>
             {!isLoading ? (
-              !activities?.data.error && !isError ? (
-                activities?.data?.result?.activities?.map((activity) => {
-                  const { id, name, image, content } = activity;
+              !news?.data.error && !isError ? (
+                news?.data?.result?.items?.map((item) => {
+                  const { id, name, image, content } = item;
                   return (
                     <New
                       key={id}
@@ -44,10 +44,10 @@ export default function News() {
                   );
                 })
               ) : (
-                <h1>¡En este momento no contamos con Actividades!</h1>
+                <h1>¡En este momento no contamos con Novedades!</h1>
               )
-            ) : !isLoading && !isFetching && activities?.data?.error ? (
-              <h1>¡En este momento no contamos con Actividades!</h1>
+            ) : !isLoading && !isFetching && news?.data?.error ? (
+              <h1>¡En este momento no contamos con Novedades!</h1>
             ) : (
               <Loading />
             )}
