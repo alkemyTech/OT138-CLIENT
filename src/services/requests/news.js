@@ -79,7 +79,7 @@ export const updateEntry = async (id, data) => {
             result.errorMessage = apiErrors[resObj.errorCode] ?? 'Error al actualizar entrada';
         } else {
             result.success = true;
-            result.data = resObj.data;
+            result.data = resObj.result;
         }
     } catch (err) {
         result.errorMessage = 'Error al actualizar entrada';

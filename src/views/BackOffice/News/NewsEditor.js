@@ -17,6 +17,7 @@ function NewsEditor({ data, onSuccess }) {
 
             if (success) {
                 toast.success("Guardado con éxito");
+                onSuccess(updatedEntry);
             } else {
                 toast.error("Error al actualizar: " + errorMessage);
             }
@@ -26,6 +27,7 @@ function NewsEditor({ data, onSuccess }) {
 
             if (success) {
                 toast.success("Entrada creada con éxito");
+                onSuccess(createdEntry);
             } else {
                 toast.error("Error al crear entrada: " + errorMessage);
             }

@@ -145,6 +145,7 @@ export default function News() {
                 <ModalBody>
                     <NewsEditor
                         data={formData.instance}
+                        onSuccess={(entry) => onUpdated(entry)}
                     />
                 </ModalBody>
             </Modal>
