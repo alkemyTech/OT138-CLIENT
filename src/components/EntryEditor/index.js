@@ -20,13 +20,35 @@ import { Content } from "../Wrappers/Containers";
  */
 
 function EntryEditor({ id, state, entryType, get, save, data, fields }) {
-    const [formData, setFormData] = useState({});
+    const [fieldsWithData, setFieldsWithData] = useState([]);
 
     useEffect(() => {
-        setFormData({
-            ...data,
+        setFieldsWithData(fields.map(field => {
+            return {
+                ...field,
+                value: (data && data[field.name]) ?? ""
+            }
+        }));
+    }, [data, fields]);
+
+    const updateField = (fieldName, fieldValue) => {
+        setFieldsWithData(state => {
+            const newState = [...state];
+            const index = state.findIndex(field => field.name === fieldName);
+            if (index >= 0) {
+                newState[index].value = fieldValue;
+            }
+            return newState;
         });
-    }, [data]);
+    }
+
+    const onSave = () => {
+        const formData = {};
+        fieldsWithData.forEach(field => {
+            formData[field.name] = field.value;
+        })
+        save(formData);
+    }
 
     return (
         <>
@@ -48,45 +70,30 @@ function EntryEditor({ id, state, entryType, get, save, data, fields }) {
                             <EntryType>{entryType}</EntryType>
                         </span>
                     )}
-                    {fields.map((field) => {
+                    {fieldsWithData.map((field) => {
                         return (
                             <div key={`field-${field.name}`}>
                                 <Label>{field.title}</Label>
                                 {field.type === "text" && (
                                     <Input
                                         type="text"
-                                        value={formData[field.name] || ""}
+                                        value={field.value}
                                         name={field.name}
-                                        onChange={({ target: { name, value } }) => {
-                                            setFormData({
-                                                ...formData,
-                                                [name]: value,
-                                            });
-                                        }}
+                                        onChange={({ target: { name, value } }) => updateField(name, value)}
                                     />
                                 )}
                                 {field.type === "textarea" && (
                                     <TextArea
-                                        value={formData[field.name] || ""}
+                                        value={field.value}
                                         name={field.name}
-                                        onChange={({ target: { name, value } }) => {
-                                            setFormData({
-                                                ...formData,
-                                                [name]: value,
-                                            });
-                                        }}
+                                        onChange={({ target: { name, value } }) => updateField(name, value)}
                                     />
                                 )}
                                 {field.type === "select" && (
                                     <Select
-                                        value={formData[field.name] || ""}
+                                        value={field.value}
                                         name={field.name}
-                                        onChange={({ target: { name, value } }) => {
-                                            setFormData({
-                                                ...formData,
-                                                [name]: value,
-                                            });
-                                        }}
+                                        onChange={({ target: { name, value } }) => updateField(name, value)}
                                     >
                                         <option value={null}></option>
                                         {field.options.map((option, index) => {
@@ -101,13 +108,10 @@ function EntryEditor({ id, state, entryType, get, save, data, fields }) {
                                 {field.type === "content" && (
                                     <TextEditor
                                         name={field.name}
-                                        data={formData[field.name]}
+                                        data={field.value}
                                         onChange={(event, editor) => {
                                             const data = editor.getData();
-                                            setFormData({
-                                                ...formData,
-                                                [field.name]: data,
-                                            });
+                                            updateField(field.name, data);
                                         }}
                                     />
                                 )}
@@ -116,7 +120,7 @@ function EntryEditor({ id, state, entryType, get, save, data, fields }) {
                     })}
                     <Button onClick={event => {
                         event.preventDefault();
-                        save(formData);
+                        onSave();
                     }}>
                         <b>GUARDAR</b>
                     </Button>

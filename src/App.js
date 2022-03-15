@@ -15,7 +15,6 @@ import Protected from "./components/Routes/Protected";
 import Activities from "./views/Activities";
 import { ActivitiesByID } from "./views/Activities";
 import ActivityEditor from "./views/BackOffice/ActivityEditor";
-import NewsEditor from "./views/BackOffice/NewsEditor";
 import UserEditor from "./views/BackOffice/UserEditor";
 import EditForm from "./views/BackOffice/EditForm";
 import News, { NewsByID } from "./views/News";
@@ -80,22 +79,6 @@ function App({ checkAuthentication }) {
           element={
             <Protected isAdmin>
               <ActivityEditor />
-            </Protected>
-          }
-        />
-        <Route
-          path="/backoffice/novedades/nueva"
-          element={
-            <Protected isAdmin>
-              <NewsEditor />
-            </Protected>
-          }
-        />
-        <Route
-          path="/backoffice/novedades/editar/:id"
-          element={
-            <Protected isAdmin>
-              <NewsEditor />
             </Protected>
           }
         />

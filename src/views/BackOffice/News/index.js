@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Table from '../../../components/Table';
 import moment from 'moment';
-import { 
+import {
     getAllNews as getAllNewsService,
     deleteEntry as deleteEntryService
 } from '../../../services/requests/news';
@@ -18,12 +18,18 @@ import Modal, {
     ModalTitle,
 } from '../../../components/Modal';
 import { HeaderButtons, AddButton, SectionTitle } from '../../../styles/BackOffice';
+import NewsEditor from './NewsEditor';
 
 export default function News() {
     const [news, setNews] = useState([]);
     const [pagination, setPagination] = useState({});
     const [currentPage, setCurrentPage] = useState(1);
+    const [resultsLimit, setResultsLimit] = useState(10);
     const [lockedEntryIds, setLockedEntryIds] = useState([]);
+    const [formData, setFormData] = useState({
+        display: false,
+        instance: null,
+    });
 
     useEffect(() => {
         getNews(currentPage);
@@ -34,7 +40,7 @@ export default function News() {
             success,
             data: newsData,
             errorMessage,
-        } = await getAllNewsService(page);
+        } = await getAllNewsService(page, resultsLimit);
 
         if (success) {
             const { items, ...pagination } = newsData;
@@ -70,7 +76,7 @@ export default function News() {
         });
     }
 
-    async function onDeleteEntry(id) {
+    async function onDelete(id) {
         const result = await Swal.fire({
             title: 'Confirmar eliminación',
             showCancelButton: true,
@@ -79,30 +85,70 @@ export default function News() {
             cancelButtonText: 'Cancelar',
             confirmButtonColor: 'red',
         });
-    
+
         if (result.isConfirmed) {
             setLockedEntryIds(state => [...state, id]);
-    
+
             const { success, errorMessage } = await deleteEntryService(id);
-    
+
             if (success) {
-                setNews((state) =>
-                    state.filter(entry => entry.id !== id)
-                );
+                getNews(currentPage);
             } else {
                 toast.error('Error al eliminar entrada: ', errorMessage);
             }
-    
+
             setLockedEntryIds((state) =>
                 state.filter(entryId => entryId !== id)
             );
         }
     }
 
+    function onEdit(instance) {
+        setFormData({
+            display: true,
+            instance: instance,
+        });
+    }
+
+    function onCreate() {
+        setFormData({
+            display: true,
+            instance: null,
+        });
+    }
+
+    function hideForm() {
+        setFormData({
+            display: false,
+            instance: null,
+        });
+    }
+
+    function onUpdated() {
+        hideForm();
+        getNews(currentPage);
+    }
+
     return (
         <>
+            <Modal size='sm' show={formData.display} onClose={() => hideForm()}>
+                <ModalBody>
+                    <NewsEditor
+                        data={formData.instance}
+                        onSuccess={(entry) => onUpdated()}
+                    />
+                </ModalBody>
+            </Modal>
             <Content>
                 <SectionTitle>Novedades</SectionTitle>
+                <HeaderButtons>
+                    <AddButton
+                        onClick={onCreate}
+                        style={{ background: 'green' }}
+                    >
+                        Agregar
+                    </AddButton>
+                </HeaderButtons>
                 <Table>
                     <thead>
                         <tr>
@@ -142,15 +188,15 @@ export default function News() {
                                                     <TailSpin height='40' width='40' color='grey' />
                                                 ) : (
                                                     <>
-                                                        {/*<Button
+                                                        <Button
                                                             style={editButtonStyle}
-                                                            onClick={() => onEditCategoryClick(category)}
+                                                            onClick={() => onEdit(entry)}
                                                         >
                                                             <FaEdit />
-                                                        </Button>*/}
+                                                        </Button>
                                                         <Button
                                                             style={deleteButtonStyle}
-                                                            onClick={() => onDeleteEntry(entry.id)}
+                                                            onClick={() => onDelete(entry.id)}
                                                         >
                                                             <FaTrash />
                                                         </Button>
