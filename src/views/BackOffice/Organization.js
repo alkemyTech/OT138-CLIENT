@@ -3,86 +3,89 @@ import EntryEditor from "../../components/EntryEditor";
 import toast, { Toaster } from "react-hot-toast";
 import { Container, Content } from "../../components/Wrappers/Containers";
 import {
-  getPublicData,
-  updatePublicData,
+    getPublicData,
+    updatePublicData,
 } from "../../services/requests/publicData";
 import * as yup from "yup";
+
 function Organization() {
-  const [data, setData] = useState({});
-  const [state, setState] = useState("ready");
+    const [data, setData] = useState({});
+    const [state, setState] = useState("ready");
 
-  const getOrganization = async () => {
-    const response = await getPublicData();
-    if (response.success) {
-      setData({
-        name: response.data.result.name,
-        image: response.data.result.image,
-      });
-    } else {
-      toast.error("Error al buscar datos de la organización");
-    }
-  };
-  useEffect(() => {
-    getOrganization();
-  }, []);
+    const getOrganization = async () => {
+        const { success, data: publicData, errorMessage } = await getPublicData();
 
-  let organizationSchema = yup.object().shape({
-    name: yup.string().required("Nombre es un campo obligatorio."),
-    image: yup
-      .string()
-      .url("URL de la imagen no es valido.")
-      .required("URL de la imagen es un campo obligatorio."),
-  });
-  const saveOrganization = async (formData) => {
-    setState("loading");
-    try {
-      organizationSchema.validateSync(formData);
-      const res = await updatePublicData(formData);
-      if (res.error === false) {
-        toast.success("Los datos fueron grabados correctamente.");
-        setState("ready");
-      } else {
-        toast.error("Sucedió un error al grabar los datos.");
-        setState("ready");
-      }
-    } catch (error) {
-      if (error instanceof yup.ValidationError) {
-        toast.error(error.message);
-      } else {
-        toast.error("Sucedió un error inesperado.");
-        console.log(error);
-      }
-      setState("ready");
-    }
-  };
+        if (success) {
+            setData({
+                name: publicData.name,
+                image: publicData.image,
+            });
+        } else {
+            toast.error("Error al buscar datos de la organización: " + errorMessage);
+        }
+    };
+    useEffect(() => {
+        getOrganization();
+    }, []);
 
-  return (
-    <Container>
-      <Toaster />
-      <Content>
-        <EntryEditor
-          id={1}
-          state={state}
-          entryType={"Organización"}
-          getEntry={getOrganization}
-          save={saveOrganization}
-          data={data}
-          fields={[
-            {
-              name: "name",
-              title: "Nombre",
-              type: "text",
-            },
-            {
-              name: "image",
-              title: "Url de imagen",
-              type: "text",
-            },
-          ]}
-        />
-      </Content>
-    </Container>
-  );
+    let organizationSchema = yup.object().shape({
+        name: yup.string().required("Nombre es un campo obligatorio."),
+        image: yup
+            .string()
+            .required("URL de la imagen es un campo obligatorio."),
+    });
+
+    const saveOrganization = async (formData) => {
+        setState("loading");
+
+        try {
+            console.log(formData)
+            organizationSchema.validateSync(formData);
+
+            const { success, errorMessage } = await updatePublicData(formData);
+
+            if (success) {
+                toast.success("Los datos fueron grabados correctamente.");
+                getOrganization();
+            } else {
+                toast.error(errorMessage);
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error("Error de validación");
+        } finally {
+            setState("ready");
+        }
+
+    };
+
+    return (
+        <Container>
+            <Toaster />
+            <Content>
+                <EntryEditor
+                    id={1}
+                    state={state}
+                    entryType={"Organización"}
+                    getEntry={getOrganization}
+                    save={saveOrganization}
+                    data={data}
+                    fields={[
+                        {
+                            name: "name",
+                            title: "Nombre",
+                            type: "text",
+                        },
+                        {
+                            name: "image",
+                            title: "Url de imagen",
+                            type: "text",
+                        },
+                    ]}
+                />
+            </Content>
+        </Container>
+    );
 }
 
 export default Organization;
