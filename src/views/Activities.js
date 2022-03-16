@@ -48,7 +48,7 @@ export default function Activities() {
             <Header />
             <Content>
                 <Banner
-                    title={"Lista de Actividades"}
+                    title={"Actividades"}
                     thumbnail={"/activities__banner.jpg"}
                 />
                 <ActivitiesContainer>

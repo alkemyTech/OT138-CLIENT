@@ -37,7 +37,7 @@ export default function News() {
   return (
     <Container>
       <Header />
-      <Banner title={"Listado de Novedades"} thumbnail={"/news__banner.jpg"} />
+      <Banner title={"Novedades"} thumbnail={"/news__banner.jpg"} />
       <Content>
         <NewsContainer>
           {!isLoading ? (

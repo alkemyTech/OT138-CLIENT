@@ -26,7 +26,7 @@ export default function News() {
         <NewsContainer>
           <h2 className="activities__title">Últimas Novedades</h2>
           <p className="activities__subtitle">
-            Enteráte de lo que está pasando en Somos Más
+            Enterate de lo que está pasando en Somos Más
           </p>
           <NewsContent>
             {!isLoading ? (
