@@ -9,6 +9,7 @@ import Contacts from "./BackOffice/Contacts";
 import Users from "./BackOffice/Users";
 import Organization from "./BackOffice/Organization";
 import News from "./BackOffice/News";
+import Activities from './BackOffice/Activities';
 
 export default function Backoffice() {
   return (
@@ -22,6 +23,7 @@ export default function Backoffice() {
         <Route path="/users" element={<Users />} />
         <Route path="/edit-organization" element={<Organization/>} />
         <Route path="/news" element={<News />} />
+        <Route path="/activities" element={<Activities />} />
       </Routes>
     </Container>
   );
