@@ -86,7 +86,7 @@ function FormContacto() {
 
         <ContainColumn>
           <Colum>
-            <h1>Es hora de poner su negocio en línea.</h1>
+            <h1>Dejanos un mensaje</h1>
           </Colum>
           <Formik
             initialValues={{
