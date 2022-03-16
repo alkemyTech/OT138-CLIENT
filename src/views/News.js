@@ -53,9 +53,7 @@ export default function News() {
     }, [currentPage]);
 
     async function goToPage(page) {
-        console.log(page);
         setCurrentPage(page);
-        getNews(page);
     }
 
     return (

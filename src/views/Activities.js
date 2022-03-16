@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useQuery } from "react-query";
 import { useHistory, useNavigate } from "react-router-dom";
 import { Navigate, useParams, useSearchParams } from "react-router-dom";
-import Pagination from "react-responsive-pagination";
+import Pagination from "../components/Pagination";
 import Activity from "../components/Activities/Cards";
 import Article from "../components/Article";
 import { Footer } from "../components/Footer";
@@ -16,10 +16,14 @@ import {
 } from "../services/requests/activities";
 import { ActivitiesContainer } from "../styles/Activities";
 import Banner from "../components/Banner";
-
+import toast from "react-hot-toast";
 
 export default function Activities() {
-    let totalPages;
+    const [activities, setActivities] = useState([]);
+    const [pagination, setPagination] = useState({
+        pages: 1,
+        count: 0
+    });
     const [currentPage, setCurrentPage] = useState(1);
     const limit = 15;
 
@@ -38,10 +42,24 @@ export default function Activities() {
     );
 
     useEffect(() => {
+        if (response) {
+            if (response.data.error) {
+                toast.error('Error al obtener actividades');
+            } else {
+                const { items, ...pagination } = response.data.result;
+                setActivities(items);
+                setPagination(pagination);
+            }
+        }
+    }, [response]);
+
+    useEffect(() => {
         refetch();
     }, [currentPage]);
 
-    totalPages = Math.ceil(response?.data?.result?.count / limit);
+    async function goToPage(page) {
+        setCurrentPage(page);
+    }
 
     return (
         <Container>
@@ -52,42 +70,32 @@ export default function Activities() {
                     thumbnail={"/activities__banner.jpg"}
                 />
                 <ActivitiesContainer>
-                    {!isLoading ? (
-                        !response?.data?.error && !isError ? (
-                            response?.data?.result?.items?.map((activity) => {
-                                const { id, name, image, content } = activity;
-                                return (
-                                    <Activity
-                                        key={id}
-                                        id={id}
-                                        name={name}
-                                        content={content}
-                                        image={image}
-                                    />
-                                );
-                            })
-                        ) : (
-                            <h1>¡En este momento no contamos con Actividades!</h1>
-                        )
-                    ) : !isLoading &&
-                        !isFetching &&
-                        response?.data?.error &&
-                        isError ? (
-                        <h1>¡No se encontraron Actividades!</h1>
-                    ) : (
-                        <Loading />
-                    )}
+                    {
+                        (isLoading || isFetching) ? <Loading /> :
+                            activities && activities.length > 0 ?
+                                activities.map((activity) => {
+                                    const { id, name, image, content } = activity;
+                                    return (
+                                        <Activity
+                                            key={id}
+                                            id={id}
+                                            name={name}
+                                            content={content}
+                                            image={image}
+                                        />
+                                    );
+                                })
+                                : <h1>¡En este momento no contamos con Actividades!</h1>
+                    }
                 </ActivitiesContainer>
-                {!isLoading && (
-                    <div className="divider">
+                <div className="divider">
+                    {pagination && (
                         <Pagination
-                            current={currentPage}
-                            total={totalPages}
-                            onPageChange={setCurrentPage}
-                            style={{ justifySelf: "end" }}
+                            onPageChange={goToPage}
+                            totalPages={pagination.pages}
                         />
-                    </div>
-                )}
+                    )}
+                </div>
             </Content>
             <Footer />
         </Container>
