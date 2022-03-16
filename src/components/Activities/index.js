@@ -26,7 +26,7 @@ export default function Activities() {
         <ActivitiesContainer>
           <h2 className="activities__title">Nuestras Actividades</h2>
           <p className="activities__subtitle">
-            ¿Qué estás esperando, intégrate?
+            ¿Qué estás esperando para unirte?
           </p>
           <ActivitiesContent>
             {!isLoading ? (
