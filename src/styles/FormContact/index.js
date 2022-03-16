@@ -72,18 +72,20 @@ outline:none;
 border-radius:5px;
 background-color:#e6e6e7;
 font-size:15px;
+font-family: Arial, sans-serif;
 `;
 
-export const Textarea = styled.input`
+export const Textarea = styled.textarea`
 border:none;
 display:block;
-padding:40px;
-margin-top:20px;
 width:100%;
 outline:none;
+padding:15px;
+margin-top:20px;
 background-color:#e6e6e7;
 border-radius:5px;
-font-size:18px;
+font-size:15px;
+font-family: Arial, sans-serif;
 `;
 
 
