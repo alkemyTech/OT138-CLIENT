@@ -32,6 +32,8 @@ export const NewDetails = styled.div`
   padding: 0 0.5rem;
   width: 100%;
   flex: 1;
+  overflow: hidden;
+
   .new__title {
     margin: 1rem 0 10px 0;
     font-size: 1.3rem;
@@ -42,6 +44,7 @@ export const NewDetails = styled.div`
     font-size: 14.5px;
     height: 100%;
     width: 100%;
+    overflow: hidden;
   }
 
   .new__readmore {
