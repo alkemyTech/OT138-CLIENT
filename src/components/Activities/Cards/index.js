@@ -18,7 +18,7 @@ export default function Activity({ id, name, image, content }) {
         />
         <ActivityDetails>
           <h3 className="activity__title">{name}</h3>
-          <p className="activity__details">{content}</p>
+          <div className="activity__details" dangerouslySetInnerHTML={{ __html: content }} />
           <p className="activity__readmore">
             Leer más <FaArrowRight />
           </p>

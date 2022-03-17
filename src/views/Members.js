@@ -19,7 +19,6 @@ function Members() {
     setState("loading");
     getMembers().then(async (response) => {
       if (!response.error) {
-        console.log(response);
         const data = await response.data.data.map((member) => {
           return {
             name: member.name,
@@ -39,8 +38,8 @@ function Members() {
       <Content>
         <Banner title={"Nosotros"} thumbnail={"/members__banner.jpg"} />
         <MembersContainer>
-          {members.map((member) => {
-            return <Card name={member.name} image={member.image} />;
+          {members.map((member, index) => {
+            return <Card key={index} name={member.name} image={member.image} />;
           })}
         </MembersContainer>
       </Content>

@@ -27,7 +27,7 @@ export default function New({ id, name, image, content }) {
         />
         <NewDetails>
           <h3 className="new__title">{formatName(name)}</h3>
-          <p className="new__details">{content}</p>
+          <div className="new__details" dangerouslySetInnerHTML={{ __html: content }} />
           <p className="new__readmore">
             Leer más <FaArrowRight />
           </p>

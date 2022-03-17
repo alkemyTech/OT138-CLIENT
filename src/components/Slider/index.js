@@ -19,7 +19,6 @@ export default function Slider() {
 
     if (success) {
       setSlides(data);
-      console.log(data);
     }
   }
 
