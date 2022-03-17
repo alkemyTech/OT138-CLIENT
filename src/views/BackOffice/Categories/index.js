@@ -20,11 +20,18 @@ import Modal, {
 } from '../../../components/Modal';
 import { HeaderButtons, AddButton } from '../../../styles/BackOffice';
 import CategoryForm from './CategoryForm';
+import Pagination from "../../../components/Pagination";
 
 export default function Categories() {
     const [categories, setCategories] = useState([]);
     const [lockedCategoryIds, setLockedCategoryIds] = useState([]);
+    const [pagination, setPagination] = useState({});
+    const [currentPage, setCurrentPage] = useState(1);
 
+    async function goToPage(page) {
+        setCurrentPage(page);
+        getCategories(page);
+      }
     // CategoryForm metadata
     const [formData, setFormData] = useState({
         display: false,
@@ -32,18 +39,21 @@ export default function Categories() {
     });
 
     useEffect(() => {
-        getCategories();
+        getCategories(currentPage);
     }, []);
 
-    async function getCategories() {
+    async function getCategories(page) {
         const {
             success,
             data: categories,
             errorMessage,
-        } = await getCategoriesService();
+        } = await getCategoriesService(page);
 
         if (success) {
-            setCategories(categories);
+            console.log(categories)
+            const {items, ...pagination} = categories;
+            setCategories(items);
+            setPagination(pagination)
         } else {
             toast.error('Error al obtener categorías');
         }
@@ -147,7 +157,7 @@ export default function Categories() {
                                         <td>{category.description}</td>
                                         <td>{category.updatedAt && moment(category.updatedAt).format('DD/MM/YY')}</td>
                                         <td>
-                                            <ButtonGroup align='center' gap={"8px"}>
+                                            <ButtonGroup align='center' gap='8px'>
                                                 {lockedCategoryIds.includes(category.id) ? (
                                                     <TailSpin height='40' width='40' color='grey' />
                                                 ) : (
@@ -174,6 +184,12 @@ export default function Categories() {
                         }
                     </tbody>
                 </Table>
+                {pagination && (
+          <Pagination
+            onPageChange={goToPage}
+            totalPages={pagination.pages || 0}
+          />
+        )}
             </Content>
         </>
     );
