@@ -83,15 +83,15 @@ export const ButtonContainer = styled.button`
 `;
 
 export const ButtonGroup = styled.div`
-    gap: ${(props) => props.gap ?? 0};
-    display: flex;
-    flex-direction: row;
-    justify-content: ${(props) =>
-      props.align === "center"
-        ? "center"
-        : props.align === "end"
-        ? "flex-end"
-        : "flex-start"};
+  gap: ${(props) => props.gap ?? 0};
+  display: flex;
+  flex-direction: row;
+  justify-content: ${(props) =>
+    props.align === "center"
+      ? "center"
+      : props.align === "end"
+      ? "flex-end"
+      : "flex-start"};
 `;
 
 export const SelectContainer = styled.select`
@@ -115,4 +115,21 @@ export const TextEditorContainer = styled.div`
     margin-bottom: 20px;
     background-color: #edf2f7;
   }
+`;
+
+export const Avatar = styled.img`
+  height: ${(props) => props.height ?? "45px"};
+  width: ${(props) => props.height ?? "45px"};
+  object-fit: cover;
+  border-radius: 50%;
+  margin: ${(props) => props.margin ?? 0};
+  padding: ${(props) => props.padding ?? 0};
+  cursor: pointer;
+`;
+
+export const TextWrapper = styled.p`
+  /* max-width: ${(props) => props.maxWidth ?? "500px"};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; */
 `;

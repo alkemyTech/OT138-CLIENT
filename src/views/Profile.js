@@ -57,40 +57,44 @@ function Profile(props) {
   const save = async () => {
     setSaving(true);
     saveProfileData({
-      id: userId, firstName: name, lastName: lastname
-    }).then(response => {
-      console.log(response)
-      if(response.data.error){
-        toast.error("No se pudo guardar");
-      }
-      toast.success("Los datos se guardaron correctamente");
-      switchMode();
-    }).catch(err => {
-      toast.error("No se pudo guardar");
-      console.log(err);
+      id: userId,
+      firstName: name,
+      lastName: lastname,
     })
+      .then((response) => {
+        console.log(response);
+        if (response.data.error) {
+          toast.error("No se pudo guardar");
+        }
+        toast.success("Los datos se guardaron correctamente");
+        switchMode();
+      })
+      .catch((err) => {
+        toast.error("No se pudo guardar");
+        console.log(err);
+      });
     setSaving(false);
   };
 
   const deleteData = async () => {
-    if(window.confirm("¿Está seguro de que quiere eliminar su cuenta?")){
-      deleteProfile(userId).then(response => {
-        console.log(response)
-        if(!response.error){
-          toast.success("Cuenta eliminada con éxito");
-          props.logout();
-          navigate('/login');
-        } else{
+    if (window.confirm("¿Está seguro de que quiere eliminar su cuenta?")) {
+      deleteProfile(userId)
+        .then((response) => {
+          console.log(response);
+          if (!response.error) {
+            toast.success("Cuenta eliminada con éxito");
+            props.logout();
+            navigate("/login");
+          } else {
+            toast.error("No se pudo eliminar la cuenta");
+          }
+        })
+        .catch((err) => {
           toast.error("No se pudo eliminar la cuenta");
-        }
-      })
-      .catch( err => {
-        toast.error("No se pudo eliminar la cuenta")
-        console.log(err);
-      })
+          console.log(err);
+        });
     }
-  }
-
+  };
 
   return (
     <Container>
@@ -101,7 +105,14 @@ function Profile(props) {
           <Toaster />
           <Form onSubmit={(e) => e.preventDefault()}>
             <Image>
-              <img src={image ? image : ""} />
+              <img
+                alt="profile__photo"
+                src={image ? image : ""}
+                onError={({ currentTarget }) => {
+                  currentTarget.onerror = null;
+                  currentTarget.src = "/broken__image.gif";
+                }}
+              />
             </Image>
             <h2>Mis Datos Personales</h2>
             <Label>Nombres</Label>
@@ -143,8 +154,9 @@ function Profile(props) {
                   <b>Modificar</b>
                 </Button>
               )}
-              <Button style={{ background: "red", margin: "0.6rem 0" }}
-              onClick={deleteData}
+              <Button
+                style={{ background: "red", margin: "0.6rem 0" }}
+                onClick={deleteData}
               >
                 <b>Eliminar Cuenta</b>
               </Button>
@@ -168,7 +180,7 @@ const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(
     {
       getProfileData,
-      logout
+      logout,
     },
     dispatch
   );

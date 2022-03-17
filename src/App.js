@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Home from "./components/Home";
 import Login from "./views/Login";
 import Signup from "./views/Signup";
-import FormContacto from "./views/Form_contact";
+import FormContacto from "./views/Contact";
 import { Route, Routes } from "react-router-dom";
 import "./styles/App.css";
 import Backoffice from "./views/Backoffice";
