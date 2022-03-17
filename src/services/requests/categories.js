@@ -8,24 +8,23 @@ import { API_CATEGORIES } from "../../constants/urls";
  *      - data: array of categories returned from the API (may be empty), if success is true
  *      - errorMessage: a string with the error message, if success is false
  */
-export async function getCategories() {
+export async function getCategories(page, limit = 10) {
   const result = {
     success: false,
     data: [],
     errorMessage: "",
   };
   try {
-    const { data: resObj } = await api.get(API_CATEGORIES);
+    const { data: resObj } = await api.get(API_CATEGORIES, {params: {page, limit}});
     if (resObj.error === false) {
       result.success = true;
-      result.data = resObj.data;
+      result.data = resObj.result;
     } else {
       result.errorMessage = resObj.message;
     }
   } catch (err) {
     result.errorMessage = "Unexpected error";
   }
-
   return result;
 }
 
