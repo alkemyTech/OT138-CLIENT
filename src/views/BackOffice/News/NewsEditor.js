@@ -64,7 +64,7 @@ function NewsEditor({ data, onSuccess }) {
           name: "categoryId",
           title: "Categoría",
           type: "select",
-          defaultValue: 2,
+          defaultValue: 1,
           options: categoriesOptions,
         },
       ]}
