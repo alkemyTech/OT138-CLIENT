@@ -1,33 +1,44 @@
-import React from "react";
-import { Pagination } from "swiper";
+import React, { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Slide from "./styles/index.js";
 import "swiper/css";
 import "swiper/css/pagination";
 import "./styles/index.css";
 import { SliderContent } from "../../styles/Slides/index.js";
+import { getSlides as getSlidesService } from '../../services/requests/slides';
 
 export default function Slider() {
+  const [slides, setSlides] = useState([]);
+
+  useState(() => {
+    getSlides();
+  }, []);
+
+  async function getSlides() {
+    const { success, data } = await getSlidesService();
+
+    if (success) {
+      setSlides(data);
+      console.log(data);
+    }
+  }
+
   return (
     <Swiper className="mySwiper">
-      <SwiperSlide>
-        <Slide>
-          <SliderContent>
-            <img src="/portada-1.jpg" alt="slide"></img>
-          </SliderContent>
-          <h1>Somos Más ONG</h1>
-          <p>¡Cambiando Vidas!</p>
-        </Slide>
-      </SwiperSlide>
-      <SwiperSlide>
-        <Slide>
-          <SliderContent>
-            <img src="/portada-2.jpg" alt="slide"></img>
-          </SliderContent>
-          <h1>Somos Más ONG</h1>
-          <p>¡Juntos todo es posible!</p>
-        </Slide>
-      </SwiperSlide>
+      {
+        slides.map((item, index) => {
+          return (
+            <SwiperSlide key={index}>
+              <Slide>
+                <SliderContent>
+                  <img src={item.imageURL} alt={`Slide number ${index}`}></img>
+                </SliderContent>
+                <h1>{item.text}</h1>
+              </Slide>
+            </SwiperSlide>
+          );
+        })
+      }
     </Swiper>
   );
 }
