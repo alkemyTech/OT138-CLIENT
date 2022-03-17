@@ -66,7 +66,7 @@ export default function Users() {
                                     <td>{user.lastName}</td>
                                     <td>{user.email}</td>
                                     <td>
-                                        <ButtonGroup alignEnd>
+                                        <ButtonGroup align='center' gap={"8px"}>
                                             <Button style={buttonStyles("orange")}>
                                                 <FaEdit />
                                             </Button>

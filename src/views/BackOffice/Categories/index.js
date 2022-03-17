@@ -11,6 +11,7 @@ import { Content } from '../../../components/Wrappers/Containers';
 import { SectionTitle } from '../../../styles/BackOffice';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { TailSpin } from 'react-loader-spinner';
+import { FaPlusSquare } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 import Modal, {
     ModalBody,
@@ -135,7 +136,7 @@ export default function Categories() {
                         onClick={onCreateCategoryClick}
                         style={{ background: 'green' }}
                     >
-                        Agregar
+                        <FaPlusSquare /> <b>Crear</b>
                     </AddButton>
                 </HeaderButtons>
                 <Table>
