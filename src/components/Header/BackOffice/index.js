@@ -35,6 +35,10 @@ export default function index() {
             route: "/backoffice/slider",
             text: "Slider",
         },
+        {
+            route: "/backoffice/edit-organization",
+            text: "Organización",
+        },
     ];
     return <Header navItems={navItems} />;
 }

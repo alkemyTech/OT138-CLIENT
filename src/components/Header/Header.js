@@ -104,7 +104,7 @@ function Header({ navItems, logout, auth }) {
                 key={index}
                 className={pathname === item.route ? "active" : ""}
               >
-                <Link to={item.route}>{item.text}</Link>
+                <Link to={item.route} onClick={() => setMenuState(!menuState)}>{item.text}</Link>
               </MobileItem>
             );
           })}
