@@ -35,8 +35,8 @@ function Members() {
   return (
     <Container>
       <Header />
+      <Banner title={"Nosotros"} thumbnail={"/members__banner.jpg"} />
       <Content>
-        <Banner title={"Nosotros"} thumbnail={"/members__banner.jpg"} />
         <MembersContainer>
           {members.map((member, index) => {
             return <Card key={index} name={member.name} image={member.image} />;
