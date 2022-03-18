@@ -1,38 +1,29 @@
 import React from "react";
-import { FaArrowRight, FaCalendar, FaClock } from "react-icons/fa";
+import { FaArrowRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { NewCard, NewDetails } from "./styles";
+import { Card, CardContent, CardImage, CardTitle, CardText, CardFooter } from "../../Card";
+import { addEllipsis } from "../../../helpers";
 
 export default function New({ id, name, image, content }) {
   const TITLE_MAX_LENGTH = 40;
 
-  function formatName(name) {
-    if (name.length > TITLE_MAX_LENGTH) {
-      return name.slice(0, TITLE_MAX_LENGTH - 3) + "...";
-    }
-    return name;
-  }
-
   return (
     <Link to={`/novedades/${id}`}>
-      <NewCard>
-        <img
-          className="thumbnail"
+      <Card>
+        <CardImage
           src={image}
           onError={({ currentTarget }) => {
             currentTarget.onerror = null;
             currentTarget.src = "/broken__image.gif";
           }}
-          alt="new__thumbnail"
+          alt="News thumbnail"
         />
-        <NewDetails>
-          <h3 className="new__title">{formatName(name)}</h3>
-          <div className="new__details" dangerouslySetInnerHTML={{ __html: content }} />
-          <p className="new__readmore">
-            Leer más <FaArrowRight />
-          </p>
-        </NewDetails>
-      </NewCard>
+        <CardContent>
+          <CardTitle>{addEllipsis(name, TITLE_MAX_LENGTH)}</CardTitle>
+          <CardText dangerouslySetInnerHTML={{ __html: content }} />
+        </CardContent>
+        <CardFooter>Leer más <FaArrowRight /></CardFooter>
+      </Card>
     </Link>
   );
 }
