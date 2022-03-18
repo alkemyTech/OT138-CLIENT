@@ -25,14 +25,6 @@ function EntryEditor({ id, state, entryType, get, save, data, fields }) {
   useEffect(() => {
     setFieldsWithData(
       fields.map((field) => {
-        console.log({
-          ...field,
-          value: data[field.name]
-            ? data[field.name]
-            : field?.defaultValue
-            ? field?.defaultValue
-            : "",
-        });
         return {
           ...field,
           value: data[field.name]
