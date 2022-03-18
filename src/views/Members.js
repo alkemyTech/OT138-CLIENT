@@ -4,6 +4,7 @@ import Header from "../components/Header/Landing";
 import { Footer } from "../components/Footer";
 import { Card } from "../components/Members";
 import Banner from "../components/Banner";
+import Loading from "../components/Loading";
 import { MembersContainer } from "../styles/Members";
 import { getMembers } from "../services/requests/members";
 
@@ -26,10 +27,14 @@ function Members() {
           };
         });
         setMembers(await data);
+        setState("ready");
       } else {
         setState("error");
       }
-    });
+    })
+    .catch(err => {
+      setState("error");
+    })
   };
 
   return (
@@ -37,11 +42,26 @@ function Members() {
       <Header />
       <Content>
         <Banner title={"Nosotros"} thumbnail={"/members__banner.jpg"} />
-        <MembersContainer>
-          {members.map((member, index) => {
-            return <Card key={index} name={member.name} image={member.image} />;
-          })}
-        </MembersContainer>
+        {
+          state === 'loading' &&
+          <Loading />
+        }
+        {
+          state === 'ready' &&
+          <MembersContainer>
+            {
+            members.length > 0 ? 
+              members.map((member, index) => {
+                return <Card key={index} name={member.name} image={member.image} />;
+              }) :
+              <h2>¡Aún no hay nada que mostrar aquí!</h2>
+          }
+          </MembersContainer>
+        }
+        {
+          state === 'error' &&
+          <h2>Lo lamentamos, hubo un error</h2>
+        }
       </Content>
       <Footer />
     </Container>
