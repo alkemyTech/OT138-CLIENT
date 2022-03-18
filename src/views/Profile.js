@@ -78,7 +78,7 @@ function Profile(props) {
 
   const deleteData = async () => {
     if (window.confirm("¿Está seguro de que quiere eliminar su cuenta?")) {
-      deleteProfile(userId)
+      deleteProfile()
         .then((response) => {
           console.log(response);
           if (!response.error) {
