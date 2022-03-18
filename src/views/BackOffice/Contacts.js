@@ -9,22 +9,26 @@ import { Button } from "../../components/Inputs";
 import { Content } from "../../components/Wrappers/Containers";
 import Swal from "sweetalert2";
 import { FaEye } from "react-icons/fa";
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+import { createArrayOfObjects } from "../../helpers";
 
 export default function Contacts() {
-  const [contacts, setContacts] = useState([]);
+  const [limit, setLimit] = useState(10)
+  const [contacts, setContacts] = useState(createArrayOfObjects(limit));
   const [pagination, setPagination] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
-
+  const [tableLoading, setTableLoading] = useState(true);
   useEffect(() => {
     getContacts(currentPage);
   }, []);
-
   async function getContacts(page) {
+    setTableLoading(true);
     const {
       success,
       data: contactsData,
       errorMessage,
-    } = await getContactsService(page);
+    } = await getContactsService(page, limit);
 
     if (success) {
       const { items, ...pagination } = contactsData;
@@ -33,6 +37,7 @@ export default function Contacts() {
     } else {
       toast.error("Error fetching contacts: " + errorMessage);
     }
+    setTableLoading(false);
   }
 
   async function goToPage(page) {
@@ -68,21 +73,21 @@ export default function Contacts() {
           {contacts.map((contact, index) => {
             return (
               <tr key={index}>
-                <td>{contact.name}</td>
-                <td>{contact.phone}</td>
-                <td>{contact.email}</td>
-
+                <td>{tableLoading?<StyledSkeleton/>: contact.name }</td>
+                <td>{tableLoading?<StyledSkeleton/>: contact.phone}</td>
+                <td>{tableLoading?<StyledSkeleton/>:contact.email}</td>
                 <td>
-                  {contact.createdAt &&
+                  {tableLoading?<StyledSkeleton/>:contact.createdAt &&
                     moment(contact.createdAt).format("DD/MM/YY")}
                 </td>
                 <td>
+                {tableLoading?<StyledSkeleton/>:
                   <Button
                     style={buttonStyle}
                     onClick={() => showMessage(contact.name, contact.message)}
                   >
                     <FaEye />
-                  </Button>
+                  </Button>}
                 </td>
               </tr>
             );
@@ -106,3 +111,9 @@ const buttonStyle = {
   height: "35px",
   width: "auto",
 };
+
+function StyledSkeleton() {
+  return (
+    <Skeleton style={{margin: "10px 0px"}}/>
+  )
+}
