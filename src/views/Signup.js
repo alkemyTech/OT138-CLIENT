@@ -29,7 +29,7 @@ const validate = (values) => {
 
     if (!values.email) {
         errors.email = "*";
-    } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(values.email)) {
+    } else if (!/^[\w-.]+@([\w-]+.)+[\w-]{2,4}$/.test(values.email)) {
         errors.email = "Inválido";
     }
 
@@ -65,7 +65,7 @@ function Signup(props) {
     });
 
     const attemptSignup = async (values) => {
-        const { success, data, errorMessage, errorFields } = await register(values);
+        const { success, errorMessage, errorFields } = await register(values);
 
         if (success) {
             toast.success("Cuenta creada");
@@ -82,9 +82,8 @@ function Signup(props) {
         }
     };
 
-    const [source, setSource] = useState(
-        photos[Math.floor(Math.random() * photos.length)]
-    );
+    const source = photos[Math.floor(Math.random() * photos.length)];
+
     return (
 
         <Container>
