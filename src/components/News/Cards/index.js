@@ -1,7 +1,7 @@
 import React from "react";
-import { FaArrowRight, FaCalendar, FaClock } from "react-icons/fa";
+import { FaArrowRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { Card, CardDetails } from '../../Card';
+import { Card, CardContent, CardImage, CardTitle, CardText, CardFooter } from "../../Card";
 import { addEllipsis } from "../../../helpers";
 
 export default function New({ id, name, image, content }) {
@@ -10,8 +10,7 @@ export default function New({ id, name, image, content }) {
   return (
     <Link to={`/novedades/${id}`}>
       <Card>
-        <img
-          className="card__thumbnail"
+        <CardImage
           src={image}
           onError={({ currentTarget }) => {
             currentTarget.onerror = null;
@@ -19,13 +18,11 @@ export default function New({ id, name, image, content }) {
           }}
           alt="News thumbnail"
         />
-        <CardDetails>
-          <h4 className="card__title">{addEllipsis(name, TITLE_MAX_LENGTH)}</h4>
-          <div className="card__details" dangerouslySetInnerHTML={{ __html: content }} />
-          <p className="card__readmore">
-            Leer más <FaArrowRight />
-          </p>
-        </CardDetails>
+        <CardContent>
+          <CardTitle>{addEllipsis(name, TITLE_MAX_LENGTH)}</CardTitle>
+          <CardText dangerouslySetInnerHTML={{ __html: content }} />
+        </CardContent>
+        <CardFooter>Leer más <FaArrowRight /></CardFooter>
       </Card>
     </Link>
   );
