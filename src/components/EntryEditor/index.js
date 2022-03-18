@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Loading from "../../components/Loading";
-import { EditorContainer, EditorContent, EntryType, Message } from "./styles";
+import { EditorContent, EntryType, Message } from "./styles";
 import { Input, Label, Button, TextArea, TextEditor, Select } from "../Inputs";
-import { Content } from "../Wrappers/Containers";
 
 /**
  *
