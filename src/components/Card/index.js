@@ -1,6 +1,7 @@
-import styled from "@emotion/styled";
+import React from 'react';
+import styled from '@emotion/styled';
 
-export const NewCard = styled.div`
+export const Card = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -13,7 +14,8 @@ export const NewCard = styled.div`
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 10%), 0 4px 6px -2px rgb(0 0 0 / 5%);
   cursor: pointer;
   margin: 0.5rem;
-  .thumbnail {
+  
+  .card__thumbnail {
     border-radius: 10px 10px 0 0;
     width: 100%;
     min-height: 180px;
@@ -25,7 +27,8 @@ export const NewCard = styled.div`
     transform: scale(1.018);
   }
 `;
-export const NewDetails = styled.div`
+
+export const CardDetails = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -34,11 +37,11 @@ export const NewDetails = styled.div`
   flex: 1;
   overflow: hidden;
 
-  .new__title {
+  .card__title {
     margin: 1rem 0 10px 0;
     font-size: 1.3rem;
   }
-  .new__details {
+  .card__details {
     color: gray;
     margin: 0;
     font-size: 14.5px;
@@ -49,7 +52,7 @@ export const NewDetails = styled.div`
     background: linear-gradient(to bottom, #fff 50%, transparent 100%);
   }
 
-  .new__readmore {
+  .card__readmore {
     display: flex;
     flex-direction: row;
     width: 100%;
