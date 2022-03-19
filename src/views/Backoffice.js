@@ -9,7 +9,7 @@ import Contacts from "./BackOffice/Contacts";
 import Users from "./BackOffice/Users";
 import Organization from "./BackOffice/Organization";
 import News from "./BackOffice/News";
-import Activities from './BackOffice/Activities';
+import Activities from './BackOffice/Activities/Activities';
 
 export default function Backoffice() {
   return (
