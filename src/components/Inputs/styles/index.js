@@ -57,10 +57,10 @@ export const TextAreaContainer = styled.textarea`
 `;
 
 export const LabelContainer = styled.label`
-  margin: 2rem 0 0 0;
+  display: inline-block;
+  margin: 0.5rem 0;
   font-weight: 500;
   font-size: 16px;
-  margin: 0.5rem 0;
   color: var(--titles-color);
   span {
     color: red;

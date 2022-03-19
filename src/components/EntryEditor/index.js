@@ -130,6 +130,7 @@ function EntryEditor({ id, state, entryType, get, save, data, fields }) {
             );
           })}
           <Button
+            style={{ margin: "1rem 0 0 0" }}
             onClick={(event) => {
               event.preventDefault();
               onSave();
