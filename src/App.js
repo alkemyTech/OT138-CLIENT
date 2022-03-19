@@ -14,7 +14,7 @@ import { checkAuthentication as checkAuthenticationAction } from "./actions/auth
 import Protected from "./components/Routes/Protected";
 import Activities from "./views/Activities";
 import { ActivitiesByID } from "./views/Activities";
-import ActivityEditor from "./views/BackOffice/ActivityEditor";
+import ActivityEditor from "./views/BackOffice/Activities/ActivityEditor";
 import UserEditor from "./views/BackOffice/UserEditor";
 import News, { NewsByID } from "./views/News";
 import TestimonialsBackOffice from "./views/BackOffice/Testimonials";
