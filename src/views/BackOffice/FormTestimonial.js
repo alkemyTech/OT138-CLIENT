@@ -91,7 +91,7 @@ function FormTestimonial({ id, SetAnimation, data }) {
   }
 
   return (
-    <>
+    <form onSubmit={OnSubmitData}>
       <Toaster />
       <h1>Formulario de testimonio</h1>
       <Input
@@ -136,7 +136,7 @@ function FormTestimonial({ id, SetAnimation, data }) {
           </Button>
         )}
       </ButtonGroup>
-    </>
+    </form>
   );
 }
 
