@@ -30,9 +30,11 @@ export default function Activities () {
     async function fetchActivities(page) {
         const { data } = await getActivities(pageLimit, page);
 
+
         if (!data.error) {
             const { items, ...pagination } = data.result;
             setActivities(items);
+            console.log({activities});
             setPagination(pagination);
         } else {
             toast.error(`Error fetching activities: ${data.message}`);
@@ -103,7 +105,7 @@ export default function Activities () {
         if (result.isConfirmed) {
             setLockedEntryIds(state => [...state, id]);
             
-            const { success, errorMessage } = await deleteActivity();
+            const { success, errorMessage } = await deleteActivity(id);
 
             if (success) {
                 fetchActivities();
