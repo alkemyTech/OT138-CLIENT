@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Home from "./components/Home";
+import Home from "./views/Home";
 import Login from "./views/Login";
 import Signup from "./views/Signup";
 import FormContacto from "./views/Contact";
