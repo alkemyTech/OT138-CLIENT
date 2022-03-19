@@ -26,7 +26,7 @@ import {
 } from "../../styles/BackOffice";
 import { FaPlusSquare } from "react-icons/fa";
 
-function EditForm() {
+function Sliders() {
   //CREATION OF STATES
   const [data, SetData] = useState([]);
   const [id, SetId] = useState();
@@ -234,57 +234,7 @@ function EditForm() {
               </tbody>
             </Table>
           </>
-        ) : (
-          <>
-            <Form
-              onSubmit={(e) => {
-                Crear(e);
-              }}
-            >
-              <h1>Formulario de slider</h1>
-              <Input
-                name="text"
-                type="text"
-                placeholder="Texto de slider"
-                value={values.text}
-                onChange={(e) => {
-                  SetValues({ ...values, text: e.target.value });
-                }}
-              />
-              <MessageError>{errors.text}</MessageError>
-              <Input
-                name="url"
-                type="text"
-                placeholder="Url de la imagen"
-                value={values.imageURL}
-                onChange={(e) => {
-                  SetValues({ ...values, imageURL: e.target.value });
-                }}
-              />
-              <MessageError>{errors.imageURL}</MessageError>
-              <Input
-                name="order"
-                type="number"
-                placeholder="Order"
-                value={values.order}
-                onChange={(e) => {
-                  SetValues({ ...values, order: e.target.value });
-                }}
-              />
-              <MessageError>{errors.order}</MessageError>
-              <Input
-                name="organizationID"
-                type="number"
-                placeholder="ID de organización"
-                value={values.organizationID}
-                onChange={(e) => {
-                  SetValues({ ...values, organizationID: e.target.value });
-                }}
-              />
-              <MessageError>{errors.organizationID}</MessageError>
-            </Form>
-          </>
-        )}
+        ) : null}
       </Content>
 
       <ContainerModal opacity={show.opacity} index={show.index}>
@@ -422,4 +372,4 @@ const closeButtonStyle = {
   background: "#6e6e6e",
 };
 
-export default EditForm;
+export default Sliders;

@@ -16,10 +16,10 @@ import Activities from "./views/Activities";
 import { ActivitiesByID } from "./views/Activities";
 import ActivityEditor from "./views/BackOffice/ActivityEditor";
 import UserEditor from "./views/BackOffice/UserEditor";
-import EditForm from "./views/BackOffice/EditForm";
 import News, { NewsByID } from "./views/News";
 import TestimonialsBackOffice from "./views/BackOffice/Testimonials";
 import Testimonials from "./views/Testimonials";
+import Sliders from "./views/BackOffice/Sliders";
 
 function App({ checkAuthentication }) {
   useEffect(() => {
@@ -95,7 +95,7 @@ function App({ checkAuthentication }) {
           path="/backoffice/slider"
           element={
             <Protected isAdmin>
-              <EditForm />
+              <Sliders />
             </Protected>
           }
         />
