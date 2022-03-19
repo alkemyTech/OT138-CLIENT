@@ -89,7 +89,7 @@ export default function Activities () {
 
     function onUpdate() {
         hideForm();
-        fetchActivities();
+        fetchActivities(currentPage);
     };
 
     async function onDelete (id) {
@@ -105,12 +105,12 @@ export default function Activities () {
         if (result.isConfirmed) {
             setLockedEntryIds(state => [...state, id]);
             
-            const { success, errorMessage } = await deleteActivity(id);
+            const { data } = await deleteActivity(id);
 
-            if (success) {
-                fetchActivities();
+            if (!data.error) {
+                fetchActivities(currentPage);
             } else {
-                toast.error(`Error al eliminar entrada: ${errorMessage}`);
+                toast.error(`Error al eliminar entrada: ${data.message}`);
             };
 
             setLockedEntryIds((state) => state.filter(entryId => entryId !== id));
