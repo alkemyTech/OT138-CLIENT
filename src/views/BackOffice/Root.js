@@ -75,8 +75,8 @@ function Backoffice({ auth }) {
               <thead>
                 <tr>
                   <th width="10%"></th>
-                  <th width="20%">Nombre</th>
-                  <th width="70%">Descripción</th>
+                  <th width="45%">Nombre</th>
+                  <th width="45%">Descripción</th>
                 </tr>
               </thead>
               <tbody>
@@ -118,8 +118,8 @@ function Backoffice({ auth }) {
               <thead>
                 <tr>
                   <th width="10%"></th>
-                  <th width="20%">Nombre</th>
-                  <th width="70%">Descripción</th>
+                  <th width="45%">Nombre</th>
+                  <th width="45%">Descripción</th>
                 </tr>
               </thead>
               <tbody>
@@ -136,7 +136,11 @@ function Backoffice({ auth }) {
                           </td>
                           <td>
                             <Link to={`/novedades/${id}`}>
-                              <b>{name}</b>
+                              <div class="parent">
+                                <div class="child">
+                                  <b>{name}</b>
+                                </div>
+                              </div>
                             </Link>
                           </td>
                           <td className="table__wrap__text">{content}</td>
@@ -184,8 +188,7 @@ function Backoffice({ auth }) {
                   <th width="10%"></th>
                   <th width="25%">Nombres</th>
                   <th width="25%">Apellidos</th>
-                  <th width="20%">Email</th>
-                  <th width="20%">Rol</th>
+                  <th width="35%">Email</th>
                 </tr>
               </thead>
               <tbody>
@@ -204,7 +207,6 @@ function Backoffice({ auth }) {
                           </td>
                           <td>{lastName}</td>
                           <td>{email}</td>
-                          <td>{roleId === 1 ? "Admin" : "Standard"}</td>
                         </tr>
                       );
                     })
