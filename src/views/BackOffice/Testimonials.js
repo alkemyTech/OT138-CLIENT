@@ -17,7 +17,11 @@ import {
   HeaderButtons,
   SectionTitle,
 } from "../../styles/BackOffice";
-
+import Modal, {
+  ModalBody,
+  ModalHeader,
+  ModalTitle,
+} from "../../components/Modal";
 function Testimonials() {
   const [Id, SetId] = useState(undefined);
 
@@ -87,7 +91,7 @@ function Testimonials() {
       }
     }
   }
-
+  const [show, setShow] = useState(false);
   return (
     <Container>
       <Header />
@@ -96,9 +100,22 @@ function Testimonials() {
         {/* <ContainerModal>
           {Id ? <FormTestimonial id={Id} /> : <FormTestimonial />}
         </ContainerModal> */}
+        <Modal size="sm" show={show} onClose={() => setShow(false)}>
+          <ModalHeader>
+            <ModalTitle>
+              {/* {formData.instance === null ? "Crear" : "Actualizar"} categoría */}
+            </ModalTitle>
+          </ModalHeader>
+          <ModalBody>
+            <FormTestimonial id={Id} />
+          </ModalBody>
+        </Modal>
         <SectionTitle>Testimonios</SectionTitle>
         <HeaderButtons>
-          <AddButton style={{ background: "green" }}>
+          <AddButton
+            style={{ background: "green" }}
+            onClick={() => setShow(true)}
+          >
             <FaPlusSquare /> <b>Crear</b>
           </AddButton>
         </HeaderButtons>
@@ -132,6 +149,7 @@ function Testimonials() {
                       <Button
                         style={editButtonStyle}
                         onClick={() => {
+                          setShow(true);
                           UpdateTestimony(id);
                         }}
                       >
@@ -140,6 +158,7 @@ function Testimonials() {
                       <Button
                         style={deleteButtonStyle}
                         onClick={() => {
+                          setShow(true);
                           DeleteTestimony(id);
                         }}
                       >

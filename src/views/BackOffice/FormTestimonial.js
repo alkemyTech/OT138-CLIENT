@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import {
@@ -91,54 +91,52 @@ function FormTestimonial({ id, SetAnimation, data }) {
   }
 
   return (
-    <Fragment>
+    <>
       <Toaster />
-      <Form onSubmit={OnSubmitData}>
-        <h1>Formulario de testimonio</h1>
-        <Input
-          type="text"
-          name="name"
-          placeholder="Nombre"
-          value={inputs.name}
-          onChange={OnChangeData}
-        />
-        <MessageError>{message.name}</MessageError>
-        <Input
-          type="text"
-          name="image"
-          placeholder="Imagen"
-          value={inputs.image}
-          onChange={OnChangeData}
-        />
-        <MessageError>{message.image}</MessageError>
-        <Label>Contenido</Label>
-        <CKEditor
-          editor={ClassicEditor}
-          data={inputs.content}
-          onChange={(event, editor) => {
-            const data = editor.getData();
-            SetCeditor(data);
-          }}
-        />
-        <MessageError>{message.content}</MessageError>
-        <ButtonGroup>
-          <Button style={saveButtonStyle} type="submit">
-            {!id ? "Guardar" : "Actualizar"}{" "}
+      <h1>Formulario de testimonio</h1>
+      <Input
+        type="text"
+        name="name"
+        placeholder="Nombre"
+        value={inputs.name}
+        onChange={OnChangeData}
+      />
+      <MessageError>{message.name}</MessageError>
+      <Input
+        type="text"
+        name="image"
+        placeholder="Imagen"
+        value={inputs.image}
+        onChange={OnChangeData}
+      />
+      <MessageError>{message.image}</MessageError>
+      <Label>Contenido</Label>
+      <CKEditor
+        editor={ClassicEditor}
+        data={inputs.content}
+        onChange={(event, editor) => {
+          const data = editor.getData();
+          SetCeditor(data);
+        }}
+      />
+      <MessageError>{message.content}</MessageError>
+      <ButtonGroup>
+        <Button style={saveButtonStyle} type="submit">
+          {!id ? "Guardar" : "Actualizar"}{" "}
+        </Button>
+        {data === undefined && (
+          <Button
+            style={closeButtonStyle}
+            type="button"
+            onClick={() => {
+              SetAnimation({ opacity: "0", index: "-1" });
+            }}
+          >
+            Cerrar
           </Button>
-          {data === undefined && (
-            <Button
-              style={closeButtonStyle}
-              type="button"
-              onClick={() => {
-                SetAnimation({ opacity: "0", index: "-1" });
-              }}
-            >
-              Cerrar
-            </Button>
-          )}
-        </ButtonGroup>
-      </Form>
-    </Fragment>
+        )}
+      </ButtonGroup>
+    </>
   );
 }
 
