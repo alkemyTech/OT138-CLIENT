@@ -18,7 +18,7 @@ import ActivityEditor from "./views/BackOffice/ActivityEditor";
 import UserEditor from "./views/BackOffice/UserEditor";
 import EditForm from "./views/BackOffice/EditForm";
 import News, { NewsByID } from "./views/News";
-import TableTestimonial from "./views/BackOffice/Table_testimonial";
+import TestimonialsBackOffice from "./views/BackOffice/Testimonials";
 import Testimonials from "./views/Testimonials";
 
 function App({ checkAuthentication }) {
@@ -58,10 +58,10 @@ function App({ checkAuthentication }) {
         />
 
         <Route
-          path="/backoffice/testimonios"
+          path="/backoffice/testimonials"
           element={
             <Protected isAdmin>
-              <TableTestimonial />
+              <TestimonialsBackOffice />
             </Protected>
           }
         />

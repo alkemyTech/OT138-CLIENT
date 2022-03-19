@@ -6,10 +6,12 @@ import { Footer } from "./Footer";
 import Activities from "./Activities";
 import AboutUs from "./AboutUs";
 import News from "./News";
+import FloatingDonateButton from "./FloatingDonateButton";
 function Home() {
   return (
     <Container>
       <Header />
+      <FloatingDonateButton />
       <Slider />
       <Content>
         <Activities />
