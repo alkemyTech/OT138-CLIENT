@@ -18,7 +18,8 @@ export default function Slider() {
     const { success, data } = await getSlidesService();
 
     if (success) {
-      setSlides(data);
+      const { items } = data;
+      setSlides(items);
     }
   }
 
