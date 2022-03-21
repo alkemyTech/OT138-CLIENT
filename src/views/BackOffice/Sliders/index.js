@@ -46,7 +46,7 @@ function EditForm() {
   setSlides(items);
   setPagination(pagination);
   }else{
-  toast.error("Error al obtener novedades: " + errorMessage);
+  toast.error("Error al obtener sliders: " + errorMessage);
   }}
 
 

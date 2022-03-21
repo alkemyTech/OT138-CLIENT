@@ -43,7 +43,7 @@ export const getOneSlides = async (id) => {
   };
 
   try {
-    const { data } = await api.get(`${API_SLIDES}${id}`)
+    const { data } = await api.get(`${API_SLIDES}/${id}`)
     if (data.error) {
       result.errorMessage = apiErrors[data.errorCode] ?? 'Error al obtener el slider';
       result.data = data.slider;
@@ -96,7 +96,7 @@ export const putSlides = async ( id,text,imageUrl) => {
   };
 
   try {
-    const { data } = await api.put(`${API_SLIDES}+${id}`, { text: text, imageURL: imageUrl });
+    const { data } = await api.put(`${API_SLIDES}/${id}`, { text: text, imageURL: imageUrl });
     if (data.error) {
       result.errorMessage = data.message;
       result.data = data.slider;
@@ -124,7 +124,7 @@ export const deleteSlides = async (id) => {
   };
 
   try {
-    const { data } = await api.delete(`${API_SLIDES}+${id}`);
+    const { data } = await api.delete(`${API_SLIDES}/${id}`);
     if (data.error) {
       result.errorMessage = data.message;
       result.data = data.slider;
