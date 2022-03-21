@@ -21,43 +21,50 @@ import Modal, {
 import { HeaderButtons, AddButton } from "../../../styles/BackOffice";
 import CategoryForm from "./CategoryForm";
 import Pagination from "../../../components/Pagination";
+import Skeleton from "react-loading-skeleton";
+import 'react-loading-skeleton/dist/skeleton.css'
+import { createArrayOfObjects } from "../../../helpers";
 
 export default function Categories() {
-  const [categories, setCategories] = useState([]);
-  const [lockedCategoryIds, setLockedCategoryIds] = useState([]);
-  const [pagination, setPagination] = useState({});
-  const [currentPage, setCurrentPage] = useState(1);
+    const [limit, setLimit] = useState(10);
+    const [categories, setCategories] = useState(createArrayOfObjects(limit));
+    const [lockedCategoryIds, setLockedCategoryIds] = useState([]);
+    const [pagination, setPagination] = useState({});
+    const [currentPage, setCurrentPage] = useState(1);
+    const [tableLoading, setTableLoading] = useState(true);
 
-  async function goToPage(page) {
-    setCurrentPage(page);
-    getCategories(page);
-  }
-  // CategoryForm metadata
-  const [formData, setFormData] = useState({
-    display: false,
-    instance: null,
-  });
+    async function goToPage(page) {
+        setCurrentPage(page);
+        getCategories(page);
+      }
+    // CategoryForm metadata
+    const [formData, setFormData] = useState({
+        display: false,
+        instance: null,
+    });
 
-  useEffect(() => {
-    getCategories(currentPage);
-  }, []);
+    useEffect(() => {
+        getCategories(currentPage);
+    }, []);
 
-  async function getCategories(page) {
-    const {
-      success,
-      data: categories,
-      errorMessage,
-    } = await getCategoriesService(page);
+    async function getCategories(page) {
+        setTableLoading(true);
+        const {
+            success,
+            data: categories,
+            errorMessage,
+        } = await getCategoriesService(page,limit);
 
-    if (success) {
-      console.log(categories);
-      const { items, ...pagination } = categories;
-      setCategories(items);
-      setPagination(pagination);
-    } else {
-      toast.error("Error al obtener categorías");
+        if (success) {
+            console.log(categories)
+            const {items, ...pagination} = categories;
+            setCategories(items);
+            setPagination(pagination)
+        } else {
+            toast.error('Error al obtener categorías');
+        }
+        setTableLoading(false);
     }
-  }
 
   async function onDeleteCategory(id) {
     const result = await Swal.fire({
@@ -152,14 +159,14 @@ export default function Categories() {
             {categories.map((category, index) => {
               return (
                 <tr key={index}>
-                  <td>{category.name}</td>
-                  <td>{category.description}</td>
+                  <td>{tableLoading?<StyledSkeleton/>:category.name}</td>
+                  <td>{tableLoading?<StyledSkeleton/>:category.description}</td>
                   <td>
-                    {category.updatedAt &&
+                    {tableLoading?<StyledSkeleton/>:category.updatedAt &&
                       moment(category.updatedAt).format("DD/MM/YY")}
                   </td>
                   <td>
-                    <ButtonGroup align="center" gap="8px">
+                    {tableLoading?<StyledSkeleton/>:<ButtonGroup align="center" gap="8px">
                       {lockedCategoryIds.includes(category.id) ? (
                         <TailSpin height="40" width="40" color="grey" />
                       ) : (
@@ -178,7 +185,7 @@ export default function Categories() {
                           </Button>
                         </>
                       )}
-                    </ButtonGroup>
+                    </ButtonGroup>}
                   </td>
                 </tr>
               );
@@ -207,3 +214,9 @@ const deleteButtonStyle = {
   height: "40px",
   background: "red",
 };
+
+function StyledSkeleton() {
+    return (
+      <Skeleton style={{margin: "10px 0px"}}/>
+    )
+  }
