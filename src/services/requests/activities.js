@@ -24,3 +24,6 @@ export const updateActivity = async (id, data) => {
     }).then((res) => res);
 }
 
+export const deleteActivity = async (id) => {
+    return api.delete(`/activities/${id}`).then((res) => res);
+}

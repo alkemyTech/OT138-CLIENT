@@ -19,6 +19,8 @@ import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { createArrayOfObjects } from "../../helpers";
 
+import { getDonations } from "../../services/requests/donations";
+import moment from "moment";
 function Backoffice({ auth }) {
   const [currentPage, setCurrentPage] = useState(1);
   const limit = 4;
@@ -63,6 +65,19 @@ function Backoffice({ auth }) {
     }
   );
 
+  const {
+    data: donations,
+    isLoadingDonations,
+    isFetchingDonations,
+    isErrorDonations,
+  } = useQuery(
+    ["donaciones", limit, currentPage],
+    () => getDonations(limit, currentPage),
+    {
+      retry: false,
+    }
+  );
+
   return (
     <Content>
       <BackofficeWelcome>
@@ -79,8 +94,8 @@ function Backoffice({ auth }) {
               <thead>
                 <tr>
                   <th width="10%"></th>
-                  <th width="20%">Nombre</th>
-                  <th width="70%">Descripción</th>
+                  <th width="45%">Nombre</th>
+                  <th width="45%">Descripción</th>
                 </tr>
               </thead>
               <tbody>
@@ -127,8 +142,8 @@ function Backoffice({ auth }) {
               <thead>
                 <tr>
                   <th width="10%"></th>
-                  <th width="20%">Nombre</th>
-                  <th width="70%">Descripción</th>
+                  <th width="45%">Nombre</th>
+                  <th width="45%">Descripción</th>
                 </tr>
               </thead>
               <tbody>
@@ -145,7 +160,11 @@ function Backoffice({ auth }) {
                           </td>
                           <td>
                             <Link to={`/novedades/${id}`}>
-                              <b>{name}</b>
+                              <div class="parent">
+                                <div class="child">
+                                  <b>{name}</b>
+                                </div>
+                              </div>
                             </Link>
                           </td>
                           <td className="table__wrap__text">{content}</td>
@@ -176,17 +195,45 @@ function Backoffice({ auth }) {
             <Table>
               <thead>
                 <tr>
-                  <th width="33%">Dedicatoria</th>
-                  <th width="33%">Dinero</th>
-                  <th width="33%">Fecha</th>
+                  <th width="60%">Dedicatoria</th>
+                  <th width="20%">Dinero</th>
+                  <th width="20%">Fecha</th>
                 </tr>
               </thead>
               <tbody>
-                <tr key={1}>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
+                {!isLoadingDonations ? (
+                  !donations?.data?.error && !isErrorDonations ? (
+                    donations?.data?.result?.items?.map((donation) => {
+                      const { id_donation, message, value, createdAt } =
+                        donation;
+                      return (
+                        <tr key={id_donation}>
+                          <td>
+                            <div class="parent">
+                              <div class="child">
+                                <b>
+                                  {message ??
+                                    "¡El donador no agregó una dedicatoria!"}
+                                </b>
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <b>${value}</b>
+                          </td>
+                          <td>{moment(createdAt).format("DD/MM/YY")}</td>
+                        </tr>
+                      );
+                    })
+                  ) : (
+                    <h1>¡En este momento no contamos con Donaciones!</h1>
+                  )
+                ) : !isLoadingDonations &&
+                  !isFetchingDonations &&
+                  donations?.data?.error &&
+                  isErrorDonations ? (
+                  <h1>¡No se encontraron Donaciones!</h1>
+                ) : null}
               </tbody>
             </Table>
           </StatisticsBox>
@@ -198,8 +245,7 @@ function Backoffice({ auth }) {
                   <th width="10%"></th>
                   <th width="25%">Nombres</th>
                   <th width="25%">Apellidos</th>
-                  <th width="20%">Email</th>
-                  <th width="20%">Rol</th>
+                  <th width="35%">Email</th>
                 </tr>
               </thead>
               <tbody>
@@ -218,7 +264,6 @@ function Backoffice({ auth }) {
                           </td>
                           <td>{lastName}</td>
                           <td>{email}</td>
-                          <td>{roleId === 1 ? "Admin" : "Standard"}</td>
                         </tr>
                       );
                     })

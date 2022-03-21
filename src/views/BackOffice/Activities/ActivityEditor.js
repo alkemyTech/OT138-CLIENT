@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Header from "../../components/Header/BackOffice";
-import { Footer } from "../../components/Footer";
-import EntryEditor from "../../components/EntryEditor";
+import Header from "../../../components/Header/BackOffice";
+import { Footer } from "../../../components/Footer";
+import EntryEditor from "../../../components/EntryEditor";
 import {
   createActivity,
   getActivitiesById,
   updateActivity,
-} from "../../services/requests/activities";
+} from "../../../services/requests/activities";
 import toast, { Toaster } from "react-hot-toast";
-import { Container, Content } from '../../components/Wrappers/Containers'; 
+import { Container, Content } from '../../../components/Wrappers/Containers'; 
 
 function ActivityEditor() {
   const { id } = useParams();
@@ -61,6 +61,7 @@ function ActivityEditor() {
         })
         .catch((err) => {
           toast.error("Error al intentar crear la entrada");
+          console.log(err);
         });
     }
   };

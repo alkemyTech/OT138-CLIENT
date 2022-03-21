@@ -39,7 +39,7 @@ function Testimonials() {
   useEffect(() => {
     if (response) {
       if (response.data.error) {
-        toast.error("Error al obtener testimonios");
+        toast.error("Error al obtener actividades");
       } else {
         const { items, ...pagination } = response.data.result;
         setTestimonials(items);
@@ -58,6 +58,7 @@ function Testimonials() {
 
   return (
     <Container>
+      {console.log(testimonials)}
       <Header />
       <Content>
         <Banner title={"Testimonios"} thumbnail={"/testimonials.jpg"} />

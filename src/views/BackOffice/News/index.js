@@ -182,7 +182,7 @@ export default function News() {
                     />}
                   </td>
                   <td>{tableLoading?<Skeleton/>:entry.name}</td>
-                  <td onClick={() => showEntryPicture(entry.image)}>
+                  <td onClick={() => showEntryContent(entry.content)}>
                     {tableLoading?<Skeleton/>:<div class="parent">
                       <div class="child">{entry.content}</div>
                     </div>}

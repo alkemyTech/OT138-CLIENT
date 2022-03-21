@@ -64,8 +64,8 @@ export default function Activities() {
   return (
     <Container>
       <Header />
+      <Banner title={"Actividades"} thumbnail={"/activities__banner.jpg"} />
       <Content>
-        <Banner title={"Actividades"} thumbnail={"/activities__banner.jpg"} />
         <ActivitiesContainer>
           {isLoading || isFetching ? (
             <Loading />

@@ -72,7 +72,7 @@ export const StatisticsBox = styled.div`
   display: flex;
   flex-direction: column;
   max-width: 620px;
-  max-height: 280px;
+  max-height: 300px;
   min-width: 280px;
   min-height: 260px;
   height: 100%;
@@ -80,6 +80,14 @@ export const StatisticsBox = styled.div`
   flex: 1;
   background: #ebf2fb;
   border-radius: 5px;
+  div > div {
+    overflow: hidden;
+  }
+  @media (max-width: 960px) {
+    div > div {
+      overflow: auto;
+    }
+  }
   .table__wrap__text {
     max-width: 220px;
     white-space: nowrap;
