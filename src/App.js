@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Home from "./components/Home";
+import Home from "./views/Home";
 import Login from "./views/Login";
 import Signup from "./views/Signup";
 import FormContacto from "./views/Contact";
@@ -14,12 +14,13 @@ import { checkAuthentication as checkAuthenticationAction } from "./actions/auth
 import Protected from "./components/Routes/Protected";
 import Activities from "./views/Activities";
 import { ActivitiesByID } from "./views/Activities";
-import ActivityEditor from "./views/BackOffice/ActivityEditor";
+import ActivityEditor from "./views/BackOffice/Activities/ActivityEditor";
 import UserEditor from "./views/BackOffice/UserEditor";
 import Sliders from "./views/BackOffice/Sliders";
 import News, { NewsByID } from "./views/News";
-import TableTestimonial from "./views/BackOffice/Table_testimonial";
+import TestimonialsBackOffice from "./views/BackOffice/Testimonials";
 import Testimonials from "./views/Testimonials";
+import Sliders from "./views/BackOffice/Sliders";
 
 function App({ checkAuthentication }) {
   useEffect(() => {
@@ -58,10 +59,10 @@ function App({ checkAuthentication }) {
         />
 
         <Route
-          path="/backoffice/testimonios"
+          path="/backoffice/testimonials"
           element={
             <Protected isAdmin>
-              <TableTestimonial />
+              <TestimonialsBackOffice />
             </Protected>
           }
         />

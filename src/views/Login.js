@@ -24,7 +24,7 @@ const validate = (values) => {
 
   if (!values.email) {
     errors.email = "*";
-  } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(values.email)) {
+  } else if (!/^[\w-.]+@([\w-]+.)+[\w-]{2,4}$/.test(values.email)) {
     errors.email = "Inválido";
   }
 

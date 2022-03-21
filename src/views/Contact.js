@@ -5,15 +5,14 @@ import {
   ContainColumn,
   Image,
   Form,
-  Input,
-  Textarea,
-  Button,
   MessageError,
 } from "../styles/FormContact";
+import { Button } from "../components/Inputs";
 import { createContact } from "../services/requests/contacts";
 import Alert from "../components/Alert";
 import { Container, Content } from "../components/Wrappers/Containers";
 import { Toaster, toast } from "react-hot-toast";
+import { Input, TextArea } from "../components/Inputs";
 
 function FormContacto() {
   const [alert, setAlert] = useState({});
@@ -117,7 +116,7 @@ function FormContacto() {
                   onBlur={handleBlur}
                 />
                 <MessageError>{touched.phone && errors.phone}</MessageError>
-                <Textarea
+                <TextArea
                   name="message"
                   placeholder="Mensaje"
                   value={values.message}
@@ -125,7 +124,12 @@ function FormContacto() {
                   onBlur={handleBlur}
                 />
                 <MessageError>{touched.message && errors.message}</MessageError>
-                <Button type="submit">
+                <Button
+                  type="submit"
+                  style={{
+                    background: "#116530",
+                  }}
+                >
                   <b>Enviar</b>
                 </Button>
               </Form>

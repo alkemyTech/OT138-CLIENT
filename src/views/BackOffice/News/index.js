@@ -176,7 +176,7 @@ export default function News() {
                     />
                   </td>
                   <td>{entry.name}</td>
-                  <td onClick={() => showEntryPicture(entry.image)}>
+                  <td onClick={() => showEntryContent(entry.content)}>
                     <div class="parent">
                       <div class="child">{entry.content}</div>
                     </div>
