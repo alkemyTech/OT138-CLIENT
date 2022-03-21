@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { getPublicData } from "../../services/requests/publicData";
 import { FooterStyle } from "./styles";
 
@@ -35,7 +36,7 @@ export function Footer() {
                         {webLinks.map((link, index) => {
                             return (
                                 <li key={index}>
-                                    <a href={link.url}>{link.name}</a>
+                                    <Link to={link.url}>{link.name}</Link>
                                 </li>
                             );
                         })}

@@ -1,18 +1,18 @@
-import React, { Fragment, useState } from "react";
+import React, { useState } from "react";
 import { Formik } from "formik";
 import Header from "../components/Header/Landing";
 import {
-  Container,
   ContainColumn,
-  Colum,
+  Image,
   Form,
-  Input,
-  Textarea,
-  Button,
   MessageError,
 } from "../styles/FormContact";
+import { Button } from "../components/Inputs";
 import { createContact } from "../services/requests/contacts";
 import Alert from "../components/Alert";
+import { Container, Content } from "../components/Wrappers/Containers";
+import { Toaster, toast } from "react-hot-toast";
+import { Input, TextArea } from "../components/Inputs";
 
 function FormContacto() {
   const [alert, setAlert] = useState({});
@@ -21,27 +21,12 @@ function FormContacto() {
     try {
       const response = await createContact(values);
       if (!response.error) {
-        setAlert({
-          type: "success",
-          show: true,
-          title: "Contacto enviado correctamente.",
-          description: "",
-        });
+        toast.success("El mensaje fue enviado con éxito.");
       } else {
-        setAlert({
-          type: "error",
-          show: true,
-          title: "Error al intentar enviar el contacto.",
-          description: response.message,
-        });
+        toast.error("Error al enviar el mensaje.");
       }
     } catch (error) {
-      setAlert({
-        type: "error",
-        show: true,
-        title: "Error al intentar enviar el contacto.",
-        description: error.message,
-      });
+      toast.error("Error al intentar enviar el mensaje.");
     }
   };
 
@@ -67,27 +52,23 @@ function FormContacto() {
       errores.phone = "Ingrese un numero de teléfono.";
     }
     //VALIDATION MESSAGE
-    if (values.message.length < 30) {
-      errores.message = "El mensaje debe contener más de 30 caracteres.";
+    if (values.message.length < 3) {
+      errores.message = "El mensaje debe contener más de 3 caracteres.";
     }
 
     return errores;
   };
   return (
-    <Fragment>
+    <Container>
       <Header />
-      <Container>
-        <Alert
-          show={alert.show}
-          title={alert.title}
-          description={alert.description}
-          type={alert.type}
-        />
-
+      <Toaster />
+      <Content>
         <ContainColumn>
-          <Colum>
-            <h1>Dejanos un mensaje</h1>
-          </Colum>
+          <Image
+            src={
+              "https://images.unsplash.com/photo-1509099836639-18ba1795216d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1031&q=80"
+            }
+          />
           <Formik
             initialValues={{
               name: "",
@@ -107,10 +88,11 @@ function FormContacto() {
               touched,
             }) => (
               <Form onSubmit={handleSubmit}>
+                <h1>Déjanos un mensaje</h1>
                 <Input
                   name="name"
                   type="text"
-                  placeholder="Nombre y Apellido"
+                  placeholder="Nombre Completo"
                   value={values.name}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -134,7 +116,7 @@ function FormContacto() {
                   onBlur={handleBlur}
                 />
                 <MessageError>{touched.phone && errors.phone}</MessageError>
-                <Textarea
+                <TextArea
                   name="message"
                   placeholder="Mensaje"
                   value={values.message}
@@ -142,13 +124,20 @@ function FormContacto() {
                   onBlur={handleBlur}
                 />
                 <MessageError>{touched.message && errors.message}</MessageError>
-                <Button type="submit">Enviar</Button>
+                <Button
+                  type="submit"
+                  style={{
+                    background: "#116530",
+                  }}
+                >
+                  <b>Enviar</b>
+                </Button>
               </Form>
             )}
           </Formik>
         </ContainColumn>
-      </Container>
-    </Fragment>
+      </Content>
+    </Container>
   );
 }
 

@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { ButtonContainer } from "../../components/Inputs/styles";
 
 export const SectionTitle = styled.h1`
-  padding-left: 10px;
+  margin: 1.5rem 0 0 0;
 `;
 
 export const HeaderButtons = styled.div`
@@ -14,8 +14,16 @@ export const HeaderButtons = styled.div`
 `;
 
 export const AddButton = styled(ButtonContainer)`
-  padding: 10px 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 5px;
+  align-items: center;
+  padding: 5px 15px;
+  min-width: 150px;
   width: auto;
+  height: 42px;
+  margin: 0 0 5px 0;
 `;
 
 export const BackOfficeContainer = styled.div`
@@ -64,7 +72,7 @@ export const StatisticsBox = styled.div`
   display: flex;
   flex-direction: column;
   max-width: 620px;
-  max-height: 280px;
+  max-height: 300px;
   min-width: 280px;
   min-height: 260px;
   height: 100%;
@@ -72,6 +80,14 @@ export const StatisticsBox = styled.div`
   flex: 1;
   background: #ebf2fb;
   border-radius: 5px;
+  div > div {
+    overflow: hidden;
+  }
+  @media (max-width: 960px) {
+    div > div {
+      overflow: auto;
+    }
+  }
   .table__wrap__text {
     max-width: 220px;
     white-space: nowrap;

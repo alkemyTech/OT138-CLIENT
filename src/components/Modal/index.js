@@ -8,14 +8,16 @@ import {
   CloseButton,
 } from "./styles";
 
-export default function ({ children, show = false, onClose, size }) {
+export default function Modal({ children, show = false, onClose, size }) {
   return (
-    <ModalWrapper show={show}>
-      <ModalContainer size={size}>
-        <CloseButton onClick={onClose}>✕</CloseButton>
-        {children}
-      </ModalContainer>
-    </ModalWrapper>
+    show && (
+      <ModalWrapper show={show}>
+        <ModalContainer size={size}>
+          <CloseButton onClick={onClose}>✕</CloseButton>
+          {children}
+        </ModalContainer>
+      </ModalWrapper>
+    )
   );
 }
 

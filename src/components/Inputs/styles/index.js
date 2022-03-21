@@ -42,7 +42,8 @@ export const TextAreaContainer = styled.textarea`
   margin: 0 0 0.5rem 0;
   min-height: 48px;
   height: 100px;
-  padding: 10px 5px;
+  padding: 10px 8px;
+  font-family: "Inter", sans-serif !important;
   /* Chrome, Safari, Edge, Opera */
   ::-webkit-outer-spin-button,
   ::-webkit-inner-spin-button {
@@ -56,10 +57,10 @@ export const TextAreaContainer = styled.textarea`
 `;
 
 export const LabelContainer = styled.label`
-  margin: 2rem 0 0 0;
+  display: inline-block;
+  margin: 0.5rem 0;
   font-weight: 500;
   font-size: 16px;
-  margin: 0.5rem 0;
   color: var(--titles-color);
   span {
     color: red;
@@ -83,15 +84,15 @@ export const ButtonContainer = styled.button`
 `;
 
 export const ButtonGroup = styled.div`
-    gap: ${(props) => props.gap ?? 0};
-    display: flex;
-    flex-direction: row;
-    justify-content: ${(props) =>
-      props.align === "center"
-        ? "center"
-        : props.align === "end"
-        ? "flex-end"
-        : "flex-start"};
+  gap: ${(props) => props.gap ?? 0};
+  display: flex;
+  flex-direction: row;
+  justify-content: ${(props) =>
+    props.align === "center"
+      ? "center"
+      : props.align === "end"
+      ? "flex-end"
+      : "flex-start"};
 `;
 
 export const SelectContainer = styled.select`
@@ -115,4 +116,21 @@ export const TextEditorContainer = styled.div`
     margin-bottom: 20px;
     background-color: #edf2f7;
   }
+`;
+
+export const Avatar = styled.img`
+  height: ${(props) => props.height ?? "45px"};
+  width: ${(props) => props.height ?? "45px"};
+  object-fit: cover;
+  border-radius: 50%;
+  margin: ${(props) => props.margin ?? 0};
+  padding: ${(props) => props.padding ?? 0};
+  cursor: pointer;
+`;
+
+export const TextWrapper = styled.p`
+  /* max-width: ${(props) => props.maxWidth ?? "500px"};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; */
 `;

@@ -22,10 +22,23 @@ export const Table = styled.table`
   th {
     padding: 10px;
     background: #ddd;
+    max-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   td {
     padding: 10px;
     white-space: pre;
+    .parent {
+      display: flex;
+    }
+    .child {
+      flex: 1;
+      width: 1px;
+      overflow-x: hidden;
+      text-overflow: ellipsis;
+    }
   }
   tr:nth-of-type(odd) {
     background: #eee;

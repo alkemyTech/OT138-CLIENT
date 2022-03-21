@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Loading from "../../components/Loading";
-import { EditorContainer, EditorContent, EntryType, Message } from "./styles";
+import { EditorContent, EntryType, Message } from "./styles";
 import { Input, Label, Button, TextArea, TextEditor, Select } from "../Inputs";
-import { Content } from "../Wrappers/Containers";
 
 /**
  *
@@ -20,122 +19,137 @@ import { Content } from "../Wrappers/Containers";
  */
 
 function EntryEditor({ id, state, entryType, get, save, data, fields }) {
-    const [fieldsWithData, setFieldsWithData] = useState([]);
+  const [fieldsWithData, setFieldsWithData] = useState([]);
 
-    useEffect(() => {
-        setFieldsWithData(fields.map(field => {
-            return {
-                ...field,
-                value: (data && data[field.name]) ?? ""
-            }
-        }));
-    }, [data, fields]);
-
-    const updateField = (fieldName, fieldValue) => {
-        setFieldsWithData(state => {
-            const newState = [...state];
-            const index = state.findIndex(field => field.name === fieldName);
-            if (index >= 0) {
-                newState[index].value = fieldValue;
-            }
-            return newState;
-        });
-    }
-
-    const onSave = () => {
-        const formData = {};
-        fieldsWithData.forEach(field => {
-            formData[field.name] = field.value;
-        })
-        save(formData);
-    }
-
-    return (
-        <>
-            {state === "loading" && (
-                <EditorContent>
-                    <Loading />
-                </EditorContent>
-            )}
-            {state === "ready" && (
-                <EditorContent>
-                    {id && (
-                        <span>
-                            <h1>Editar entrada</h1> <EntryType>{entryType}</EntryType>
-                        </span>
-                    )}
-                    {!id && (
-                        <span>
-                            <h1>Crear entrada</h1>
-                            <EntryType>{entryType}</EntryType>
-                        </span>
-                    )}
-                    {fieldsWithData.map((field) => {
-                        return (
-                            <div key={`field-${field.name}`}>
-                                <Label>{field.title}</Label>
-                                {field.type === "text" && (
-                                    <Input
-                                        type="text"
-                                        value={field.value}
-                                        name={field.name}
-                                        onChange={({ target: { name, value } }) => updateField(name, value)}
-                                    />
-                                )}
-                                {field.type === "textarea" && (
-                                    <TextArea
-                                        value={field.value}
-                                        name={field.name}
-                                        onChange={({ target: { name, value } }) => updateField(name, value)}
-                                    />
-                                )}
-                                {field.type === "select" && (
-                                    <Select
-                                        value={field.value}
-                                        name={field.name}
-                                        onChange={({ target: { name, value } }) => updateField(name, value)}
-                                    >
-                                        <option value={null}></option>
-                                        {field.options.map((option, index) => {
-                                            return (
-                                                <option value={option.value} key={`option-${index}`}>
-                                                    {option.text}
-                                                </option>
-                                            );
-                                        })}
-                                    </Select>
-                                )}
-                                {field.type === "content" && (
-                                    <TextEditor
-                                        name={field.name}
-                                        data={field.value}
-                                        onChange={(event, editor) => {
-                                            const data = editor.getData();
-                                            updateField(field.name, data);
-                                        }}
-                                    />
-                                )}
-                            </div>
-                        );
-                    })}
-                    <Button onClick={event => {
-                        event.preventDefault();
-                        onSave();
-                    }}>
-                        <b>GUARDAR</b>
-                    </Button>
-                </EditorContent>
-            )}
-            {state === "load_error" && (
-                <EditorContent>
-                    <Message alert>
-                        <span>Error al cargar los datos</span>
-                        <Button onClick={get} children={"Cargar de nuevo"} />
-                    </Message>
-                </EditorContent>
-            )}
-        </>
+  useEffect(() => {
+    setFieldsWithData(
+      fields.map((field) => {
+        return {
+          ...field,
+          value: data[field.name]
+            ? data[field.name]
+            : field?.defaultValue
+            ? field?.defaultValue
+            : "",
+        };
+      })
     );
+  }, [data, fields]);
+
+  const updateField = (fieldName, fieldValue) => {
+    setFieldsWithData((state) => {
+      const newState = [...state];
+      const index = state.findIndex((field) => field.name === fieldName);
+      if (index >= 0) {
+        newState[index].value = fieldValue;
+      }
+      return newState;
+    });
+  };
+
+  const onSave = () => {
+    const formData = {};
+    fieldsWithData.forEach((field) => {
+      formData[field.name] = field.value;
+    });
+    save(formData);
+  };
+
+  return (
+    <>
+      {state === "loading" && (
+        <EditorContent>
+          <Loading />
+        </EditorContent>
+      )}
+      {state === "ready" && (
+        <EditorContent>
+          {id && (
+            <span>
+              <h1>Editar entrada</h1> <EntryType>{entryType}</EntryType>
+            </span>
+          )}
+          {!id && (
+            <span>
+              <h1>Crear entrada</h1>
+              <EntryType>{entryType}</EntryType>
+            </span>
+          )}
+          {fieldsWithData.map((field) => {
+            return (
+              <div key={`field-${field.name}`}>
+                <Label>{field.title}</Label>
+                {field.type === "text" && (
+                  <Input
+                    type="text"
+                    value={field.value}
+                    name={field.name}
+                    onChange={({ target: { name, value } }) =>
+                      updateField(name, value)
+                    }
+                  />
+                )}
+                {field.type === "textarea" && (
+                  <TextArea
+                    value={field.value}
+                    name={field.name}
+                    onChange={({ target: { name, value } }) =>
+                      updateField(name, value)
+                    }
+                  />
+                )}
+                {field.type === "select" && (
+                  <Select
+                    value={field.value}
+                    name={field.name}
+                    defaultValue={field.defaultValue}
+                    onChange={({ target: { name, value } }) =>
+                      updateField(name, value)
+                    }
+                  >
+                    {field.options.map((option, index) => {
+                      return (
+                        <option value={option.value} key={`option-${index}`}>
+                          {option.text}
+                        </option>
+                      );
+                    })}
+                  </Select>
+                )}
+                {field.type === "content" && (
+                  <TextEditor
+                    name={field.name}
+                    data={field.value}
+                    onChange={(event, editor) => {
+                      const data = editor.getData();
+                      updateField(field.name, data);
+                    }}
+                  />
+                )}
+              </div>
+            );
+          })}
+          <Button
+            style={{ margin: "1rem 0 0 0" }}
+            onClick={(event) => {
+              event.preventDefault();
+              onSave();
+            }}
+          >
+            <b>GUARDAR</b>
+          </Button>
+        </EditorContent>
+      )}
+      {state === "load_error" && (
+        <EditorContent>
+          <Message alert>
+            <span>Error al cargar los datos</span>
+            <Button onClick={get} children={"Cargar de nuevo"} />
+          </Message>
+        </EditorContent>
+      )}
+    </>
+  );
 }
 
 export default EntryEditor;

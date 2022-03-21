@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-import Home from "./components/Home";
+import Home from "./views/Home";
 import Login from "./views/Login";
 import Signup from "./views/Signup";
-import FormContacto from "./views/Form_contact";
+import FormContacto from "./views/Contact";
 import { Route, Routes } from "react-router-dom";
 import "./styles/App.css";
 import Backoffice from "./views/Backoffice";
@@ -15,11 +15,16 @@ import Protected from "./components/Routes/Protected";
 import Activities from "./views/Activities";
 import { ActivitiesByID } from "./views/Activities";
 import ActivityEditor from "./views/BackOffice/Activities/ActivityEditor";
+<<<<<<< HEAD
 import UserEditor from "./views/BackOffice/Users/UserEditor";
 import EditForm from "./views/BackOffice/EditForm";
+=======
+import UserEditor from "./views/BackOffice/UserEditor";
+>>>>>>> a624b25bbcd278eee4900945e8cb6c2573432988
 import News, { NewsByID } from "./views/News";
-import TableTestimonial from "./views/BackOffice/Table_testimonial";
+import TestimonialsBackOffice from "./views/BackOffice/Testimonials";
 import Testimonials from "./views/Testimonials";
+import Sliders from "./views/BackOffice/Sliders";
 
 function App({ checkAuthentication }) {
   useEffect(() => {
@@ -58,10 +63,10 @@ function App({ checkAuthentication }) {
         />
 
         <Route
-          path="/backoffice/testimonios"
+          path="/backoffice/testimonials"
           element={
             <Protected isAdmin>
-              <TableTestimonial />
+              <TestimonialsBackOffice />
             </Protected>
           }
         />
@@ -95,7 +100,7 @@ function App({ checkAuthentication }) {
           path="/backoffice/slider"
           element={
             <Protected isAdmin>
-              <EditForm />
+              <Sliders />
             </Protected>
           }
         />

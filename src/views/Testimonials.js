@@ -1,79 +1,105 @@
-import React, { Fragment, useEffect, useState } from 'react';
-import {getTestimony} from "../services/requests/form_testimonial";
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import React, { useEffect, useState } from "react";
 import Header from "../components/Header/Landing";
 import Banner from "../components/Banner";
-import Pagination from 'react-responsive-pagination';
-import {Card,HeaderCard,Container,Content,PositionPagination} from "../styles/Testimonials";
+import Pagination from "../components/Pagination";
+import {
+  Card,
+  HeaderCard,
+  TestimonialsContainer,
+} from "../styles/Testimonials";
+import { getTestimonies } from "../services/requests/testimonials";
+import { useQuery } from "react-query";
+import toast from "react-hot-toast";
+import Loading from "../components/Loading";
+import { Container, Content } from "../components/Wrappers/Containers";
+import { Footer } from "../components/Footer";
+function Testimonials() {
+  const [testimonials, setTestimonials] = useState([]);
+  const [pagination, setPagination] = useState({
+    pages: 1,
+    count: 0,
+  });
+  const [currentPage, setCurrentPage] = useState(1);
+  const limit = 15;
 
-
-
-
-
-
-function Testimonials(){
-
-    const [data,SetData] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
-    const totalPages = Math.ceil(data.length/3);
-    const testimontPage = 3;
-
-   
-    //OPERACIONES
-    const indexOfLast = currentPage * testimontPage;
-    const indexOfFist = indexOfLast - testimontPage;
-
-
-    useEffect(()=>{
-    GetData();
-    },[]);
-
-
-
-
-    async function GetData(){
-    const response = await getTestimony();
-    SetData(response.data)
+  const {
+    data: response,
+    isLoading,
+    isFetching,
+    isError,
+    refetch,
+  } = useQuery(
+    ["testimonios", limit, currentPage],
+    () => getTestimonies(limit, currentPage),
+    {
+      retry: false,
     }
+  );
 
-    
+  useEffect(() => {
+    if (response) {
+      if (response.data.error) {
+        toast.error("Error al obtener actividades");
+      } else {
+        const { items, ...pagination } = response.data.result;
+        setTestimonials(items);
+        setPagination(pagination);
+      }
+    }
+  }, [response]);
 
-    return(
-    <Fragment>
-    <Header/>
-    <Banner
-    title={"Lista de Testimonios"}
-    thumbnail={"/testimonials.jpg"}
-    />
+  useEffect(() => {
+    refetch();
+  }, [currentPage]);
+
+  async function goToPage(page) {
+    setCurrentPage(page);
+  }
+
+  return (
     <Container>
-    {data.length ? data.slice(indexOfFist,indexOfLast).map((item)=>{
-
-    return(
-    <Card key={item.id}>
-    <HeaderCard>
-    <img src={item.image} alt='imagen-perfil'/>
-    <h2>{item.name}</h2>
-    </HeaderCard>
-    <Content>
-    <CKEditor editor={ ClassicEditor }  data={item.content}/>
-    </Content>       
-    </Card>
-    )})
-
-    : <h1>No hay testimonios</h1>}
-        
+      {console.log(testimonials)}
+      <Header />
+      <Content>
+        <Banner title={"Testimonios"} thumbnail={"/testimonials.jpg"} />
+        <TestimonialsContainer>
+          {isLoading || isFetching ? (
+            <Loading />
+          ) : testimonials && testimonials.length > 0 ? (
+            testimonials.map((testimonial) => {
+              const { id, name, image, content } = testimonial;
+              return (
+                <Card key={id}>
+                  <HeaderCard>
+                    <img
+                      src={image}
+                      alt="imagen-perfil"
+                      onError={({ currentTarget }) => {
+                        currentTarget.onerror = null;
+                        currentTarget.src = "/broken__image.gif";
+                      }}
+                    />
+                    <h2>{name}</h2>
+                  </HeaderCard>
+                  <Content>
+                    <p>{content}</p>
+                  </Content>
+                </Card>
+              );
+            })
+          ) : (
+            <h2>¡En este momento no contamos con Testimonios!</h2>
+          )}
+        </TestimonialsContainer>
+        <div className="divider">
+          {pagination && (
+            <Pagination onPageChange={goToPage} totalPages={pagination.pages} />
+          )}
+        </div>
+      </Content>
+      <Footer />
     </Container>
-    <PositionPagination>
-    <Pagination
-      current={currentPage}
-      total={totalPages}
-      onPageChange={setCurrentPage}
-    />
-   </PositionPagination>
-   </Fragment>
-    );
+  );
 }
-
 
 export default Testimonials;
