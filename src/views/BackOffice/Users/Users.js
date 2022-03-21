@@ -8,13 +8,19 @@ import { Content } from "../../../components/Wrappers/Containers";
 import { SectionTitle } from "../../../styles/BackOffice";
 import Swal from 'sweetalert2';
 import { useNavigate } from "react-router-dom";
+import { createArrayOfObjects } from "../../../helpers";
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 export default function Users() {
-    const [users, setUsers] = useState([]);
+    const [limit, setLimit] = useState(10);
+    const [tableLoading, setTableLoading] = useState(false)
+    const [users, setUsers] = useState(createArrayOfObjects(limit));
     const [lockedEntryIds, setLockedEntryIds] = useState([]);
     let navigate = useNavigate();
 
     async function fetchUsers() {
+        setTableLoading(true);
         const { success, data: users, errorMessage } = await getUsers();
         //console.log(JSON.stringify(await getUsers()));
 
@@ -23,6 +29,7 @@ export default function Users() {
         } else {
             toast.error(`Error fetching users: ${errorMessage}`);
         }
+        setTableLoading(false);
     }
 
     useEffect(() => {
@@ -96,18 +103,18 @@ export default function Users() {
                             users.map((user, index) => {
                                 return (
                                     <tr key={index}>
-                                        <td>{user.firstName}</td>
-                                        <td>{user.lastName}</td>
-                                        <td>{user.email}</td>
+                                        <td>{tableLoading?<Skeleton/>:user.firstName}</td>
+                                        <td>{tableLoading?<Skeleton/>:user.lastName}</td>
+                                        <td>{tableLoading?<Skeleton/>:user.email}</td>
                                         <td>
-                                            <ButtonGroup align='center'>
+                                            {tableLoading?<Skeleton/>:<ButtonGroup align='center'>
                                                 <Button style={buttonStyles("orange")} onClick={() => onEdit(user.id)} >
                                                     <FaEdit />
                                                 </Button>
                                                 <Button style={buttonStyles("red")} onClick={() => onDelete(user.id)} >
                                                     <FaTrash />
                                                 </Button>
-                                            </ButtonGroup>
+                                            </ButtonGroup>}
                                         </td>
                                     </tr>
                                 )
