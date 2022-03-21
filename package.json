@@ -33,6 +33,7 @@
     "react-router-dom": "^6.2.1",
     "react-router-redux": "^4.0.8",
     "react-scripts": "^5.0.0",
+    "react-transition-group": "^4.4.2",
     "redux-thunk": "^2.4.1",
     "rehype-raw": "^6.1.1",
     "serve": "^13.0.2",
