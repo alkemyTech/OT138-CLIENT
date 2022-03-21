@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import EntryEditor from "../../components/EntryEditor";
-import Header from "../../components/Header/BackOffice";
-import { Footer } from "../../components/Footer";
-import { getProfileByAdmin, saveProfileData, updateProfileByAdmin } from "../../services/requests/profile";
-import { Container, Content } from "../../components/Wrappers/Containers";
+import EntryEditor from "../../../components/EntryEditor";
+import Header from "../../../components/Header/BackOffice";
+import { Footer } from "../../../components/Footer";
+import { getProfileByAdmin, saveProfileData, updateProfileByAdmin } from "../../../services/requests/profile";
+import { Container, Content } from "../../../components/Wrappers/Containers";
 import toast, { Toaster } from "react-hot-toast";
 
 function UserEditor(){
@@ -43,7 +43,9 @@ function UserEditor(){
     }
 
     const saveData = async (data) => {
-        updateProfileByAdmin(data).then(response => {
+        const factorizeData = {...data}
+        factorizeData.id = id;
+        updateProfileByAdmin(factorizeData).then(response => {
             if(!response.data.error){
                 toast.success("Los datos fueron guardados con éxito");
             } else{
