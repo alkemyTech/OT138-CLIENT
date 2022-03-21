@@ -14,6 +14,8 @@ import { Avatar } from "../../../components/Inputs/styles";
 import {HeaderButtons,AddButton,SectionTitle} from "../../../styles/BackOffice";
 import Modal, {ModalBody} from "../../../components/Modal";
 import Pagination from "../../../components/Pagination";
+import Skeleton from "react-loading-skeleton";
+import 'react-loading-skeleton/dist/skeleton.css'
 
 
 function EditForm() {
@@ -24,6 +26,7 @@ function EditForm() {
   const [currentPage, setCurrentPage] = useState(1);
   const [formData, setFormData] = useState({display: false,instance: null,});
   const [pagination, setPagination] = useState({});
+  const [tableLoading, setTableLoading] = useState(true);
   const resultsLimit = 10;
 
 
@@ -40,6 +43,7 @@ function EditForm() {
 
  //GET SLIDERS
   async function getSlider(page) {
+  setTableLoading(true);
   const {success,data: slidesData,errorMessage,} = await getSlides(page, resultsLimit);
   if(success) {
   const { items, ...pagination } = slidesData;
@@ -47,7 +51,7 @@ function EditForm() {
   setPagination(pagination);
   }else{
   toast.error("Error al obtener sliders: " + errorMessage);
-  }}
+  }setTableLoading(false);}
 
 
 
@@ -60,7 +64,6 @@ function EditForm() {
 
 
 
-
   //SHOW COVER
   function showEntryPicture(url) {
   Swal.fire({
@@ -69,6 +72,19 @@ function EditForm() {
   cancelButtonText: "Cerrar",
   imageUrl: url,
   imageAlt: "Entry image",
+  });
+  }
+
+
+
+ //SHOW TEXT
+  function showEntryContent(content) {
+  Swal.fire({
+  showCancelButton: true,
+  showConfirmButton: false,
+  cancelButtonText: "Cerrar",
+  title: "Texto slider",
+  text: content,
   });
   }
 
@@ -167,15 +183,21 @@ function EditForm() {
       {sliders.map((item) => {
       return (
       <tr key={item.id}>
+
+
       <td>
-      <Avatar
+      {tableLoading ?
+      <AvatarSkeleton/>
+      :<AvatarWithSkeleton
       src={item.imageURL}
       onClick={() => showEntryPicture(item.imageURL)}
-      />
+      />}
       </td>
-      <td>{item.text}</td>
-      <td>{item.createdAt && moment(item.createdAt).format("DD/MM/yyyy")}</td>
-      <td>{item.updatedAt && moment(item.updatedAt).format("DD/MM/yyyy")}</td>
+      <td onClick={() => showEntryContent(item.text)}>
+      {tableLoading && !item.text ? <Skeleton/> : item.text}
+      </td>
+      <td>{tableLoading && !item.createdAt ? <Skeleton/> : moment(item.createdAt).format("DD/MM/yyyy")}</td>
+      <td>{tableLoading && !item.createdAt ? <Skeleton/> : moment(item.updatedAt).format("DD/MM/yyyy")}</td>
       <td>
       <Button type="button" style={editButtonStyle} onClick={()=>{onEdit(item)}}>
       <FiEdit />
@@ -210,6 +232,19 @@ const deleteButtonStyle = {
   width: '40px',
   height: '40px',
   background: 'red'
+}
+
+function AvatarSkeleton(){
+return(<Skeleton circle={true} width="45px" height="45px"/>)
+}
+
+
+function AvatarWithSkeleton(props){
+const[loaded, setLoaded] = useState(false)
+return(<>
+<Avatar {...props} onLoad={() => setLoaded(true)} style={loaded?{}:{display:"none"}}/>
+{!loaded && <AvatarSkeleton/>}
+</>)
 }
 
 
