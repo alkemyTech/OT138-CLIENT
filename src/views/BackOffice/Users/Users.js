@@ -100,10 +100,10 @@ export default function Users() {
                 <Table>
                     <thead>
                         <tr>
-                            <th>Nombre</th>
-                            <th>Apellido</th>
-                            <th>Email</th>
-                            <th>Acciones</th>
+                            <th style={{width: "20%"}}>Nombre</th>
+                            <th style={{width: "20%"}}>Apellido</th>
+                            <th style={{width: "45%"}}>Email</th>
+                            <th style={{width: "15%"}}>Acciones</th>
                         </tr>
                     </thead>
                     <tbody style={{overflow: 'scroll'}}>
@@ -142,6 +142,6 @@ export default function Users() {
 
 function StyledSkeleton() {
     return (
-      <Skeleton style={{margin: "10px 0px"}}/>
+      <Skeleton style={{margin: "12px 0px"}}/>
     )
   }
