@@ -5,7 +5,7 @@ export const ContainColumn = styled.div`
   flex-direction: row;
   max-width: 900px;
   width: 100%;
-  height: 500px;
+  height: 540px;
   margin: auto 0;
 `;
 
@@ -19,11 +19,16 @@ export const Image = styled.img`
 `;
 
 export const Form = styled.form`
-  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 2rem 0 2rem;
   width: 50%;
   border-radius: 0px 10px 10px 0px;
   background: #fff;
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 10%), 0 4px 6px -2px rgb(0 0 0 / 5%);
+  gap: 5px;
+  flex: 1;
 `;
 
 export const Input = styled.input`

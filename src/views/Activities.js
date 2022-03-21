@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { useQuery } from "react-query";
-import { useHistory, useNavigate } from "react-router-dom";
-import { Navigate, useParams, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Pagination from "../components/Pagination";
 import Activity from "../components/Activities/Cards";
 import Article from "../components/Article";
@@ -64,8 +64,8 @@ export default function Activities() {
   return (
     <Container>
       <Header />
+      <Banner title={"Actividades"} thumbnail={"/activities__banner.jpg"} />
       <Content>
-        <Banner title={"Actividades"} thumbnail={"/activities__banner.jpg"} />
         <ActivitiesContainer>
           {isLoading || isFetching ? (
             <Loading />

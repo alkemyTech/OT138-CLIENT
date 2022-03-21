@@ -53,7 +53,13 @@ export default function Contacts() {
 
   return (
     <Content>
-      <SectionTitle>Contactos</SectionTitle>
+      <SectionTitle
+        style={{
+          marginBottom: "1rem",
+        }}
+      >
+        Mensajes de Contacto
+      </SectionTitle>
       <Table>
         <thead>
           <tr>

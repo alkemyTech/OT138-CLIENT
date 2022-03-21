@@ -1,29 +1,29 @@
 import React from "react";
-import { FaArrowRight, FaCalendar, FaClock } from "react-icons/fa";
+import { FaArrowRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { ActivityCard, ActivityDetails } from "./styles";
+import { addEllipsis } from "../../../helpers";
+import { Card, CardContent, CardImage, CardTitle, CardText, CardFooter } from "../../Card";
 
 export default function Activity({ id, name, image, content }) {
+  const TITLE_MAX_LENGTH = 40;
+
   return (
     <Link to={`/actividades/${id}`}>
-      <ActivityCard>
-        <img
-          className="thumbnail"
+      <Card>
+        <CardImage
           src={image}
-          alt="activities__thumbnail"
+          alt="Activity thumbnail"
           onError={({ currentTarget }) => {
             currentTarget.onerror = null;
             currentTarget.src = "/broken__image.gif";
           }}
         />
-        <ActivityDetails>
-          <h3 className="activity__title">{name}</h3>
-          <div className="activity__details" dangerouslySetInnerHTML={{ __html: content }} />
-          <p className="activity__readmore">
-            Leer más <FaArrowRight />
-          </p>
-        </ActivityDetails>
-      </ActivityCard>
+        <CardContent>
+          <CardTitle>{addEllipsis(name, TITLE_MAX_LENGTH)}</CardTitle>
+          <CardText dangerouslySetInnerHTML={{ __html: content }} />
+        </CardContent>
+        <CardFooter>Leer más <FaArrowRight /></CardFooter>
+      </Card>
     </Link>
   );
 }

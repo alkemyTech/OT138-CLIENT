@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Loading from "../../components/Loading";
-import { EditorContainer, EditorContent, EntryType, Message } from "./styles";
+import { EditorContent, EntryType, Message } from "./styles";
 import { Input, Label, Button, TextArea, TextEditor, Select } from "../Inputs";
-import { Content } from "../Wrappers/Containers";
 
 /**
  *
@@ -25,14 +24,6 @@ function EntryEditor({ id, state, entryType, get, save, data, fields }) {
   useEffect(() => {
     setFieldsWithData(
       fields.map((field) => {
-        console.log({
-          ...field,
-          value: data[field.name]
-            ? data[field.name]
-            : field?.defaultValue
-            ? field?.defaultValue
-            : "",
-        });
         return {
           ...field,
           value: data[field.name]
@@ -139,6 +130,7 @@ function EntryEditor({ id, state, entryType, get, save, data, fields }) {
             );
           })}
           <Button
+            style={{ margin: "1rem 0 0 0" }}
             onClick={(event) => {
               event.preventDefault();
               onSave();

@@ -122,10 +122,10 @@ function EditForm() {
   });
 
   if (result.isConfirmed) {
-  const { success, errorMessage } = await deleteSlides(id);
+  const { success } = await deleteSlides(id);
   if (success) {getSlider(currentPage)} 
   else {
-  toast.error("Error al eliminar entrada: ", errorMessage);
+  toast.error("Error al eliminar Sliders");
   }}}
 
 
