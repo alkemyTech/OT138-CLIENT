@@ -15,12 +15,7 @@ import Protected from "./components/Routes/Protected";
 import Activities from "./views/Activities";
 import { ActivitiesByID } from "./views/Activities";
 import ActivityEditor from "./views/BackOffice/Activities/ActivityEditor";
-<<<<<<< HEAD
 import UserEditor from "./views/BackOffice/Users/UserEditor";
-import EditForm from "./views/BackOffice/EditForm";
-=======
-import UserEditor from "./views/BackOffice/UserEditor";
->>>>>>> a624b25bbcd278eee4900945e8cb6c2573432988
 import News, { NewsByID } from "./views/News";
 import TestimonialsBackOffice from "./views/BackOffice/Testimonials";
 import Testimonials from "./views/Testimonials";
