@@ -18,14 +18,15 @@ export default function Slider() {
     const { success, data } = await getSlidesService();
 
     if (success) {
-      setSlides(data);
+      const { items } = data;
+      setSlides(items);
     }
   }
 
   return (
     <Swiper className="mySwiper">
       {
-        slides.map((item, index) => {
+        !slides.map?"":slides.map((item, index) => {
           return (
             <SwiperSlide key={index}>
               <Slide>

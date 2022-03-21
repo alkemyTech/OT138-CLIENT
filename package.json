@@ -24,6 +24,7 @@
     "react-hot-toast": "^2.2.0",
     "react-icons": "^4.3.1",
     "react-loader-spinner": "^5.1.4",
+    "react-loading-skeleton": "^3.0.3",
     "react-markdown": "^8.0.0",
     "react-paginate": "^8.1.2",
     "react-query": "^3.34.15",

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Container, Content } from "../../components/Wrappers/Containers";
 import {
@@ -15,6 +15,10 @@ import Loading from "../../components/Loading";
 import { Link } from "react-router-dom";
 import { getNews } from "../../services/requests/news";
 import { getUsersList } from "../../services/requests/users";
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+import { createArrayOfObjects } from "../../helpers";
+
 import { getDonations } from "../../services/requests/donations";
 import moment from "moment";
 function Backoffice({ auth }) {
@@ -37,9 +41,9 @@ function Backoffice({ auth }) {
 
   const {
     data: news,
-    isLoadingNews,
-    isFetchingNews,
-    isErrorNews,
+    isLoading: isLoadingNews,
+    isFetching: isFetchingNews,
+    isError: isErrorNews,
   } = useQuery(
     ["novedades", limit, currentPage],
     () => getNews(limit, currentPage),
@@ -50,9 +54,9 @@ function Backoffice({ auth }) {
 
   const {
     data: users,
-    isLoadingUser,
-    isFetchingUser,
-    isErrorUser,
+    isLoading: isLoadingUser,
+    isFetching: isFetchingUser,
+    isError: isErrorUser,
   } = useQuery(
     ["usuarios", limit, currentPage],
     () => getUsersList(limit, currentPage),
@@ -103,7 +107,7 @@ function Backoffice({ auth }) {
                         <tr key={id}>
                           <td>
                             <Link to={`/actividades/${id}`}>
-                              <Thumbnail src={image} />
+                              <ThumbnailWithSkeleton src={image} />
                             </Link>
                           </td>
                           <td>
@@ -123,7 +127,12 @@ function Backoffice({ auth }) {
                   response?.data?.error &&
                   isError ? (
                   <h1>¡No se encontraron Actividades!</h1>
-                ) : null}
+                ) : createArrayOfObjects(limit).map((value,index)=>{ 
+                return(<tr key={index}>
+                  <td><ThumbnailSkeleton/></td>
+                  <td><Skeleton/></td>
+                  <td><Skeleton/></td>
+                  </tr>)})}
               </tbody>
             </Table>
           </StatisticsBox>
@@ -146,7 +155,7 @@ function Backoffice({ auth }) {
                         <tr key={id}>
                           <td>
                             <Link to={`/novedades/${id}`}>
-                              <Thumbnail src={image} />
+                              <ThumbnailWithSkeleton src={image} />
                             </Link>
                           </td>
                           <td>
@@ -170,7 +179,12 @@ function Backoffice({ auth }) {
                   news?.data?.error &&
                   isErrorNews ? (
                   <h1>¡No se encontraron Novedades!</h1>
-                ) : null}
+                ) : createArrayOfObjects(limit).map((value,index)=>{ 
+                  return(<tr key={index}>
+                    <td><ThumbnailSkeleton/></td>
+                    <td><Skeleton/></td>
+                    <td><Skeleton/></td>
+                    </tr>)})}
               </tbody>
             </Table>
           </StatisticsBox>
@@ -243,7 +257,7 @@ function Backoffice({ auth }) {
                       return (
                         <tr key={id}>
                           <td>
-                            <Thumbnail src={image} />
+                            <ThumbnailWithSkeleton src={image} />
                           </td>
                           <td>
                             <b>{firstName}</b>
@@ -261,7 +275,14 @@ function Backoffice({ auth }) {
                   users?.data?.error &&
                   isErrorUser ? (
                   <h1>¡No se encontraron Usuarios!</h1>
-                ) : null}
+                ) : createArrayOfObjects(limit).map((value,index)=>{ 
+                  return(<tr key={index}>
+                    <td><ThumbnailSkeleton/></td>
+                    <td><Skeleton/></td>
+                    <td><Skeleton/></td>
+                    <td><Skeleton/></td>
+                    <td><Skeleton/></td>
+                    </tr>)})}
               </tbody>
             </Table>
           </StatisticsBox>
@@ -276,5 +297,18 @@ const mapStateToProps = (state) => {
     auth: state.auth,
   };
 };
+
+function ThumbnailSkeleton(){
+  return(<Skeleton circle={true} width="45px" height="45px"/>)
+}
+
+function ThumbnailWithSkeleton(props){
+  const[loaded, setLoaded] = useState(false)
+  return(<>
+    <Thumbnail {...props} onLoad={() => setLoaded(true)} style={loaded?{}:{display:"none"}}/>
+    {!loaded && <ThumbnailSkeleton/>}
+  </>)
+}
+
 
 export default connect(mapStateToProps)(Backoffice);

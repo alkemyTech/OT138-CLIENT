@@ -19,7 +19,7 @@ import UserEditor from "./views/BackOffice/Users/UserEditor";
 import News, { NewsByID } from "./views/News";
 import TestimonialsBackOffice from "./views/BackOffice/Testimonials";
 import Testimonials from "./views/Testimonials";
-import Sliders from "./views/BackOffice/Sliders";
+import Sliders from "./views/BackOffice/Sliders/index";
 
 function App({ checkAuthentication }) {
   useEffect(() => {

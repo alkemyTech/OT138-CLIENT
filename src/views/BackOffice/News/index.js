@@ -30,23 +30,28 @@ import {
 } from "../../../styles/BackOffice";
 import NewsEditor from "./NewsEditor";
 import { Avatar, TextWrapper } from "../../../components/Inputs/styles";
+import Skeleton from "react-loading-skeleton";
+import 'react-loading-skeleton/dist/skeleton.css'
+import { createArrayOfObjects } from "../../../helpers";
 
 export default function News() {
-  const [news, setNews] = useState([]);
+  const [resultsLimit, setResultsLimit] = useState(10);
+  const [news, setNews] = useState(createArrayOfObjects(resultsLimit));
   const [pagination, setPagination] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
-  const [resultsLimit, setResultsLimit] = useState(10);
   const [lockedEntryIds, setLockedEntryIds] = useState([]);
   const [formData, setFormData] = useState({
     display: false,
     instance: null,
   });
+  const [tableLoading, setTableLoading] = useState(true);
 
   useEffect(() => {
     getNews(currentPage);
   }, []);
 
   async function getNews(page) {
+    setTableLoading(true);
     const {
       success,
       data: newsData,
@@ -60,6 +65,7 @@ export default function News() {
     } else {
       toast.error("Error al obtener novedades: " + errorMessage);
     }
+    setTableLoading(false);
   }
 
   async function goToPage(page) {
@@ -170,24 +176,24 @@ export default function News() {
               return (
                 <tr key={index}>
                   <td>
-                    <Avatar
+                    {tableLoading?<AvatarSkeleton/>:<AvatarWithSkeleton
                       src={entry.image}
                       onClick={() => showEntryPicture(entry.image)}
-                    />
+                    />}
                   </td>
-                  <td>{entry.name}</td>
+                  <td>{tableLoading?<Skeleton/>:entry.name}</td>
                   <td onClick={() => showEntryContent(entry.content)}>
-                    <div class="parent">
+                    {tableLoading?<Skeleton/>:<div class="parent">
                       <div class="child">{entry.content}</div>
-                    </div>
+                    </div>}
                   </td>
 
                   <td>
-                    {entry.createdAt &&
+                    {tableLoading?<Skeleton/>:entry.createdAt &&
                       moment(entry.createdAt).format("DD/MM/yyyy")}
                   </td>
                   <td>
-                    <ButtonGroup align="center" gap={"8px"}>
+                    {tableLoading?<Skeleton/>:<ButtonGroup align="center" gap={"8px"}>
                       {lockedEntryIds.includes(entry.id) ? (
                         <TailSpin height="40" width="40" color="grey" />
                       ) : (
@@ -206,7 +212,7 @@ export default function News() {
                           </Button>
                         </>
                       )}
-                    </ButtonGroup>
+                    </ButtonGroup>}
                   </td>
                 </tr>
               );
@@ -235,3 +241,15 @@ const deleteButtonStyle = {
   height: "40px",
   background: "red",
 };
+
+function AvatarSkeleton(){
+  return(<Skeleton circle={true} width="45px" height="45px"/>)
+}
+
+function AvatarWithSkeleton(props){
+  const[loaded, setLoaded] = useState(false)
+  return(<>
+    <Avatar {...props} onLoad={() => setLoaded(true)} style={loaded?{}:{display:"none"}}/>
+    {!loaded && <AvatarSkeleton/>}
+  </>)
+}
