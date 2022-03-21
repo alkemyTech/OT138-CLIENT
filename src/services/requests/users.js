@@ -1,17 +1,18 @@
 import api from "../../config/api";
 import { API_USERS } from "../../constants/urls";
 
-export async function getUsers() {
+export async function getUsers(page, limit) {
   const result = {
     success: false,
     data: [],
     errorMessage: "",
   };
   try {
-    const { data: resObj } = await api.get(API_USERS);
+    const { data: resObj } = await api.get(API_USERS, {params:{page, limit}});
+    console.log('resObj', resObj)
     if (resObj.error === false) {
       result.success = true;
-      result.data = resObj.result;
+      result.result = resObj.result;
     } else {
       result.errorMessage = resObj.message;
     }

@@ -11,21 +11,26 @@ import { useNavigate } from "react-router-dom";
 import { createArrayOfObjects } from "../../../helpers";
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+import Pagination from "../../../components/Pagination";
 
 export default function Users() {
     const [limit, setLimit] = useState(10);
     const [tableLoading, setTableLoading] = useState(false)
+    const [pagination, setPagination] = useState({})
+    const [currentPage, setCurrentPage] = useState(1)
     const [users, setUsers] = useState(createArrayOfObjects(limit));
     const [lockedEntryIds, setLockedEntryIds] = useState([]);
     let navigate = useNavigate();
 
-    async function fetchUsers() {
+    async function fetchUsers(page) {
         setTableLoading(true);
-        const { success, data: users, errorMessage } = await getUsers();
+        const { success, result, errorMessage } = await getUsers(page, limit);
         //console.log(JSON.stringify(await getUsers()));
 
         if (success) {
+            const {items: users, ...pagination} = result;
             setUsers(users);
+            setPagination(pagination);
         } else {
             toast.error(`Error fetching users: ${errorMessage}`);
         }
@@ -36,6 +41,9 @@ export default function Users() {
         fetchUsers();
     }, []);
 
+    function goToPage(page){
+        fetchUsers(page)
+    }
     function buttonStyles(color) {
         return {
             width: "40px",
@@ -122,6 +130,12 @@ export default function Users() {
                         }
                     </tbody>
                 </Table>
+                {pagination && (
+                <Pagination
+                onPageChange={goToPage}
+                totalPages={pagination.pages || 0}
+        />
+      )}
             </Content>
         </>
     );
