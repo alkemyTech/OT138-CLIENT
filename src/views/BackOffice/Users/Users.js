@@ -111,11 +111,11 @@ export default function Users() {
                             users.map((user, index) => {
                                 return (
                                     <tr key={index}>
-                                        <td>{tableLoading?<Skeleton/>:user.firstName}</td>
-                                        <td>{tableLoading?<Skeleton/>:user.lastName}</td>
-                                        <td>{tableLoading?<Skeleton/>:user.email}</td>
+                                        <td>{tableLoading?<StyledSkeleton/>:user.firstName}</td>
+                                        <td>{tableLoading?<StyledSkeleton/>:user.lastName}</td>
+                                        <td>{tableLoading?<StyledSkeleton/>:user.email}</td>
                                         <td>
-                                            {tableLoading?<Skeleton/>:<ButtonGroup align='center'>
+                                            {tableLoading?<StyledSkeleton/>:<ButtonGroup align='center'>
                                                 <Button style={buttonStyles("orange")} onClick={() => onEdit(user.id)} >
                                                     <FaEdit />
                                                 </Button>
@@ -133,10 +133,15 @@ export default function Users() {
                 {pagination && (
                 <Pagination
                 onPageChange={goToPage}
-                totalPages={pagination.pages || 0}
-        />
-      )}
+                totalPages={pagination.pages || 0}/>
+                )}
             </Content>
         </>
     );
 }
+
+function StyledSkeleton() {
+    return (
+      <Skeleton style={{margin: "10px 0px"}}/>
+    )
+  }
