@@ -115,7 +115,7 @@ export default function Users() {
                                         <td>{tableLoading?<StyledSkeleton/>:user.lastName}</td>
                                         <td>{tableLoading?<StyledSkeleton/>:user.email}</td>
                                         <td>
-                                            {tableLoading?<StyledSkeleton/>:<ButtonGroup align='center'>
+                                            {tableLoading?<StyledSkeleton/>:<ButtonGroup align='center' gap={"8px"}>
                                                 <Button style={buttonStyles("orange")} onClick={() => onEdit(user.id)} >
                                                     <FaEdit />
                                                 </Button>
