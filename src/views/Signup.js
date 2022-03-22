@@ -3,6 +3,9 @@ import toast, { Toaster } from "react-hot-toast";
 import { useFormik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import { Container } from "../components/Wrappers/Containers";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { login as loginAction } from "../actions/authActions";
 import { TailSpin } from "react-loader-spinner";
 import {
   FormContainer,
@@ -17,6 +20,7 @@ import {
 import { Button, Input } from "../components/Inputs";
 import { register } from "../services/requests/auth";
 import { SendridRegister } from "../services/requests/sendGrid";
+import { status } from "../constants";
 
 // Returns an object with the error messages for handled input validation
 // i.e. fields required, correct email format and password min 6 chars length
@@ -53,7 +57,7 @@ const photos = [
   "login__5.jpg",
 ];
 
-function Signup() {
+function Signup({ login }) {
   const [loading, setLoading] = useState(false);
   const navigation = useNavigate();
   const formik = useFormik({
@@ -77,6 +81,7 @@ function Signup() {
 
     if (success) {
       toast.success("Cuenta creada");
+      login(values);
       navigation("/");
     } else {
       if (errorFields) {
@@ -185,4 +190,13 @@ function Signup() {
   );
 }
 
-export default Signup;
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators(
+    {
+      login: loginAction,
+    },
+    dispatch
+  );
+};
+
+export default connect(null, mapDispatchToProps)(Signup);
