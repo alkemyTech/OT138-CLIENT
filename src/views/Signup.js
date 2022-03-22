@@ -82,7 +82,7 @@ function Signup(props) {
       toast.error(errorMessage);
     }
   };
-
+  
   const source = photos[Math.floor(Math.random() * photos.length)];
 
   return (
