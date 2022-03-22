@@ -32,8 +32,7 @@ import NewsEditor from "./NewsEditor";
 import { Avatar, TextWrapper } from "../../../components/Inputs/styles";
 import Skeleton from "react-loading-skeleton";
 import 'react-loading-skeleton/dist/skeleton.css'
-import { createArrayOfObjects } from "../../../helpers";
-import { removeTags } from '../../../helpers';
+import { createArrayOfObjects, removeTags } from "../../../helpers";
 
 export default function News() {
   const [resultsLimit, setResultsLimit] = useState(10);

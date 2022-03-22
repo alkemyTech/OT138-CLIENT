@@ -23,30 +23,33 @@ import Swal from "sweetalert2";
 import Pagination from "../../../components/Pagination";
 import moment from "moment";
 import { Avatar } from "../../../components/Inputs/styles";
-import { removeTags } from '../../../helpers';
+import Skeleton from "react-loading-skeleton";
+import { createArrayOfObjects, removeTags } from '../../../helpers';
 
 export default function Activities() {
-  const [activities, setActivities] = useState([]);
+  const [pageLimit, setPageLimit] = useState(10);
+  const [activities, setActivities] = useState(createArrayOfObjects(pageLimit));
   const [pagination, setPagination] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageLimit, setPageLimit] = useState(10);
   const [lockedEntryIds, setLockedEntryIds] = useState([]);
   const [formData, setFormData] = useState({
     display: false,
     instance: null,
   });
+  const [tableLoading, setTableLoading] = useState(true);
 
   async function fetchActivities(page) {
+    setTableLoading(true);
     const { data } = await getActivities(pageLimit, page);
 
     if (!data.error) {
       const { items, ...pagination } = data.result;
       setActivities(items);
-      console.log({ activities });
       setPagination(pagination);
     } else {
       toast.error(`Error fetching activities: ${data.message}`);
     }
+    setTableLoading(false);
   }
 
   useEffect(() => {
@@ -177,34 +180,46 @@ export default function Activities() {
               return (
                 <tr key={index}>
                   <td>
-                    <Avatar
-                      src={activity.image}
-                      onClick={() => showActivityPicture(activity.image)}
-                    />
+                    {
+                      tableLoading ? <AvatarSkeleton /> :
+                        <AvatarWithSkeleton
+
+                          src={activity.image}
+                          onClick={() => showActivityPicture(activity.image)}
+                        />
+                    }
                   </td>
-                  <td>{activity.name}</td>
+                  <td>{tableLoading ? <Skeleton /> : activity.name}</td>
                   <td onClick={() => showActivityContent(activity.content)} className="clickable">
-                    <div className="parent">
-                      <div className="child">{removeTags(activity.content)}</div>
-                    </div>
+                    {
+                      tableLoading ? <Skeleton /> :
+                        <div className="parent">
+                          <div className="child">{removeTags(activity.content)}</div>
+                        </div>
+                    }
                   </td>
                   <td>
-                    {activity.createdAt &&
-                      moment(activity.createdAt).format("DD/MM/YY")}
+                    {
+                      tableLoading ? <Skeleton /> :
+                        activity.createdAt && moment(activity.createdAt).format("DD/MM/YY")
+                    }
                   </td>
                   <td>
-                    <ButtonGroup align="center" gap="8px">
-                      <Button
-                        style={buttonStyles("orange")}
-                        onClick={() => onEdit(activity)}>
-                        <FaEdit />
-                      </Button>
-                      <Button
-                        style={buttonStyles("red")}
-                        onClick={() => onDelete(activity.id)}>
-                        <FaTrash />
-                      </Button>
-                    </ButtonGroup>
+                    {
+                      tableLoading ? <Skeleton /> :
+                        <ButtonGroup align="center" gap="8px">
+                          <Button
+                            style={buttonStyles("orange")}
+                            onClick={() => onEdit(activity)}>
+                            <FaEdit />
+                          </Button>
+                          <Button
+                            style={buttonStyles("red")}
+                            onClick={() => onDelete(activity.id)}>
+                            <FaTrash />
+                          </Button>
+                        </ButtonGroup>
+                    }
                   </td>
                 </tr>
               );
@@ -220,4 +235,16 @@ export default function Activities() {
       </Content>
     </>
   );
+}
+
+function AvatarSkeleton() {
+  return (<Skeleton circle={true} width="45px" height="45px" />)
+}
+
+function AvatarWithSkeleton(props) {
+  const [loaded, setLoaded] = useState(false)
+  return (<>
+    <Avatar {...props} onLoad={() => setLoaded(true)} style={loaded ? {} : { display: "none" }} />
+    {!loaded && <AvatarSkeleton />}
+  </>)
 }
