@@ -8,27 +8,42 @@ import { Content } from "../../../components/Wrappers/Containers";
 import { SectionTitle } from "../../../styles/BackOffice";
 import Swal from 'sweetalert2';
 import { useNavigate } from "react-router-dom";
+import { createArrayOfObjects } from "../../../helpers";
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+import Pagination from "../../../components/Pagination";
 
 export default function Users() {
-    const [users, setUsers] = useState([]);
+    const [limit, setLimit] = useState(10);
+    const [tableLoading, setTableLoading] = useState(false)
+    const [pagination, setPagination] = useState({})
+    const [currentPage, setCurrentPage] = useState(1)
+    const [users, setUsers] = useState(createArrayOfObjects(limit));
     const [lockedEntryIds, setLockedEntryIds] = useState([]);
     let navigate = useNavigate();
 
-    async function fetchUsers() {
-        const { success, data: users, errorMessage } = await getUsers();
+    async function fetchUsers(page) {
+        setTableLoading(true);
+        const { success, result, errorMessage } = await getUsers(page, limit);
         //console.log(JSON.stringify(await getUsers()));
 
         if (success) {
+            const {items: users, ...pagination} = result;
             setUsers(users);
+            setPagination(pagination);
         } else {
             toast.error(`Error fetching users: ${errorMessage}`);
         }
+        setTableLoading(false);
     }
 
     useEffect(() => {
         fetchUsers();
     }, []);
 
+    function goToPage(page){
+        fetchUsers(page)
+    }
     function buttonStyles(color) {
         return {
             width: "40px",
@@ -85,10 +100,10 @@ export default function Users() {
                 <Table>
                     <thead>
                         <tr>
-                            <th>Nombre</th>
-                            <th>Apellido</th>
-                            <th>Email</th>
-                            <th>Acciones</th>
+                            <th style={{width: "20%"}}>Nombre</th>
+                            <th style={{width: "20%"}}>Apellido</th>
+                            <th style={{width: "45%"}}>Email</th>
+                            <th style={{width: "15%"}}>Acciones</th>
                         </tr>
                     </thead>
                     <tbody style={{overflow: 'scroll'}}>
@@ -96,18 +111,18 @@ export default function Users() {
                             users.map((user, index) => {
                                 return (
                                     <tr key={index}>
-                                        <td>{user.firstName}</td>
-                                        <td>{user.lastName}</td>
-                                        <td>{user.email}</td>
+                                        <td>{tableLoading?<StyledSkeleton/>:user.firstName}</td>
+                                        <td>{tableLoading?<StyledSkeleton/>:user.lastName}</td>
+                                        <td>{tableLoading?<StyledSkeleton/>:user.email}</td>
                                         <td>
-                                            <ButtonGroup align='center'>
+                                            {tableLoading?<StyledSkeleton/>:<ButtonGroup align='center' gap={"8px"}>
                                                 <Button style={buttonStyles("orange")} onClick={() => onEdit(user.id)} >
                                                     <FaEdit />
                                                 </Button>
                                                 <Button style={buttonStyles("red")} onClick={() => onDelete(user.id)} >
                                                     <FaTrash />
                                                 </Button>
-                                            </ButtonGroup>
+                                            </ButtonGroup>}
                                         </td>
                                     </tr>
                                 )
@@ -115,7 +130,18 @@ export default function Users() {
                         }
                     </tbody>
                 </Table>
+                {pagination && (
+                <Pagination
+                onPageChange={goToPage}
+                totalPages={pagination.pages || 0}/>
+                )}
             </Content>
         </>
     );
 }
+
+function StyledSkeleton() {
+    return (
+      <Skeleton style={{margin: "12px 0px"}}/>
+    )
+  }
