@@ -15,6 +15,9 @@ export function addEllipsis(str, length) {
   return str;
 }
 
+export function removeTags(html) {
+  return html.replace(/<(.|\n)*?>/g, '');
+}
 /**
  * Creates an FormData object from an object with values
  * @param {Object} values Object with the values
