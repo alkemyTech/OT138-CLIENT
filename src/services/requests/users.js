@@ -9,7 +9,6 @@ export async function getUsers(page, limit) {
   };
   try {
     const { data: resObj } = await api.get(API_USERS, {params:{page, limit}});
-    console.log('resObj', resObj)
     if (resObj.error === false) {
       result.success = true;
       result.result = resObj.result;
