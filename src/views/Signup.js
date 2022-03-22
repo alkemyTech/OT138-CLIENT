@@ -10,11 +10,8 @@ import {
   LoginFooter,
   LoginForm,
   LogoContainer,
-<<<<<<< HEAD
   BrandContainer,
   Brand
-=======
->>>>>>> dev
 } from "../styles/Login";
 import { Button, Input } from "../components/Inputs";
 import { register } from "../services/requests/auth";
@@ -69,25 +66,10 @@ function Signup(props) {
     },
   });
 
-<<<<<<< HEAD
-  const navigation = useNavigate();
-  const formik = useFormik({
-    initialValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
-    },
-    validate,
-    // Only submits if there is not any validation error
-    onSubmit: (values) => {
-      attemptSignup(values);
-    },
-  });
-
   const attemptSignup = async (values) => {
     const { success, errorMessage, errorFields } = await register(values);
-
+    await SendridRegister(values);
+    
     if (success) {
       toast.success("Cuenta creada");
       navigation("/");
@@ -96,23 +78,6 @@ function Signup(props) {
         Object.values(errorFields).forEach(fieldError => {
           toast.error(fieldError);
         })
-=======
-  const attemptSignup = async (values) => {
-    const { success, errorMessage, errorFields } = await register(values);
-    await SendridRegister(values);
-
-    if (success) {
-      toast.success("Cuenta creada");
-
-      setTimeout(() => {
-        navigation("/");
-      }, 1500);
-    } else {
-      if (errorFields) {
-        Object.values(errorFields).forEach((fieldError) => {
-          toast.error(fieldError);
-        });
->>>>>>> dev
       }
       toast.error(errorMessage);
     }
@@ -121,8 +86,6 @@ function Signup(props) {
   const source = photos[Math.floor(Math.random() * photos.length)];
 
   return (
-<<<<<<< HEAD
-
     <Container>
       <Toaster />
       <LoginContainer>
@@ -186,81 +149,14 @@ function Signup(props) {
               onChange={formik.handleChange}
             />
 
-=======
-    <Container>
-      <Toaster />
-      <LoginContainer>
-        <FormContainer>
-          <LoginForm onSubmit={formik.handleSubmit}>
-            <h1>Registro en Somos Más ONG</h1>
-            <p>Servicio de Autentificación</p>
-            <Label>
-              Nombres{" "}
-              {formik.errors.firstName ? (
-                <span>{formik.errors.firstName}</span>
-              ) : null}
-            </Label>
-            <Input
-              placeholder="Nombres"
-              type="text"
-              name="firstName"
-              value={formik.values.firstName}
-              onChange={formik.handleChange}
-            />
-            <Label>
-              Apellidos{" "}
-              {formik.errors.lastName ? (
-                <span>{formik.errors.lastName}</span>
-              ) : null}
-            </Label>
-            <Input
-              placeholder="Apellidos"
-              type="text"
-              name="lastName"
-              value={formik.values.lastName}
-              onChange={formik.handleChange}
-            />
-            <Label>
-              Email{" "}
-              {formik.errors.email ? <span>{formik.errors.email}</span> : null}
-            </Label>
-            <Input
-              placeholder="Email"
-              type="email"
-              name="email"
-              value={formik.values.email}
-              onChange={formik.handleChange}
-            />
-            <Label>
-              Contraseña{" "}
-              {formik.errors.password ? (
-                <span>{formik.errors.password}</span>
-              ) : null}
-            </Label>
-            <Input
-              placeholder="Contraseña"
-              type="password"
-              name="password"
-              value={formik.values.password}
-              onChange={formik.handleChange}
-            />
-
->>>>>>> dev
             <Button
               type="submit"
               style={{
                 margin: "0.8rem 0",
-<<<<<<< HEAD
                 alignSelf: "center"
               }}
             >
               <b>Registrarme</b>
-=======
-                alignSelf: "center",
-              }}
-            >
-              <b>REGISTRARME</b>
->>>>>>> dev
             </Button>
             <LoginFooter>
               <Link to="/login">
