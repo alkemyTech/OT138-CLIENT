@@ -20,7 +20,6 @@ import {
 import { Button, Input } from "../components/Inputs";
 import { register } from "../services/requests/auth";
 import { SendridRegister } from "../services/requests/sendGrid";
-import { status } from "../constants";
 
 // Returns an object with the error messages for handled input validation
 // i.e. fields required, correct email format and password min 6 chars length
@@ -165,6 +164,7 @@ function Signup({ login }) {
 
             <Button
               type="submit"
+              disabled={loading}
               style={{
                 margin: "0.8rem 0",
                 alignSelf: "center"
