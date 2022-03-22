@@ -22,8 +22,8 @@ import ActivityEditor from "./ActivityEditor";
 import Swal from "sweetalert2";
 import Pagination from "../../../components/Pagination";
 import moment from "moment";
-import { Avatar } from "../../../components/Inputs/styles";
 import Skeleton from "react-loading-skeleton";
+import { AvatarSkeleton, AvatarWithSkeleton } from "../../../components/Skeleton";
 import { createArrayOfObjects, removeTags } from '../../../helpers';
 
 export default function Activities() {
@@ -235,16 +235,4 @@ export default function Activities() {
       </Content>
     </>
   );
-}
-
-function AvatarSkeleton() {
-  return (<Skeleton circle={true} width="45px" height="45px" />)
-}
-
-function AvatarWithSkeleton(props) {
-  const [loaded, setLoaded] = useState(false)
-  return (<>
-    <Avatar {...props} onLoad={() => setLoaded(true)} style={loaded ? {} : { display: "none" }} />
-    {!loaded && <AvatarSkeleton />}
-  </>)
 }
