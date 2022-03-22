@@ -2,6 +2,8 @@ import React from "react";
 import styled from "@emotion/styled";
 
 export const ModalWrapper = styled.div`
+  padding-top: 15px;
+  padding-bottom: 15px; 
   top: 0;
   left: 0;
   right: 0;
@@ -17,9 +19,11 @@ export const ModalWrapper = styled.div`
 `;
 
 export const ModalContainer = styled.div`
+  overflow: auto;
   position: relative;
   background-color: #fff;
   width: 100%;
+  max-height: 100%;
   border-radius: 10px;
   margin: 10px;
   z-index: 9999;
