@@ -111,3 +111,38 @@ body {
   border-radius: 50%;
   margin: 0 5px;
 }
+
+.dzu-dropzone {
+  overflow: auto !important;
+  height: 300px !important;
+  min-width: 100px !important;
+  max-width: 450px !important;
+  width: 100% !important;
+}
+.dzu-inputLabel {
+  text-align: center;
+}
+.dzu-previewContainer {
+  min-height: 280px !important;
+  justify-content: center !important;
+  z-index: 0 !important;
+}
+.dzu-previewButton {
+  font-size: 2rem;
+}
+.dzu-previewContainer img {
+  max-height: 280px !important;
+  min-width: 100px !important;
+  height: 280px !important;
+  object-fit: contain !important;
+  z-index: -1 !important;
+}
+.dzu-previewImage {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+.img__uploader {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}

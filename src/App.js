@@ -20,7 +20,7 @@ import News, { NewsByID } from "./views/News";
 import TestimonialsBackOffice from "./views/BackOffice/Testimonials";
 import Testimonials from "./views/Testimonials";
 import Sliders from "./views/BackOffice/Sliders/index";
-
+import ThanksForYourDonation from "./views/ThanksForYourDonation";
 function App({ checkAuthentication }) {
   useEffect(() => {
     checkAuthentication();
@@ -36,6 +36,7 @@ function App({ checkAuthentication }) {
         <Route path="/contacto" element={<FormContacto />} />
         <Route path="/nosotros" element={<Members />} />
         <Route path="/testimonios" element={<Testimonials />} />
+        <Route path="/gracias" element={<ThanksForYourDonation />} />
         <Route
           path="/perfil"
           element={
