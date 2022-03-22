@@ -2,6 +2,16 @@ import api from "../../config/api";
 import { apiErrors } from '../../constants';
 import { API_TESTIMONIAL } from "../../constants/urls";
 
+
+export const getTestimoniesCard = (limit, currentPage) =>
+    api
+        .get(`/testimonials${limit ? `/?limit=${limit}` : ""}&page=${currentPage}`)
+        .then((res) => res);
+
+
+
+
+
    export const getTestimonies = async (page=1,limit=10) => {
 
      const result = {

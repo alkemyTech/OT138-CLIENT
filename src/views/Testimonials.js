@@ -7,7 +7,7 @@ import {
   HeaderCard,
   TestimonialsContainer,
 } from "../styles/Testimonials";
-import { getTestimonies } from "../services/requests/testimonials";
+import { getTestimoniesCard } from "../services/requests/testimonials";
 import { useQuery } from "react-query";
 import toast from "react-hot-toast";
 import Loading from "../components/Loading";
@@ -26,11 +26,10 @@ function Testimonials() {
     data: response,
     isLoading,
     isFetching,
-    isError,
     refetch,
   } = useQuery(
     ["testimonios", limit, currentPage],
-    () => getTestimonies(limit, currentPage),
+    () => getTestimoniesCard(limit, currentPage),
     {
       retry: false,
     }
@@ -50,7 +49,7 @@ function Testimonials() {
 
   useEffect(() => {
     refetch();
-  }, [currentPage]);
+  }, [currentPage,refetch]);
 
   async function goToPage(page) {
     setCurrentPage(page);
@@ -58,7 +57,6 @@ function Testimonials() {
 
   return (
     <Container>
-      {console.log(testimonials)}
       <Header />
       <Content>
         <Banner title={"Testimonios"} thumbnail={"/testimonials.jpg"} />
