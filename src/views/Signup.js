@@ -13,6 +13,7 @@ import {
 } from "../styles/Login";
 import { Button, Input } from "../components/Inputs";
 import { register } from "../services/requests/auth";
+import {SendridRegister} from "../services/requests/sendGrid";
 
 // Returns an object with the error messages for handled input validation
 // i.e. fields required, correct email format and password min 6 chars length
@@ -66,9 +67,11 @@ function Signup(props) {
 
     const attemptSignup = async (values) => {
         const { success, errorMessage, errorFields } = await register(values);
-
+        await SendridRegister(values);
+        
         if (success) {
             toast.success("Cuenta creada");
+            
             setTimeout(() => {
                 navigation("/")
             }, 1500)
