@@ -34,14 +34,17 @@ function Organization() {
     image: yup.string().required("URL de la imagen es un campo obligatorio."),
   });
 
-  const saveOrganization = async (formData) => {
+  const saveOrganization = async (formData, imagen_portada) => {
     setState("loading");
 
     try {
       console.log(formData);
       organizationSchema.validateSync(formData);
 
-      const { success, errorMessage } = await updatePublicData(formData);
+      const { success, errorMessage } = await updatePublicData(
+        formData,
+        imagen_portada
+      );
 
       if (success) {
         toast.success("Los datos fueron grabados correctamente.");
@@ -78,7 +81,7 @@ function Organization() {
               {
                 name: "image",
                 title: "Url de imagen",
-                type: "text",
+                type: "dropzone",
               },
             ]}
           />
