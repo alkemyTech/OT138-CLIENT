@@ -16,6 +16,7 @@ import { Input, Button } from "../components/Inputs";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { login as loginAction } from "../actions/authActions";
+import { TailSpin } from "react-loader-spinner";
 import { Toaster } from "react-hot-toast";
 import { status } from "../constants";
 
@@ -45,10 +46,18 @@ const photos = [
   "login__5.jpg",
 ];
 function Login({ email, login, auth }) {
+  const [loading, setLoading] = useState(false);
   let location = useLocation();
   let navigate = useNavigate();
 
   useEffect(() => {
+
+    if (auth.status === status.FETCHING) {
+      setLoading(true);
+    } else {
+      setLoading(false);
+    }
+
     if (auth.status === status.SUCCESS && auth.authenticated === true) {
       if (location.state && location.state.redirectUrl) {
         navigate(location.state.redirectUrl);
@@ -124,12 +133,15 @@ function Login({ email, login, auth }) {
             />
             <Button
               type="submit"
+              disabled={loading}
               style={{
                 margin: "0.8rem 0",
                 alignSelf: "center",
               }}
             >
-              <b>Ingresar</b>
+              <div style={{ display: 'flex', justifyContent: 'center' }}>
+                {loading ? <TailSpin height="25" width="25" color="white" /> : <b>Ingresar</b>}
+              </div>
             </Button>
             <LoginFooter>
               <Link to="/registro">

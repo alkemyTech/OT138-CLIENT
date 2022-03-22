@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   HeaderContainer,
   HeaderBar,
@@ -21,6 +21,7 @@ import { status } from "../../constants";
 
 function Header({ navItems, logout, auth }) {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   const [menuState, setMenuState] = useState(false);
   const [dropdownState, setDropdownState] = useState(false);
@@ -93,9 +94,7 @@ function Header({ navItems, logout, auth }) {
             </ProfileDropdown>
           </Avatar>
         ) : dataState !== "loading" ? (
-          <SessionButton>
-            <Link to="/login">Iniciar Sesión</Link>
-          </SessionButton>
+          <SessionButton onClick={() => navigate("/login")}>Iniciar Sesión</SessionButton>
         ) : null}
         <MobileNavBar menuState={menuState}>
           {navItems.map((item, index) => {
