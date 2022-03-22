@@ -91,8 +91,8 @@ export const ButtonGroup = styled.div`
     props.align === "center"
       ? "center"
       : props.align === "end"
-      ? "flex-end"
-      : "flex-start"};
+        ? "flex-end"
+        : "flex-start"};
 `;
 
 export const SelectContainer = styled.select`
@@ -115,6 +115,10 @@ export const TextEditorContainer = styled.div`
     width: 100%;
     margin-bottom: 20px;
     background-color: #edf2f7;
+
+    .ck-editor__editable {
+      max-height: 300px;
+    }
   }
 `;
 
