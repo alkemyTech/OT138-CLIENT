@@ -23,6 +23,7 @@ import Swal from "sweetalert2";
 import Pagination from "../../../components/Pagination";
 import moment from "moment";
 import { Avatar } from "../../../components/Inputs/styles";
+import HTMLRenderer from "../../../components/HTMLRenderer";
 
 export default function Activities() {
   const [activities, setActivities] = useState([]);
@@ -183,8 +184,8 @@ export default function Activities() {
                   </td>
                   <td>{activity.name}</td>
                   <td onClick={() => showActivityContent(activity.content)}>
-                    <div class="parent">
-                      <div class="child">{activity.content}</div>
+                    <div className="parent">
+                      <div className="child">{activity.content}</div>
                     </div>
                   </td>
                   <td>

@@ -35,7 +35,7 @@ export const Table = styled.table`
     }
     .child {
       flex: 1;
-      width: 1px;
+      width: 100px;
       overflow-x: hidden;
       text-overflow: ellipsis;
     }

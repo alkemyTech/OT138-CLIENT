@@ -1,5 +1,7 @@
+import React from 'react';
+
 export default function HTMLRenderer({ html }) {
   return (
-    <div dangerouslySetInnerHTML={{ __html: html }} />
+    <p dangerouslySetInnerHTML={{ __html: html }} />
   )
 }
