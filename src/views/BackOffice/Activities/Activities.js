@@ -195,14 +195,12 @@ export default function Activities() {
                     <ButtonGroup align="center" gap="8px">
                       <Button
                         style={buttonStyles("orange")}
-                        onClick={() => onEdit(activity)}
-                      >
+                        onClick={() => onEdit(activity)}>
                         <FaEdit />
                       </Button>
                       <Button
                         style={buttonStyles("red")}
-                        onClick={() => onDelete(activity.id)}
-                      >
+                        onClick={() => onDelete(activity.id)}>
                         <FaTrash />
                       </Button>
                     </ButtonGroup>
@@ -214,7 +212,7 @@ export default function Activities() {
         </Table>
         {pagination && (
           <Pagination
-            onChangePage={changePage}
+            onPageChange={changePage}
             totalPages={pagination.pages || 0}
           />
         )}
