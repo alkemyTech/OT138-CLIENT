@@ -86,7 +86,7 @@ export const postSlides = async (values) => {
 }
 
 //UPDATED SLIDES
-export const putSlides = async ( id,text,imageUrl) => {
+export const putSlides = async ( id,text,imageUrl,order,organizationID) => {
 
   const result = {
     success: false,
@@ -96,7 +96,7 @@ export const putSlides = async ( id,text,imageUrl) => {
   };
 
   try {
-    const { data } = await api.put(`${API_SLIDES}/${id}`, { text: text, imageURL: imageUrl });
+    const { data } = await api.put(`${API_SLIDES}/${id}`, { text: text, imageURL: imageUrl, order:order, organizationID:organizationID });
     if (data.error) {
       result.errorMessage = data.message;
       result.data = data.slider;

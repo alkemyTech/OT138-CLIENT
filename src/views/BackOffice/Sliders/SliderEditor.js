@@ -35,7 +35,7 @@ const [inputs,SetInputs] = useState({text:"",imageURL:"",order:"",organizationID
     async function submitForm(){
     if(data){
   
-    const {success} = await putSlides(data.id,inputs.text,inputs.imageURL);
+    const {success} = await putSlides(data.id,inputs.text,inputs.imageURL,inputs.order,inputs.organizationID);
     if(success){
     toast.success("Actualizado con éxito");
     onSuccess()
