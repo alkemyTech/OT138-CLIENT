@@ -12,10 +12,12 @@ export default function Modal({ children, show = false, onClose, size }) {
   return (
     show && (
       <ModalWrapper show={show}>
-        <ModalContainer size={size}>
-          <CloseButton onClick={onClose}>✕</CloseButton>
-          {children}
-        </ModalContainer>
+        <main>
+          <ModalContainer size={size}>
+            <CloseButton onClick={onClose}>✕</CloseButton>
+            {children}
+          </ModalContainer>
+        </main>
       </ModalWrapper>
     )
   );
