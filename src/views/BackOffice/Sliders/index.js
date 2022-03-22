@@ -229,17 +229,6 @@ function EditForm() {
   );
 }
 
-const editButtonStyle = {
-  width: "40px",
-  height: "40px",
-  background: "orange",
-};
-
-const deleteButtonStyle = {
-  width: "40px",
-  height: "40px",
-  background: "red",
-};
 
 function buttonStyles(color) {
   return {

@@ -19,7 +19,7 @@ import { ActivitiesByID } from "./views/Activities";
 import ActivityEditor from "./views/BackOffice/Activities/ActivityEditor";
 import UserEditor from "./views/BackOffice/Users/UserEditor";
 import News, { NewsByID } from "./views/News";
-import TestimonialsBackOffice from "./views/BackOffice/Testimonials";
+import TestimonialsBackOffice from "./views/BackOffice/Testimonials/index";
 import Testimonials from "./views/Testimonials";
 import Sliders from "./views/BackOffice/Sliders/index";
 import ThanksForYourDonation from "./views/ThanksForYourDonation";
