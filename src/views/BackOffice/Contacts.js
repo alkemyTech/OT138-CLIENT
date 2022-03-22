@@ -52,7 +52,7 @@ export default function Contacts() {
       cancelButtonText: "Cerrar",
       cancelButtonColor: "green",
       title: `Mensaje de ${sender}`,
-      text: message,
+      html: message,
     });
   }
 
