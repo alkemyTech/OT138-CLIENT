@@ -127,8 +127,6 @@ export const LoginForm = styled.form`
   min-width: 300px;
   max-width: 100%;
   min-height: 300px;
-  height: 100%;
-  flex: 1;
   background: #ffffff;
   border-width: 0px;
   border-style: solid;
