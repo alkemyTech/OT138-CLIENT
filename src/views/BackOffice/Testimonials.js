@@ -114,7 +114,9 @@ function Testimonials() {
         <HeaderButtons>
           <AddButton
             style={{ background: "green" }}
-            onClick={() => setShow(true)}
+            onClick={() => {
+              SetId(false);
+              setShow(true)}}
           >
             <FaPlusSquare /> <b>Crear</b>
           </AddButton>
