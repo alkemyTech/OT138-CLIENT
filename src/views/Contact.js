@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Formik } from "formik";
 import Header from "../components/Header/Landing";
 import {
@@ -9,22 +9,27 @@ import {
 } from "../styles/FormContact";
 import { Button } from "../components/Inputs";
 import { createContact } from "../services/requests/contacts";
-import Alert from "../components/Alert";
 import { Container, Content } from "../components/Wrappers/Containers";
 import { Toaster, toast } from "react-hot-toast";
 import { Input, TextArea } from "../components/Inputs";
+import {SendridContact} from "../services/requests/sendGrid";
 
 function FormContacto() {
-  const [alert, setAlert] = useState({});
+ 
   const submitForm = async (values, { resetForm }) => {
     resetForm();
     try {
       const response = await createContact(values);
+      await SendridContact(values);
       if (!response.error) {
         toast.success("El mensaje fue enviado con éxito.");
       } else {
         toast.error("Error al enviar el mensaje.");
       }
+
+     
+      
+
     } catch (error) {
       toast.error("Error al intentar enviar el mensaje.");
     }
