@@ -14,6 +14,7 @@ import { bindActionCreators } from "redux";
 import { checkAuthentication as checkAuthenticationAction } from "./actions/authActions";
 import Protected from "./components/Routes/Protected";
 import Activities from "./views/Activities";
+import NotFound from "./views/NotFound";
 import { ActivitiesByID } from "./views/Activities";
 import ActivityEditor from "./views/BackOffice/Activities/ActivityEditor";
 import UserEditor from "./views/BackOffice/Users/UserEditor";
@@ -33,6 +34,7 @@ function App({ checkAuthentication }) {
     <TransitionGroup component={null}>
       <CSSTransition key={location.key} classNames="transition-fade" timeout={400}>
         <Routes>
+          <Route path="*" element={<NotFound/>}/>
           <Route path="/" element={<Home />} />
           <Route path="/services" element={<h1>Services</h1>} />
           <Route path="/registro" element={<Signup />} />
