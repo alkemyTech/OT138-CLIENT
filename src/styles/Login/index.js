@@ -14,7 +14,7 @@ export const LogoContainer = styled.div`
   min-height: 100vh;
   width: 60%;
   .logo {
-    height: 100vh;
+    height: 100%;
     width: 100%;
     object-fit: cover;
   }
@@ -127,15 +127,12 @@ export const LoginForm = styled.form`
   min-width: 300px;
   max-width: 100%;
   min-height: 300px;
-  height: 100%;
-  flex: 1;
-  max-height: 600px;
   background: #ffffff;
   border-width: 0px;
   border-style: solid;
   border-color: rgb(226, 232, 240);
   border-radius: 10px;
-  padding: 2rem;
+  padding: 3rem 2rem;
   h1 {
     margin: 0;
     text-align: center;
@@ -163,4 +160,22 @@ export const LoginFooter = styled.div`
     margin: 4px 0;
     cursor: pointer;
   }
+`;
+
+export const Brand = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 6rem;
+
+  img {
+    height: 75%;
+    padding: 0 0.5rem;
+  }
+`;
+
+export const BrandContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  padding-bottom: 1rem;
 `;

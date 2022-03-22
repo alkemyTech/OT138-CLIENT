@@ -10,6 +10,8 @@ import {
   LoginFooter,
   LoginForm,
   LogoContainer,
+  BrandContainer,
+  Brand
 } from "../styles/Login";
 import { Button, Input } from "../components/Inputs";
 import { register } from "../services/requests/auth";
@@ -70,21 +72,20 @@ function Signup(props) {
 
     if (success) {
       toast.success("Cuenta creada");
-
-      setTimeout(() => {
-        navigation("/");
-      }, 1500);
+      navigation("/");
     } else {
       if (errorFields) {
-        Object.values(errorFields).forEach((fieldError) => {
+        Object.values(errorFields).forEach(fieldError => {
           toast.error(fieldError);
-        });
+        })
       }
       toast.error(errorMessage);
     }
   };
 
-  const source = photos[Math.floor(Math.random() * photos.length)];
+  const [source, setSource] = useState(
+    photos[Math.floor(Math.random() * photos.length)]
+  );
 
   return (
     <Container>
@@ -92,13 +93,18 @@ function Signup(props) {
       <LoginContainer>
         <FormContainer>
           <LoginForm onSubmit={formik.handleSubmit}>
-            <h1>Registro en Somos Más ONG</h1>
-            <p>Servicio de Autentificación</p>
+            <BrandContainer>
+              <Link to="/">
+                <Brand>
+                  <img src="/logo.png" alt="Somos mas logo" />
+                </Brand>
+              </Link>
+            </BrandContainer>
+            <h1>Crear cuenta</h1>
+            <br />
             <Label>
               Nombres{" "}
-              {formik.errors.firstName ? (
-                <span>{formik.errors.firstName}</span>
-              ) : null}
+              {formik.errors.firstName ? <span>{formik.errors.firstName}</span> : null}
             </Label>
             <Input
               placeholder="Nombres"
@@ -149,10 +155,10 @@ function Signup(props) {
               type="submit"
               style={{
                 margin: "0.8rem 0",
-                alignSelf: "center",
+                alignSelf: "center"
               }}
             >
-              <b>REGISTRARME</b>
+              <b>Registrarme</b>
             </Button>
             <LoginFooter>
               <Link to="/login">
