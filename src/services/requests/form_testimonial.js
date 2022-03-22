@@ -1,5 +1,6 @@
 import api from "../../config/api";
 import { API_TESTIMONIAL } from "../../constants/urls";
+import { createFormData } from "../../helpers";
 
 //GET ALL TESTIMONY
 export const getTestimony = async () => {
@@ -61,7 +62,15 @@ export async function postTestimony(values) {
   };
 
   try {
-    const { data } = await api.post(API_TESTIMONIAL, { ...values });
+    const { data } = await api.post(
+      API_TESTIMONIAL,
+      createFormData(values),
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
     if (data.error) {
       result.errorMessage = data.message;
       result.data = data.result;
