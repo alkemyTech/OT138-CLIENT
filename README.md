@@ -1,8 +1,8 @@
-# Alkemy ONG Client
+# Somos Más ONG | Client
 
 ## Development branch deploy
 
-[Alkemy ONG Link](https://alkemy.ml).
+[Somos Más ONG Link](https://alkemy.ml).
 
 ## Available Commands
 

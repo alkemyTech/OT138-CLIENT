@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Loading from "../../components/Loading";
 import { EditorContent, EntryType, Message } from "./styles";
 import { Input, Label, Button, TextArea, TextEditor, Select } from "../Inputs";
-
+import Dropzone from "../../components/Dropzone";
 /**
  *
  * @param {integer} [id] The entry id. If not provided, the function assumes that it will create a new entry
@@ -20,7 +20,10 @@ import { Input, Label, Button, TextArea, TextEditor, Select } from "../Inputs";
 
 function EntryEditor({ id, state, entryType, get, save, data, fields }) {
   const [fieldsWithData, setFieldsWithData] = useState([]);
-
+  const [imagenEnviar, setImagenEnviar] = useState([]);
+  const [imagen_portada, setImagenPortada] = useState("/dog_upload.png");
+  const [imagen_portada_preview, setImagenPortadaPreview] =
+    useState("/dog_upload.png");
   useEffect(() => {
     setFieldsWithData(
       fields.map((field) => {
@@ -52,7 +55,28 @@ function EntryEditor({ id, state, entryType, get, save, data, fields }) {
     fieldsWithData.forEach((field) => {
       formData[field.name] = field.value;
     });
-    save(formData);
+    save(formData, imagen_portada);
+  };
+
+  const onChangeStatus = ({ meta, file, remove }, status) => {
+    if (status === "done") {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = async (event) => {
+        setImagenEnviar(event?.target?.result);
+        setImagenPortada(file);
+        setImagenPortadaPreview(meta);
+      };
+    }
+    if (status === "removed") {
+      setImagenEnviar(null);
+      setImagenPortada("/upload.png");
+      setImagenPortadaPreview("/upload.png");
+    }
+  };
+
+  const onSubmitFile = (files, allFiles) => {
+    allFiles.forEach((f) => f.remove());
   };
 
   return (
@@ -124,6 +148,13 @@ function EntryEditor({ id, state, entryType, get, save, data, fields }) {
                       const data = editor.getData();
                       updateField(field.name, data);
                     }}
+                  />
+                )}
+                {field.type === "dropzone" && (
+                  <Dropzone
+                    defaultImage={field.value}
+                    onChangeStatus={onChangeStatus}
+                    onSubmit={onSubmitFile}
                   />
                 )}
               </div>
