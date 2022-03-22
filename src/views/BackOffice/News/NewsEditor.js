@@ -4,15 +4,19 @@ import { createNewsEntry, updateEntry } from "../../../services/requests/news";
 import toast from "react-hot-toast";
 
 function NewsEditor({ data, onSuccess }) {
-  const save = async (formData) => {
+  const save = async (formData, image) => {
     if (data) {
       // If there is an existing ID, then the form has to update the existing data on new
       const {
         success,
         data: updatedEntry,
         errorMessage,
-      } = await updateEntry(data.id, formData);
-
+      } = await updateEntry(data.id, {
+        name: formData.name,
+        content: formData.content,
+        categoryId: formData.categoryId,
+        image: image
+      });
       if (success) {
         toast.success("Guardado con éxito");
         onSuccess(updatedEntry);
@@ -25,7 +29,12 @@ function NewsEditor({ data, onSuccess }) {
         success,
         data: createdEntry,
         errorMessage,
-      } = await createNewsEntry(formData);
+      } = await createNewsEntry({
+        name: formData.name,
+        content: formData.content,
+        categoryId: formData.categoryId,
+        image: image
+      });
 
       if (success) {
         toast.success("Entrada creada con éxito");
@@ -52,8 +61,8 @@ function NewsEditor({ data, onSuccess }) {
         },
         {
           name: "image",
-          title: "Url de imagen",
-          type: "text",
+          title: "Archivo de imagen",
+          type: "dropzone",
         },
         {
           name: "content",

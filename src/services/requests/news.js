@@ -1,6 +1,7 @@
 import api from "../../config/api";
 import { API_NEWS } from "../../constants/urls";
 import { apiErrors } from '../../constants';
+import { createFormData } from '../../helpers';
 
 export const getAllNews = async (page = 1, limit = 10) => {
     const result = {
@@ -52,7 +53,14 @@ export const createNewsEntry = async (data) => {
     };
 
     try {
-        const { data: resObj } = await api.post(API_NEWS, data);
+        const { data: resObj } = await api.post(
+            API_NEWS, 
+            createFormData(data), 
+            {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
         if (resObj.error) {
             result.errorMessage = apiErrors[resObj.errorCode] ?? 'Error al crear entrada';
         } else {
@@ -74,7 +82,15 @@ export const updateEntry = async (id, data) => {
     };
 
     try {
-        const { data: resObj } = await api.put(`${API_NEWS}/${id}`, data);
+        const { data: resObj } = await api.put(
+            `${API_NEWS}/${id}`,
+            createFormData(data),
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }
+        );
         if (resObj.error) {
             result.errorMessage = apiErrors[resObj.errorCode] ?? 'Error al actualizar entrada';
         } else {
