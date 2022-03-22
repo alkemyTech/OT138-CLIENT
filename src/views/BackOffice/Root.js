@@ -171,8 +171,8 @@ function Backoffice({ auth }) {
                           </td>
                           <td>
                             <Link to={`/novedades/${id}`}>
-                              <div class="parent">
-                                <div class="child">
+                              <div className="parent">
+                                <div className="child">
                                   <b>{name}</b>
                                 </div>
                               </div>
@@ -231,8 +231,8 @@ function Backoffice({ auth }) {
                       return (
                         <tr key={id_donation}>
                           <td>
-                            <div class="parent">
-                              <div class="child">
+                            <div className="parent">
+                              <div className="child">
                                 <b>
                                   {message ??
                                     "¡El donador no agregó una dedicatoria!"}

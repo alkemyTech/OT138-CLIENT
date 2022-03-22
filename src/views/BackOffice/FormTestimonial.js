@@ -15,12 +15,13 @@ import {
   getOneTestimony,
 } from "../../services/requests/form_testimonial";
 import { toast, Toaster } from "react-hot-toast";
+import Dropzone from "../../components/Dropzone";
+import EntryEditor from "../../components/EntryEditor";
 
 function FormTestimonial({ id, SetAnimation, data }) {
   //STATES
   const [inputs, SetInputs] = useState({ name: "", image: "", content: "" });
   const [ckeditor, SetCeditor] = useState(inputs.content);
-  const [message, SetMessage] = useState({ name: "", image: "", content: "" });
 
   useEffect(() => {
     if (id) {
@@ -40,27 +41,20 @@ function FormTestimonial({ id, SetAnimation, data }) {
     });
   }
 
-  //CHANGE INPUTS VALUES
-  function OnChangeData(e) {
-    const { name, value } = e.target;
-    SetInputs({ ...inputs, [name]: value });
-  }
-
   //SEND DATA
-  async function OnSubmitData(e) {
-    e.preventDefault();
-    if (!inputs.name) {
-      SetMessage({ name: "Campo obligatorio", image: "", content: "" });
-    } else if (!inputs.image) {
-      SetMessage({ name: "", image: "Campo obligatorio", content: "" });
-    } else if (!ckeditor) {
-      SetMessage({ name: "", image: "", content: "Campo obligatorio" });
+  async function OnSubmitData(formData, img) {
+    formData.image = img;
+    console.log(formData);
+    if (!formData.name) {
+      toast.error("Nombre es Obligatorio")
+    } else if (!(formData.image instanceof File)) {
+      toast.error("Imagen es Obligatorio")
+    } else if (!formData.content) {
+      toast.error("Contenido es Obligatorio")
     } else {
-      SetMessage("");
       if (!id) {
-        inputs.content = ckeditor;
         const { successMessage, success, errorMessage } = await postTestimony(
-          inputs
+          formData
         );
         if (success) {
           toast.success(successMessage);
@@ -72,9 +66,9 @@ function FormTestimonial({ id, SetAnimation, data }) {
           toast.error(errorMessage);
         }
       } else {
-        inputs.content = ckeditor;
+        formData.content = ckeditor;
         const { successMessage, success, errorMessage } = await putTestimony(
-          inputs,
+          formData,
           id
         );
         if (success) {
@@ -91,52 +85,34 @@ function FormTestimonial({ id, SetAnimation, data }) {
   }
 
   return (
-    <form onSubmit={OnSubmitData}>
-      <Toaster />
-      <h1>Formulario de testimonio</h1>
-      <Input
-        type="text"
-        name="name"
-        placeholder="Nombre"
-        value={inputs.name}
-        onChange={OnChangeData}
-      />
-      <MessageError>{message.name}</MessageError>
-      <Input
-        type="text"
-        name="image"
-        placeholder="Imagen"
-        value={inputs.image}
-        onChange={OnChangeData}
-      />
-      <MessageError>{message.image}</MessageError>
-      <Label>Contenido</Label>
-      <CKEditor
-        editor={ClassicEditor}
-        data={inputs.content}
-        onChange={(event, editor) => {
-          const data = editor.getData();
-          SetCeditor(data);
-        }}
-      />
-      <MessageError>{message.content}</MessageError>
-      <ButtonGroup>
-        <Button style={saveButtonStyle} type="submit">
-          {!id ? "Guardar" : "Actualizar"}{" "}
-        </Button>
-        {data === undefined && (
-          <Button
-            style={closeButtonStyle}
-            type="button"
-            onClick={() => {
-              SetAnimation({ opacity: "0", index: "-1" });
-            }}
-          >
-            Cerrar
-          </Button>
-        )}
-      </ButtonGroup>
-    </form>
+    <>
+    <Toaster/>
+    <EntryEditor
+     id={id}
+     state={"ready"}
+     entryType={"Testimonio"}
+     getEntry={Obtener}
+     save={OnSubmitData}
+     data={inputs}
+     fields={[
+       {
+         name: "name",
+         title: "Nombre",
+         type: "text",
+       },
+       {
+         name: "image",
+         title: "Imagen",
+         type: "dropzone",
+       },
+       {
+        name: "content",
+        title: "Contenido",
+        type: "content",
+      },
+     ]}
+    />
+    </>
   );
 }
 
