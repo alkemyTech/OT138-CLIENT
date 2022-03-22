@@ -2,9 +2,19 @@ import React from "react";
 import styled from "@emotion/styled";
 
 export const ModalWrapper = styled.div`
+<<<<<<< HEAD
   height: 100%;
   width: 100%;
   z-index: 9998;
+=======
+  padding-top: 15px;
+  padding-bottom: 15px; 
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+>>>>>>> 2c0c6dd9438ecb5fb0fb2e12a09b199e9e888a4a
   position: fixed;
   background: rgba(0, 0, 0, 0.5);
   display: ${(props) => (props.show === true ? "flex" : "none")};
@@ -22,9 +32,11 @@ export const ModalWrapper = styled.div`
 `;
 
 export const ModalContainer = styled.div`
+  overflow: auto;
   position: relative;
   background-color: #fff;
   width: 100%;
+  max-height: 100%;
   border-radius: 10px;
   z-index: 9999;
   margin: 10px;
