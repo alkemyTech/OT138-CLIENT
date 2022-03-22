@@ -3,6 +3,10 @@ import toast, { Toaster } from "react-hot-toast";
 import { useFormik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import { Container } from "../components/Wrappers/Containers";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { login as loginAction } from "../actions/authActions";
+import { TailSpin } from "react-loader-spinner";
 import {
   FormContainer,
   Label,
@@ -43,6 +47,7 @@ const validate = (values) => {
   }
   return errors;
 };
+
 const photos = [
   "login__1.jpg",
   "login__2.jpg",
@@ -50,7 +55,9 @@ const photos = [
   "login__4.jpg",
   "login__5.jpg",
 ];
-function Signup(props) {
+
+function Signup({ login }) {
+  const [loading, setLoading] = useState(false);
   const navigation = useNavigate();
   const formik = useFormik({
     initialValues: {
@@ -67,11 +74,13 @@ function Signup(props) {
   });
 
   const attemptSignup = async (values) => {
+    setLoading(true);
     const { success, errorMessage, errorFields } = await register(values);
     await SendridRegister(values);
 
     if (success) {
       toast.success("Cuenta creada");
+      login(values);
       navigation("/");
     } else {
       if (errorFields) {
@@ -81,6 +90,8 @@ function Signup(props) {
       }
       toast.error(errorMessage);
     }
+
+    setLoading(false);
   };
 
   const [source, setSource] = useState(
@@ -153,12 +164,15 @@ function Signup(props) {
 
             <Button
               type="submit"
+              disabled={loading}
               style={{
                 margin: "0.8rem 0",
                 alignSelf: "center"
               }}
             >
-              <b>Registrarme</b>
+              <div style={{ display: 'flex', justifyContent: 'center' }}>
+                {loading ? <TailSpin height="25" width="25" color="white" /> : <b>Registrarme</b>}
+              </div>
             </Button>
             <LoginFooter>
               <Link to="/login">
@@ -176,4 +190,13 @@ function Signup(props) {
   );
 }
 
-export default Signup;
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators(
+    {
+      login: loginAction,
+    },
+    dispatch
+  );
+};
+
+export default connect(null, mapDispatchToProps)(Signup);
