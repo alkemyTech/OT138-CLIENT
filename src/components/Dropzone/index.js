@@ -16,7 +16,7 @@ export default function Dropzone({ onChangeStatus, onSubmit, defaultImage }) {
       SubmitButtonComponent={null}
       inputContent={
         <img
-          src={defaultImage ?? "/upload.png"}
+          src={defaultImage || "/upload.png"}
           className="img__uploader"
           alt="upload"
         />
