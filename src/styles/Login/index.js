@@ -129,7 +129,6 @@ export const LoginForm = styled.form`
   min-height: 300px;
   height: 100%;
   flex: 1;
-  max-height: 600px;
   background: #ffffff;
   border-width: 0px;
   border-style: solid;
@@ -163,4 +162,22 @@ export const LoginFooter = styled.div`
     margin: 4px 0;
     cursor: pointer;
   }
+`;
+
+export const Brand = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 6rem;
+
+  img {
+    height: 75%;
+    padding: 0 0.5rem;
+  }
+`;
+
+export const BrandContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  padding-bottom: 1rem;
 `;

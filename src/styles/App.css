@@ -31,9 +31,35 @@
     transform: translateY(0);
   }
   50% {
-    transform: translateY(10px)
+    transform: translateY(10px);
   }
   100% {
-    transform: translateY(0px)
+    transform: translateY(0px);
   }
+}
+
+/* CSS Transitions */
+
+.transition-fade-enter {
+  opacity: 0.3;
+}
+
+.transition-fade-enter-active {
+  opacity: 1;
+  transition: opacity 400ms;
+  -webkit-transition: -webkit-opacity 400ms ease-in-out;
+  -moz-transition: -moz-opacity 400ms ease-in-out;
+  -o-transition: -o-opacity 400ms ease-in-out;
+}
+
+.transition-fade-exit {
+  opacity: 1;
+}
+
+.transition-fade-exit-active {
+  opacity: 0.3;
+  transition: opacity 400ms;
+  -webkit-transition: -webkit-opacity 400ms ease-in-out;
+  -moz-transition: -moz-opacity 400ms ease-in-out;
+  -o-transition: -o-opacity 400ms ease-in-out;
 }

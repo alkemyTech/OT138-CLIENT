@@ -9,6 +9,8 @@ import {
   LoginForm,
   Label,
   LoginFooter,
+  BrandContainer,
+  Brand
 } from "../styles/Login";
 import { Input, Button } from "../components/Inputs";
 import { connect } from "react-redux";
@@ -81,8 +83,15 @@ function Login({ email, login, auth }) {
       <LoginContainer>
         <FormContainer>
           <LoginForm onSubmit={formik.handleSubmit}>
-            <h1>Ingreso a Somos Más</h1>
-            <p>Servicio de Autentificación</p>
+            <BrandContainer>
+              <Link to="/">
+                <Brand>
+                  <img src="/logo.png" alt="Somos mas logo" />
+                </Brand>
+              </Link>
+            </BrandContainer>
+            <h1>Ingresar</h1>
+            <br />
             <Label>
               Email{" "}
               <span>
@@ -120,7 +129,7 @@ function Login({ email, login, auth }) {
                 alignSelf: "center",
               }}
             >
-              <b>ENTRAR</b>
+              <b>Ingresar</b>
             </Button>
             <LoginFooter>
               <Link to="/registro">
