@@ -13,6 +13,7 @@ import toast from "react-hot-toast";
 import Loading from "../components/Loading";
 import { Container, Content } from "../components/Wrappers/Containers";
 import { Footer } from "../components/Footer";
+import { removeTags } from "../helpers";
 function Testimonials() {
   const [testimonials, setTestimonials] = useState([]);
   const [pagination, setPagination] = useState({
@@ -80,7 +81,7 @@ function Testimonials() {
                     <h2>{name}</h2>
                   </HeaderCard>
                   <Content>
-                    <p>{content}</p>
+                  <div className="child">{removeTags(content)}</div>
                   </Content>
                 </Card>
               );
@@ -99,5 +100,6 @@ function Testimonials() {
     </Container>
   );
 }
+
 
 export default Testimonials;

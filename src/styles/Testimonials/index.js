@@ -19,6 +19,12 @@ export const Card = styled.div`
   &:hover {
     transform: scale(1.018);
   }
+
+
+  .child{
+    font-size:20px;
+    margin-top:15px;
+  }
 `;
 
 export const HeaderCard = styled.div`

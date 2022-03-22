@@ -19,6 +19,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { Button, ButtonGroup } from "../../../components/Inputs";
 import TestimonyEditor from "./TestimonyEditor";
+import { removeTags } from "../../../helpers";
 
 
 function Testimonials(){
@@ -188,11 +189,12 @@ function Testimonials(){
                         )}
                       </td>
                       <td>
-                        {tableLoading && !item.text ? <Skeleton /> : item.name}
+                        {tableLoading && !item.name ? <Skeleton /> : item.name}
                       </td>
 
                       <td onClick={() => showEntryContent(item.content)}>
-                        {tableLoading && !item.text ? <Skeleton /> : item.content}
+                        {tableLoading && !item.content ? <Skeleton /> : <div className="child">{removeTags(item.content)}</div>}
+                       
                       </td>
                       <td>
                         {tableLoading && !item.createdAt ? (

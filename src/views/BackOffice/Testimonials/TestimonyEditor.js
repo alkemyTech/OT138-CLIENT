@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import {Input,Label} from "../../../components/Inputs";
 import {toast} from 'react-hot-toast';
-import {Button} from "../../../components/Inputs"
+import {Button,TextEditor} from "../../../components/Inputs"
 import {putTestimonies,postTestimonies} from "../../../services/requests/testimonials";
 import {EntryType} from "../../../components/EntryEditor/styles"
 
@@ -67,7 +67,7 @@ const [inputs,SetInputs] = useState({name:"",image:"",content:""});
         <Label>Url de imagen</Label>
         <Input type="text" name="image" value={inputs.image} onChange={(e)=>{SetInputs({...inputs,image:e.target.value})}}/>
         <Label>Contenido</Label>
-        <Input type="text" name="content" value={inputs.content} onChange={(e)=>{SetInputs({...inputs,content:e.target.value})}}/>
+        <TextEditor name="content" data={inputs.content} onChange={(editor) => {const data = editor.getData(); inputs.content = data}}/>
         <Button onClick={()=>{submitForm()}}><b>GUARDAR</b></Button>
         </Fragment>
 
