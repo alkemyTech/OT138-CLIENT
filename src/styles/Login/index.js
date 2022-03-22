@@ -14,7 +14,7 @@ export const LogoContainer = styled.div`
   min-height: 100vh;
   width: 60%;
   .logo {
-    height: 100vh;
+    height: 100%;
     width: 100%;
     object-fit: cover;
   }
@@ -132,7 +132,7 @@ export const LoginForm = styled.form`
   border-style: solid;
   border-color: rgb(226, 232, 240);
   border-radius: 10px;
-  padding: 2rem;
+  padding: 3rem 2rem;
   h1 {
     margin: 0;
     text-align: center;
