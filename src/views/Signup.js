@@ -3,6 +3,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { useFormik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import { Container } from "../components/Wrappers/Containers";
+import { TailSpin } from "react-loader-spinner";
 import {
   FormContainer,
   Label,
@@ -43,6 +44,7 @@ const validate = (values) => {
   }
   return errors;
 };
+
 const photos = [
   "login__1.jpg",
   "login__2.jpg",
@@ -50,7 +52,9 @@ const photos = [
   "login__4.jpg",
   "login__5.jpg",
 ];
-function Signup(props) {
+
+function Signup() {
+  const [loading, setLoading] = useState(false);
   const navigation = useNavigate();
   const formik = useFormik({
     initialValues: {
@@ -67,6 +71,7 @@ function Signup(props) {
   });
 
   const attemptSignup = async (values) => {
+    setLoading(true);
     const { success, errorMessage, errorFields } = await register(values);
     await SendridRegister(values);
 
@@ -81,6 +86,8 @@ function Signup(props) {
       }
       toast.error(errorMessage);
     }
+
+    setLoading(false);
   };
 
   const [source, setSource] = useState(
@@ -158,7 +165,9 @@ function Signup(props) {
                 alignSelf: "center"
               }}
             >
-              <b>Registrarme</b>
+              <div style={{ display: 'flex', justifyContent: 'center' }}>
+                {loading ? <TailSpin height="25" width="25" color="white" /> : <b>Registrarme</b>}
+              </div>
             </Button>
             <LoginFooter>
               <Link to="/login">
