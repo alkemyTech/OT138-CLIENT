@@ -14,14 +14,25 @@ export default function FloatingDonateButton() {
     <>
       <Modal size="sm" show={show} onClose={() => setShow(false)}>
         <ModalHeader>
-          <ModalTitle>¡Doná con MercadoPago!</ModalTitle>
+          <ModalTitle>¡Colaborá con Somos Más ONG!</ModalTitle>
+          <img
+            src="/mercadopago.jpg"
+            style={{
+              width: "100%",
+              maxWidth: "250px",
+              alignSelf: "center",
+              padding: "10px 0 0 0",
+            }}
+            alt="mercadopago"
+          />
         </ModalHeader>
         <ModalBody>
+          <Label>Escribe tu Dedicatoria</Label>
           <TextArea
             placeholder={"Escribe tu Dedicatoria aquí (opcional)"}
             onChange={(e) => setMessage(e?.target?.value)}
           />
-          <Label>Introduce tu monto a donar</Label>
+          <Label>Elige el monto a donar</Label>
           <Input
             type={"number"}
             defaultValue={20}

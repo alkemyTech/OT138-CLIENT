@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import toast, { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from "react-hot-toast";
 import { useFormik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import { Container } from "../components/Wrappers/Containers";
@@ -15,6 +15,7 @@ import {
 } from "../styles/Login";
 import { Button, Input } from "../components/Inputs";
 import { register } from "../services/requests/auth";
+import { SendridRegister } from "../services/requests/sendGrid";
 
 // Returns an object with the error messages for handled input validation
 // i.e. fields required, correct email format and password min 6 chars length
@@ -50,7 +51,6 @@ const photos = [
   "login__5.jpg",
 ];
 function Signup(props) {
-
   const navigation = useNavigate();
   const formik = useFormik({
     initialValues: {
@@ -68,7 +68,8 @@ function Signup(props) {
 
   const attemptSignup = async (values) => {
     const { success, errorMessage, errorFields } = await register(values);
-
+    await SendridRegister(values);
+    
     if (success) {
       toast.success("Cuenta creada");
       navigation("/");
@@ -81,11 +82,10 @@ function Signup(props) {
       toast.error(errorMessage);
     }
   };
-
+  
   const source = photos[Math.floor(Math.random() * photos.length)];
 
   return (
-
     <Container>
       <Toaster />
       <LoginContainer>

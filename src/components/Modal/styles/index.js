@@ -44,6 +44,8 @@ export const ModalBody = styled.div`
 `;
 
 export const ModalHeader = styled.div`
+  display: flex;
+  flex-direction: column;
   padding: 1rem;
 `;
 
@@ -60,6 +62,7 @@ export const CloseButton = styled.button`
 
 export const ModalTitle = styled.h1`
   margin: 0;
-  font-size: 1.3rem;
+  padding: 0;
+  font-size: 1.4rem;
   text-align: center;
 `;
