@@ -31,7 +31,7 @@ export default function AboutUs() {
           atenciones mensuales.
         </p>
         {/* <p className="about__details">
-          Alkemy ONG es una iniciativa de alkemy.org en colaboración con los
+          Somos Más ONG es una iniciativa de alkemy.org en colaboración con los
           estudiantes de la misma.
           <br />
           Fue lanzada el 14 de febrero de 2022 en el marco de la celebración del

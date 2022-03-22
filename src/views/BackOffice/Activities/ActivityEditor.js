@@ -9,7 +9,7 @@ import {
   updateActivity,
 } from "../../../services/requests/activities";
 import toast, { Toaster } from "react-hot-toast";
-import { Container, Content } from '../../../components/Wrappers/Containers'; 
+import { Container, Content } from "../../../components/Wrappers/Containers";
 
 function ActivityEditor() {
   const { id } = useParams();
@@ -67,38 +67,34 @@ function ActivityEditor() {
   };
 
   return (
-    <Container>
-      <Header />
+    <>
       <Toaster />
-      <Content>
-        <EntryEditor
-          id={id}
-          state={state}
-          entryType={"Actividades"}
-          getEntry={getActivitiesById}
-          save={saveActivity}
-          data={data}
-          fields={[
-            {
-              name: "name",
-              title: "Nombre",
-              type: "text",
-            },
-            {
-              name: "image",
-              title: "Url de imagen",
-              type: "text",
-            },
-            {
-              name: "content",
-              title: "Contenido",
-              type: "content",
-            },
-          ]}
-        />
-      </Content>
-      <Footer />
-    </Container>
+      <EntryEditor
+        id={id}
+        state={state}
+        entryType={"Actividades"}
+        getEntry={getActivitiesById}
+        save={saveActivity}
+        data={data}
+        fields={[
+          {
+            name: "name",
+            title: "Nombre",
+            type: "text",
+          },
+          {
+            name: "image",
+            title: "Url de imagen",
+            type: "text",
+          },
+          {
+            name: "content",
+            title: "Contenido",
+            type: "content",
+          },
+        ]}
+      />
+    </>
   );
 }
 

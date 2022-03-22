@@ -15,8 +15,8 @@ import Loading from "../../components/Loading";
 import { Link } from "react-router-dom";
 import { getNews } from "../../services/requests/news";
 import { getUsersList } from "../../services/requests/users";
-import Skeleton from 'react-loading-skeleton'
-import 'react-loading-skeleton/dist/skeleton.css'
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import { createArrayOfObjects } from "../../helpers";
 
 import { getDonations } from "../../services/requests/donations";
@@ -127,12 +127,23 @@ function Backoffice({ auth }) {
                   response?.data?.error &&
                   isError ? (
                   <h1>¡No se encontraron Actividades!</h1>
-                ) : createArrayOfObjects(limit).map((value,index)=>{ 
-                return(<tr key={index}>
-                  <td><ThumbnailSkeleton/></td>
-                  <td><Skeleton/></td>
-                  <td><Skeleton/></td>
-                  </tr>)})}
+                ) : (
+                  createArrayOfObjects(limit).map((value, index) => {
+                    return (
+                      <tr key={index}>
+                        <td>
+                          <ThumbnailSkeleton />
+                        </td>
+                        <td>
+                          <Skeleton />
+                        </td>
+                        <td>
+                          <Skeleton />
+                        </td>
+                      </tr>
+                    );
+                  })
+                )}
               </tbody>
             </Table>
           </StatisticsBox>
@@ -179,12 +190,23 @@ function Backoffice({ auth }) {
                   news?.data?.error &&
                   isErrorNews ? (
                   <h1>¡No se encontraron Novedades!</h1>
-                ) : createArrayOfObjects(limit).map((value,index)=>{ 
-                  return(<tr key={index}>
-                    <td><ThumbnailSkeleton/></td>
-                    <td><Skeleton/></td>
-                    <td><Skeleton/></td>
-                    </tr>)})}
+                ) : (
+                  createArrayOfObjects(limit).map((value, index) => {
+                    return (
+                      <tr key={index}>
+                        <td>
+                          <ThumbnailSkeleton />
+                        </td>
+                        <td>
+                          <Skeleton />
+                        </td>
+                        <td>
+                          <Skeleton />
+                        </td>
+                      </tr>
+                    );
+                  })
+                )}
               </tbody>
             </Table>
           </StatisticsBox>
@@ -251,7 +273,7 @@ function Backoffice({ auth }) {
               <tbody>
                 {!isLoadingUser ? (
                   !users?.data?.error && !isErrorUser ? (
-                    users?.data?.result?.map((user) => {
+                    users?.data?.result?.items?.map((user) => {
                       const { id, firstName, lastName, image, email, roleId } =
                         user;
                       return (
@@ -275,14 +297,29 @@ function Backoffice({ auth }) {
                   users?.data?.error &&
                   isErrorUser ? (
                   <h1>¡No se encontraron Usuarios!</h1>
-                ) : createArrayOfObjects(limit).map((value,index)=>{ 
-                  return(<tr key={index}>
-                    <td><ThumbnailSkeleton/></td>
-                    <td><Skeleton/></td>
-                    <td><Skeleton/></td>
-                    <td><Skeleton/></td>
-                    <td><Skeleton/></td>
-                    </tr>)})}
+                ) : (
+                  createArrayOfObjects(limit).map((value, index) => {
+                    return (
+                      <tr key={index}>
+                        <td>
+                          <ThumbnailSkeleton />
+                        </td>
+                        <td>
+                          <Skeleton />
+                        </td>
+                        <td>
+                          <Skeleton />
+                        </td>
+                        <td>
+                          <Skeleton />
+                        </td>
+                        <td>
+                          <Skeleton />
+                        </td>
+                      </tr>
+                    );
+                  })
+                )}
               </tbody>
             </Table>
           </StatisticsBox>
@@ -298,17 +335,22 @@ const mapStateToProps = (state) => {
   };
 };
 
-function ThumbnailSkeleton(){
-  return(<Skeleton circle={true} width="45px" height="45px"/>)
+function ThumbnailSkeleton() {
+  return <Skeleton circle={true} width="45px" height="45px" />;
 }
 
-function ThumbnailWithSkeleton(props){
-  const[loaded, setLoaded] = useState(false)
-  return(<>
-    <Thumbnail {...props} onLoad={() => setLoaded(true)} style={loaded?{}:{display:"none"}}/>
-    {!loaded && <ThumbnailSkeleton/>}
-  </>)
+function ThumbnailWithSkeleton(props) {
+  const [loaded, setLoaded] = useState(false);
+  return (
+    <>
+      <Thumbnail
+        {...props}
+        onLoad={() => setLoaded(true)}
+        style={loaded ? {} : { display: "none" }}
+      />
+      {!loaded && <ThumbnailSkeleton />}
+    </>
+  );
 }
-
 
 export default connect(mapStateToProps)(Backoffice);
