@@ -23,7 +23,7 @@ import Swal from "sweetalert2";
 import Pagination from "../../../components/Pagination";
 import moment from "moment";
 import { Avatar } from "../../../components/Inputs/styles";
-import HTMLRenderer from "../../../components/HTMLRenderer";
+import { removeTags } from '../../../helpers';
 
 export default function Activities() {
   const [activities, setActivities] = useState([]);
@@ -131,7 +131,7 @@ export default function Activities() {
       showConfirmButton: false,
       cancelButtonText: "Cerrar",
       title: "Contenido",
-      text: content,
+      html: content,
     });
   }
 
@@ -183,9 +183,9 @@ export default function Activities() {
                     />
                   </td>
                   <td>{activity.name}</td>
-                  <td onClick={() => showActivityContent(activity.content)}>
+                  <td onClick={() => showActivityContent(activity.content)} style={{cursor: 'pointer'}}>
                     <div className="parent">
-                      <div className="child">{activity.content}</div>
+                      <div className="child">{removeTags(activity.content)}</div>
                     </div>
                   </td>
                   <td>
