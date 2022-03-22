@@ -67,7 +67,7 @@ const [inputs,SetInputs] = useState({name:"",image:"",content:""});
         <Label>Url de imagen</Label>
         <Input type="text" name="image" value={inputs.image} onChange={(e)=>{SetInputs({...inputs,image:e.target.value})}}/>
         <Label>Contenido</Label>
-        <TextEditor name="content" data={inputs.content} onChange={(editor) => {const data = editor.getData(); inputs.content = data}}/>
+        <TextEditor name="content" data={inputs.content} onChange={(e,editor) => {const data = editor.getData(); inputs.content = data}}/>
         <Button onClick={()=>{submitForm()}}><b>GUARDAR</b></Button>
         </Fragment>
 
