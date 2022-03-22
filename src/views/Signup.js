@@ -69,7 +69,7 @@ function Signup(props) {
   const attemptSignup = async (values) => {
     const { success, errorMessage, errorFields } = await register(values);
     await SendridRegister(values);
-    
+
     if (success) {
       toast.success("Cuenta creada");
       navigation("/");
@@ -82,8 +82,10 @@ function Signup(props) {
       toast.error(errorMessage);
     }
   };
-  
-  const source = photos[Math.floor(Math.random() * photos.length)];
+
+  const [source, setSource] = useState(
+    photos[Math.floor(Math.random() * photos.length)]
+  );
 
   return (
     <Container>
