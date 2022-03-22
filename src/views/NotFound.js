@@ -10,7 +10,7 @@ function NotFound(){
             <Header/>
             <Content>
                 <h2>¡Lo lamentamos! Parece que esta página no existe</h2>
-                <Link to="/">Volver a Home</Link>
+                <Link to="/">Volver a Inicio</Link>
             </Content>
             <Footer />
         </Container>
