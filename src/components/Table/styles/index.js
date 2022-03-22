@@ -40,6 +40,9 @@ export const Table = styled.table`
       text-overflow: ellipsis;
     }
   }
+  td.clickable {
+    cursor: pointer;
+  }
   tr:nth-of-type(odd) {
     background: #eee;
   }

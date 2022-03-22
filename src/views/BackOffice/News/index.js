@@ -33,6 +33,7 @@ import { Avatar, TextWrapper } from "../../../components/Inputs/styles";
 import Skeleton from "react-loading-skeleton";
 import 'react-loading-skeleton/dist/skeleton.css'
 import { createArrayOfObjects } from "../../../helpers";
+import { removeTags } from '../../../helpers';
 
 export default function News() {
   const [resultsLimit, setResultsLimit] = useState(10);
@@ -79,7 +80,7 @@ export default function News() {
       showConfirmButton: false,
       cancelButtonText: "Cerrar",
       title: "Contenido",
-      text: content,
+      html: content,
     });
   }
 
@@ -176,24 +177,24 @@ export default function News() {
               return (
                 <tr key={index}>
                   <td>
-                    {tableLoading?<AvatarSkeleton/>:<AvatarWithSkeleton
+                    {tableLoading ? <AvatarSkeleton /> : <AvatarWithSkeleton
                       src={entry.image}
                       onClick={() => showEntryPicture(entry.image)}
                     />}
                   </td>
-                  <td>{tableLoading?<Skeleton/>:entry.name}</td>
-                  <td onClick={() => showEntryContent(entry.content)}>
-                    {tableLoading?<Skeleton/>:<div class="parent">
-                      <div class="child">{entry.content}</div>
+                  <td>{tableLoading ? <Skeleton /> : entry.name}</td>
+                  <td onClick={() => showEntryContent(entry.content)} className="clickable">
+                    {tableLoading ? <Skeleton /> : <div className="parent">
+                      <div className="child">{removeTags(entry.content)}</div>
                     </div>}
                   </td>
 
                   <td>
-                    {tableLoading?<Skeleton/>:entry.createdAt &&
+                    {tableLoading ? <Skeleton /> : entry.createdAt &&
                       moment(entry.createdAt).format("DD/MM/yyyy")}
                   </td>
                   <td>
-                    {tableLoading?<Skeleton/>:<ButtonGroup align="center" gap={"8px"}>
+                    {tableLoading ? <Skeleton /> : <ButtonGroup align="center" gap={"8px"}>
                       {lockedEntryIds.includes(entry.id) ? (
                         <TailSpin height="40" width="40" color="grey" />
                       ) : (
@@ -242,14 +243,14 @@ const deleteButtonStyle = {
   background: "red",
 };
 
-function AvatarSkeleton(){
-  return(<Skeleton circle={true} width="45px" height="45px"/>)
+function AvatarSkeleton() {
+  return (<Skeleton circle={true} width="45px" height="45px" />)
 }
 
-function AvatarWithSkeleton(props){
-  const[loaded, setLoaded] = useState(false)
-  return(<>
-    <Avatar {...props} onLoad={() => setLoaded(true)} style={loaded?{}:{display:"none"}}/>
-    {!loaded && <AvatarSkeleton/>}
+function AvatarWithSkeleton(props) {
+  const [loaded, setLoaded] = useState(false)
+  return (<>
+    <Avatar {...props} onLoad={() => setLoaded(true)} style={loaded ? {} : { display: "none" }} />
+    {!loaded && <AvatarSkeleton />}
   </>)
 }
