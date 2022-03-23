@@ -20,6 +20,7 @@ import Dropzone from "../../components/Dropzone";
 
 function EntryEditor({ id, state, entryType, get, save, data, fields }) {
   const [fieldsWithData, setFieldsWithData] = useState([]);
+  const [checked, setChecked] = useState(false);
   const [imagenEnviar, setImagenEnviar] = useState([]);
   const [imagen_portada, setImagenPortada] = useState("/dog_upload.png");
   const [imagen_portada_preview, setImagenPortadaPreview] =
@@ -78,6 +79,9 @@ function EntryEditor({ id, state, entryType, get, save, data, fields }) {
   const onSubmitFile = (files, allFiles) => {
     allFiles.forEach((f) => f.remove());
   };
+  useEffect(() => {
+    console.log("data", data);
+  }, [data]);
 
   return (
     <>
@@ -88,12 +92,12 @@ function EntryEditor({ id, state, entryType, get, save, data, fields }) {
       )}
       {state === "ready" && (
         <EditorContent>
-          {id && (
+          {Object.keys(data).length !== 0 && (
             <span>
               <h1>Editar entrada</h1> <EntryType>{entryType}</EntryType>
             </span>
           )}
-          {!id && (
+          {Object.keys(data).length === 0 && (
             <span>
               <h1>Crear entrada</h1>
               <EntryType>{entryType}</EntryType>
@@ -102,7 +106,11 @@ function EntryEditor({ id, state, entryType, get, save, data, fields }) {
           {fieldsWithData.map((field) => {
             return (
               <div key={`field-${field.name}`}>
-                <Label>{field.title}</Label>
+                {(field.type !== "checkbox" ||
+                  Object.keys(data).length === 0) && (
+                  <Label>{field.title}</Label>
+                )}
+
                 {field.type === "text" && (
                   <Input
                     type="text"
@@ -156,6 +164,20 @@ function EntryEditor({ id, state, entryType, get, save, data, fields }) {
                     onChangeStatus={onChangeStatus}
                     onSubmit={onSubmitFile}
                   />
+                )}
+                {Object.keys(data).length === 0 && field.type === "checkbox" && (
+                  <label>
+                    <input
+                      type="checkbox"
+                      id="cbox1"
+                      value={checked}
+                      defaultValue={field.defaultValue}
+                      onChange={(e) => {
+                        updateField(field.name, !checked);
+                        setChecked(!checked);
+                      }}
+                    />
+                  </label>
                 )}
               </div>
             );

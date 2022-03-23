@@ -15,7 +15,7 @@ import {
   LoginForm,
   LogoContainer,
   BrandContainer,
-  Brand
+  Brand,
 } from "../styles/Login";
 import { Button, Input } from "../components/Inputs";
 import { register } from "../services/requests/auth";
@@ -63,6 +63,7 @@ function Signup({ login }) {
     initialValues: {
       firstName: "",
       lastName: "",
+      phone: "",
       email: "",
       password: "",
     },
@@ -84,9 +85,9 @@ function Signup({ login }) {
       navigation("/");
     } else {
       if (errorFields) {
-        Object.values(errorFields).forEach(fieldError => {
+        Object.values(errorFields).forEach((fieldError) => {
           toast.error(fieldError);
-        })
+        });
       }
       toast.error(errorMessage);
     }
@@ -115,7 +116,9 @@ function Signup({ login }) {
             <br />
             <Label>
               Nombres{" "}
-              {formik.errors.firstName ? <span>{formik.errors.firstName}</span> : null}
+              {formik.errors.firstName ? (
+                <span>{formik.errors.firstName}</span>
+              ) : null}
             </Label>
             <Input
               placeholder="Nombres"
@@ -135,6 +138,17 @@ function Signup({ login }) {
               type="text"
               name="lastName"
               value={formik.values.lastName}
+              onChange={formik.handleChange}
+            />
+            <Label>
+              Número de Celular{" "}
+              {formik.errors.phone ? <span>{formik.errors.phone}</span> : null}
+            </Label>
+            <Input
+              placeholder="Celular"
+              type="number"
+              name="phone"
+              value={formik.values.phone}
               onChange={formik.handleChange}
             />
             <Label>
@@ -167,11 +181,15 @@ function Signup({ login }) {
               disabled={loading}
               style={{
                 margin: "0.8rem 0",
-                alignSelf: "center"
+                alignSelf: "center",
               }}
             >
-              <div style={{ display: 'flex', justifyContent: 'center' }}>
-                {loading ? <TailSpin height="25" width="25" color="white" /> : <b>Registrarme</b>}
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                {loading ? (
+                  <TailSpin height="25" width="25" color="white" />
+                ) : (
+                  <b>Registrarme</b>
+                )}
               </div>
             </Button>
             <LoginFooter>

@@ -11,8 +11,7 @@ import {
 import toast, { Toaster } from "react-hot-toast";
 import { Container, Content } from "../../../components/Wrappers/Containers";
 
-function ActivityEditor({data, onSuccess}) {
-
+function ActivityEditor({ data, onSuccess }) {
   //const [data, setData] = useState({});
   const [state, setState] = useState("ready");
 
@@ -40,7 +39,7 @@ function ActivityEditor({data, onSuccess}) {
       updateActivity(data.id, {
         name: formData.name,
         content: formData.content,
-        image: image
+        image: image,
       })
         .then((response) => {
           if (response.data.error) {
@@ -58,7 +57,8 @@ function ActivityEditor({data, onSuccess}) {
       createActivity({
         name: formData.name,
         content: formData.content,
-        image: image
+        send: formData.send !== "" ? formData.send : false,
+        image: image,
       })
         .then((response) => {
           if (response.data.error) {
@@ -83,7 +83,7 @@ function ActivityEditor({data, onSuccess}) {
         entryType={"Actividades"}
         getEntry={getActivitiesById}
         save={saveActivity}
-        data={data?? {}}
+        data={data ?? {}}
         fields={[
           {
             name: "name",
@@ -99,6 +99,13 @@ function ActivityEditor({data, onSuccess}) {
             name: "content",
             title: "Contenido",
             type: "content",
+          },
+          {
+            name: "send",
+            title: "Notificar Usuarios",
+            type: "checkbox",
+            defaultValue: false,
+            onlyCreate: true,
           },
         ]}
       />

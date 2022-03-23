@@ -23,8 +23,11 @@ import Swal from "sweetalert2";
 import Pagination from "../../../components/Pagination";
 import moment from "moment";
 import Skeleton from "react-loading-skeleton";
-import { AvatarSkeleton, AvatarWithSkeleton } from "../../../components/Skeleton";
-import { createArrayOfObjects, removeTags } from '../../../helpers';
+import {
+  AvatarSkeleton,
+  AvatarWithSkeleton,
+} from "../../../components/Skeleton";
+import { createArrayOfObjects, removeTags } from "../../../helpers";
 
 export default function Activities() {
   const [pageLimit, setPageLimit] = useState(10);
@@ -78,7 +81,7 @@ export default function Activities() {
   }
 
   function onEdit(instance) {
-    console.log(instance)
+    console.log(instance);
     setFormData({
       display: true,
       instance: instance,
@@ -181,46 +184,57 @@ export default function Activities() {
               return (
                 <tr key={index}>
                   <td>
-                    {
-                      tableLoading ? <AvatarSkeleton /> :
-                        <AvatarWithSkeleton
-
-                          src={activity.image}
-                          onClick={() => showActivityPicture(activity.image)}
-                        />
-                    }
+                    {tableLoading ? (
+                      <AvatarSkeleton />
+                    ) : (
+                      <AvatarWithSkeleton
+                        src={activity.image}
+                        onClick={() => showActivityPicture(activity.image)}
+                      />
+                    )}
                   </td>
                   <td>{tableLoading ? <Skeleton /> : activity.name}</td>
-                  <td onClick={() => showActivityContent(activity.content)} className="clickable">
-                    {
-                      tableLoading ? <Skeleton /> :
-                        <div className="parent">
-                          <div className="child">{removeTags(activity.content)}</div>
+                  <td
+                    onClick={() => showActivityContent(activity.content)}
+                    className="clickable"
+                  >
+                    {tableLoading ? (
+                      <Skeleton />
+                    ) : (
+                      <div className="parent">
+                        <div className="child">
+                          {removeTags(activity.content)}
                         </div>
-                    }
+                      </div>
+                    )}
                   </td>
                   <td>
-                    {
-                      tableLoading ? <Skeleton /> :
-                        activity.createdAt && moment(activity.createdAt).format("DD/MM/YY")
-                    }
+                    {tableLoading ? (
+                      <Skeleton />
+                    ) : (
+                      activity.createdAt &&
+                      moment(activity.createdAt).format("DD/MM/YY")
+                    )}
                   </td>
                   <td>
-                    {
-                      tableLoading ? <Skeleton /> :
-                        <ButtonGroup align="center" gap="8px">
-                          <Button
-                            style={buttonStyles("orange")}
-                            onClick={() => onEdit(activity)}>
-                            <FaEdit />
-                          </Button>
-                          <Button
-                            style={buttonStyles("red")}
-                            onClick={() => onDelete(activity.id)}>
-                            <FaTrash />
-                          </Button>
-                        </ButtonGroup>
-                    }
+                    {tableLoading ? (
+                      <Skeleton />
+                    ) : (
+                      <ButtonGroup align="center" gap="8px">
+                        <Button
+                          style={buttonStyles("orange")}
+                          onClick={() => onEdit(activity)}
+                        >
+                          <FaEdit />
+                        </Button>
+                        <Button
+                          style={buttonStyles("red")}
+                          onClick={() => onDelete(activity.id)}
+                        >
+                          <FaTrash />
+                        </Button>
+                      </ButtonGroup>
+                    )}
                   </td>
                 </tr>
               );
