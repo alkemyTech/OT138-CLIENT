@@ -37,14 +37,14 @@ function Header({ navItems, logout, auth }) {
   useEffect(() => {
     (async () => {
       const result = await getPublicData();
-      if (!result.error) {
+      if (!result.error && result.data) {
         setPublicData(result.data);
+      } else {
+        console.warn("No se encontraron datos de la organización.");
       }
     })();
   }, []);
-  useEffect(() => {
-    console.log(publicData);
-  }, [publicData]);
+
   useEffect(() => {
     if (auth.status === status.SUCCESS) {
       if (auth.authenticated) {
