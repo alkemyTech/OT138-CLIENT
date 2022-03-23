@@ -5,6 +5,9 @@ export const FooterStyle = styled.footer`
   width: 100%;
   justify-content: space-between;
   border-top: solid lightgray 1px;
+  p {
+    font-weight: bold;
+  }
   div {
     padding: 0.5rem;
     width: 100%;
@@ -16,6 +19,9 @@ export const FooterStyle = styled.footer`
   }
 
   .logo {
-    width: 4rem;
+    width: 8rem;
+  }
+  @media (max-width: 600px) {
+    flex-direction: column;
   }
 `;
