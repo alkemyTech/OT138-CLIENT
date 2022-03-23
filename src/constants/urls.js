@@ -11,5 +11,6 @@ export const API_USERS = "/users";
 export const API_TESTIMONIAL = "/testimonials";
 export const API_SLIDES = "/slides";
 export const API_NEWS = "/news";
+export const API_ACTIVITIES = "/activities";
 export const API_SENDGRID_CONTACT = "/sendgrid/contact-form";
 export const API_SENDGRID_REGISTER = "/sendgrid/register-form";

@@ -78,9 +78,10 @@ export default function Activities() {
   }
 
   function onEdit(instance) {
+    console.log(instance)
     setFormData({
       display: true,
-      instance,
+      instance: instance,
     });
   }
 
