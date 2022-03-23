@@ -67,9 +67,9 @@ function Backoffice({ auth }) {
 
   const {
     data: donations,
-    isLoadingDonations,
-    isFetchingDonations,
-    isErrorDonations,
+    isLoading: isLoadingDonations,
+    isFetching: isFetchingDonations,
+    IsError: isErrorDonations,
   } = useQuery(
     ["donaciones", limit, currentPage],
     () => getDonations(limit, currentPage),
@@ -255,7 +255,23 @@ function Backoffice({ auth }) {
                   donations?.data?.error &&
                   isErrorDonations ? (
                   <h1>¡No se encontraron Donaciones!</h1>
-                ) : null}
+                ) : (
+                  createArrayOfObjects(limit).map((value, index) => {
+                    return (
+                      <tr key={index}>
+                        <td>
+                          <Skeleton />
+                        </td>
+                        <td>
+                          <Skeleton />
+                        </td>
+                        <td>
+                          <Skeleton />
+                        </td>
+                      </tr>
+                    );
+                  })
+                )}
               </tbody>
             </Table>
           </StatisticsBox>
