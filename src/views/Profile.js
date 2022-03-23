@@ -7,6 +7,7 @@ import {
   ActionsBar,
   Form,
 } from "../styles/Profile";
+import Dropzone from "../components/Dropzone";
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -24,10 +25,13 @@ function Profile(props) {
   const [saving, setSaving] = useState(false);
   const [dataState, setDataState] = useState("loading");
   const [userId, setUserId] = useState(null);
-  const [image, setImage] = useState(null);
   const [name, setName] = useState(null);
   const [lastname, setLastName] = useState(null);
   const [email, setEmail] = useState(null);
+  
+  const [profileImageToSend, setProfileImageToSend] = useState([]);
+  const [profileImage, setProfileImage] = useState('/upload.png');
+  const [profileImagePreview, setProfileImagePreview] = useState('/upload.png');
 
   const navigate = useNavigate();
 
@@ -44,11 +48,11 @@ function Profile(props) {
     if (data.payload.success) {
       let { id, image, firstName, lastName, email } = data.payload.user;
       setUserId(id);
-      setImage(image);
       setName(firstName);
       setLastName(lastName);
       setEmail(email);
       setDataState("loaded");
+      setProfileImage(image);
     } else {
       setDataState("error");
     }
@@ -60,6 +64,7 @@ function Profile(props) {
       id: userId,
       firstName: name,
       lastName: lastname,
+      image: profileImage
     })
       .then((response) => {
         console.log(response);
@@ -96,6 +101,28 @@ function Profile(props) {
     }
   };
 
+
+  const onChangeStatus = ({ meta, file, remove }, status) => {
+    if (status === "done") {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = async (event) => {
+        setProfileImageToSend(event?.target?.result);
+        setProfileImage(file);
+        setProfileImagePreview(meta);
+      };
+    }
+    if (status === "removed") {
+      setProfileImageToSend(null);
+      setProfileImage("/upload.png");
+      setProfileImagePreview("/upload.png");
+    }
+  };
+
+  const onSubmitFile = (files, allFiles) => {
+    allFiles.forEach((f) => f.remove());
+  };
+
   return (
     <Container>
       <Header />
@@ -104,14 +131,15 @@ function Profile(props) {
         <ProfileContent>
           <Toaster />
           <Form onSubmit={(e) => e.preventDefault()}>
-            <Image>
-              <img
-                alt="profile__photo"
-                src={image ? image : ""}
-                onError={({ currentTarget }) => {
-                  currentTarget.onerror = null;
-                  currentTarget.src = "/broken__image.gif";
-                }}
+            <Image editing={editing}>
+              <div className="profile-editing-cover">
+                EDITAR
+              </div>
+              <Dropzone
+                defaultImage={profileImage}
+                onChangeStatus={onChangeStatus}
+                onSubmit={onSubmitFile}
+                disabled={!editing}
               />
             </Image>
             <h2>Mis Datos Personales</h2>
