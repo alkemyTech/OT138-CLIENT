@@ -49,10 +49,57 @@ export const Image = styled.div`
   height: 200px;
   margin: 0 0 10px 0;
   align-self: center;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  .profile-editing-cover{
+    position: absolute;
+    z-index: 20;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    color: white;
+    font-weight: 900;
+  }
+  &:hover .profile-editing-cover{
+    opacity: ${props => props.editing? '1':'0'};
+  }
+  .dzu-dropzone{
+    display: block;
+    width: 200px !important;
+    height: 200px !important;
+    border: 0 !important;
+    overflow: hidden !important;
+  }
+  .dzu-previewContainer{
+    min-height: auto !important;
+    display: block;
+    padding: 0;
+    position: relative;
+  }
   img {
-    border-radius: 50%;
-    height: 100%;
+    height: 100% !important;
     width: 100%;
+    object-fit: cover !important;
+    object-position: center center;
+    min-width: 200px !important;
+    min-height: 200px !important;
+    position: absolute;
+  }
+  .dzu-previewStatusContainer{
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    z-index: 5;
+    padding: 4px;
+    box-sizing: border-box;
+    background-color: rgba(255,255,255,0.6);
+    border-radius: 50%;
+  }
+  .dzu-previewButton{
+    margin: 0;
   }
 `;
 

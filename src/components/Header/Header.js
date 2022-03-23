@@ -18,6 +18,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { logout as logoutAction } from "../../actions/authActions";
 import { status } from "../../constants";
+import { getPublicData } from "../../services/requests/publicData";
 
 function Header({ navItems, logout, auth }) {
   const { pathname } = useLocation();
@@ -32,6 +33,17 @@ function Header({ navItems, logout, auth }) {
     lastName: "",
     email: "",
   });
+  const [publicData, setPublicData] = useState({});
+  useEffect(() => {
+    (async () => {
+      const result = await getPublicData();
+      if (!result.error && result.data) {
+        setPublicData(result.data);
+      } else {
+        console.warn("No se encontraron datos de la organización.");
+      }
+    })();
+  }, []);
 
   useEffect(() => {
     if (auth.status === status.SUCCESS) {
@@ -59,7 +71,7 @@ function Header({ navItems, logout, auth }) {
         </Hamburger>
         <Link to="/">
           <Logo>
-            <img src="/logo.png" alt="ong logo" />
+            <img src={publicData.image} alt="ong logo" />
             {/* <h2 className="logo__title">Alkemy ONG</h2> */}
           </Logo>
         </Link>
@@ -94,7 +106,9 @@ function Header({ navItems, logout, auth }) {
             </ProfileDropdown>
           </Avatar>
         ) : dataState !== "loading" ? (
-          <SessionButton onClick={() => navigate("/login")}>Iniciar Sesión</SessionButton>
+          <SessionButton onClick={() => navigate("/login")}>
+            Iniciar Sesión
+          </SessionButton>
         ) : null}
         <MobileNavBar menuState={menuState}>
           {navItems.map((item, index) => {
@@ -103,7 +117,9 @@ function Header({ navItems, logout, auth }) {
                 key={index}
                 className={pathname === item.route ? "active" : ""}
               >
-                <Link to={item.route} onClick={() => setMenuState(!menuState)}>{item.text}</Link>
+                <Link to={item.route} onClick={() => setMenuState(!menuState)}>
+                  {item.text}
+                </Link>
               </MobileItem>
             );
           })}

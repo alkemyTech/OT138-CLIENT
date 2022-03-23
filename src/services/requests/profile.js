@@ -1,11 +1,20 @@
 import api from "../../config/api";
+import { createFormData } from "../../helpers";
 
 /*export const getProfileData = async (id) => {
     return api.get(`users/${id}`)
 };*/
 
 export const saveProfileData = async (data) => {
-    return api.put(`/auth/account`, data).then( res => res);
+    return api.put(
+        `/auth/account`, 
+        createFormData(data),
+        {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+        .then( res => res);
 };
 
 export const deleteProfile = async () => {
