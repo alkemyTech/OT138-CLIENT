@@ -19,6 +19,7 @@ import { bindActionCreators } from "redux";
 import { logout as logoutAction } from "../../actions/authActions";
 import { status } from "../../constants";
 import { getPublicData } from "../../services/requests/publicData";
+import ImageLoader from "../ImageLoader";
 
 function Header({ navItems, logout, auth }) {
   const { pathname } = useLocation();
@@ -71,7 +72,13 @@ function Header({ navItems, logout, auth }) {
         </Hamburger>
         <Link to="/">
           <Logo>
-            <img src={publicData.image} alt="ong logo" />
+            <ImageLoader
+              src={publicData.image}
+              alt="ong logo"
+              loaderWidth="5rem"
+              loaderHeight="75%"
+              loaderStyle={{ padding: "0rem 0.5rem" }}
+            />
             {/* <h2 className="logo__title">Alkemy ONG</h2> */}
           </Logo>
         </Link>
