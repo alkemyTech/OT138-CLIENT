@@ -1,4 +1,5 @@
 import api from "../../config/api";
+import { createFormData } from "../../helpers";
 
 export const getActivities = (limit, currentPage) =>
     api
@@ -9,19 +10,28 @@ export const getActivitiesById = (id) =>
     api.get(`/activities/${id}`).then((res) => res);
 
 export const createActivity = async (data) => {
-    return api.post('/activities', {
-        name: data.name,
-        image: data.image,
-        content: data.content
-    }).then((res) => res);
+
+    return api.post(
+        '/activities', 
+        createFormData(data),
+        {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+        .then((res) => res);
 }
 
 export const updateActivity = async (id, data) => {
-    return api.put(`/activities/${id}`, {
-        name: data.name,
-        image: data.image,
-        content: data.content
-    }).then((res) => res);
+    return api.put(
+        `/activities/${id}`,
+        createFormData(data),
+        {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+        .then((res) => res);
 }
 
 export const deleteActivity = async (id) => {
