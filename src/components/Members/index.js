@@ -29,6 +29,7 @@ export const MemberCardContainer = styled.div`
     font-size: 1.1rem;
     text-align: center;
     box-sizing: border-box;
+    padding: 1rem 0 .5rem 0;
   }
 
   .card__area {
