@@ -3,16 +3,9 @@ import {
   updateCategory,
   createCategory,
 } from "../../../services/requests/categories";
-import Form from "../../../components/Form";
 import toast from "react-hot-toast";
-import {
-  SubmitButton,
-  CancelButton,
-  InputFeedback,
-} from "../../../components/Form/styles";
-import { useFormik } from "formik";
-import { Input, ButtonGroup, Label } from "../../../components/Inputs";
 import * as Yup from "yup";
+import EntryEditor from "../../../components/EntryEditor";
 
 /**
  * Form component to create or update a category.
@@ -26,100 +19,64 @@ export default function CategotyForm({ instance, onCancel, onSuccess }) {
   const [backendValidationErrors, setBackendValidationErrors] = useState({});
 
   async function submit(values) {
-    if (instance !== null) {
-      const { success, data, errorMessage, errorFields } = await updateCategory(
-        instance.id,
-        values
-      );
-      if (success) {
-        if (onSuccess) onSuccess(data);
+    try {
+      const result = await validationSchema.validate(values);
+      console.log("result", result);
+      if (instance !== null) {
+        const { success, data, errorMessage, errorFields } =
+          await updateCategory(instance.id, values);
+        if (success) {
+          if (onSuccess) onSuccess(data);
+        } else {
+          toast.error("Error al actualizar categoría: " + errorMessage);
+          setBackendValidationErrors(errorFields);
+        }
       } else {
-        toast.error("Error al actualizar categoría: " + errorMessage);
-        setBackendValidationErrors(errorFields);
+        const { success, data, errorMessage, errorFields } =
+          await createCategory(values);
+        if (success) {
+          if (onSuccess) onSuccess(data);
+        } else {
+          toast.error("Error al crear categoría: " + errorMessage);
+          setBackendValidationErrors(errorFields);
+        }
       }
-    } else {
-      const { success, data, errorMessage, errorFields } = await createCategory(
-        values
-      );
-      if (success) {
-        if (onSuccess) onSuccess(data);
+    } catch (error) {
+      if (error instanceof Yup.ValidationError) {
+        toast.error(error.message);
+        console.log(error)
       } else {
-        toast.error("Error al crear categoría: " + errorMessage);
-        setBackendValidationErrors(errorFields);
+        throw error;
       }
     }
   }
   const validationSchema = Yup.object().shape({
     name: Yup.string()
-      .max(255, "No debe superar los 255 caracteres")
-      .required("Campo requerido"),
+      .max(255, "El nombre no debe superar los 255 caracteres")
+      .required("Campo nombre es obligatorio"),
     description: Yup.string()
-      .max(255, "No debe superar los 255 caracteres")
-      .required("Campo requerido"),
+      .max(255, "La descripción no debe superar los 255 caracteres")
+      .required("Campo descripción es obligatorio"),
   });
-
-  const formik = useFormik({
-    initialValues: {
-      name: instance?.name ?? "",
-      description: instance?.description ?? "",
-    },
-    validationSchema,
-    onSubmit: (values) => {
-      submit(values);
-    },
-  });
-
-  useEffect(() => {
-    formik.setValues({
-      name: instance?.name ?? "",
-      description: instance?.description ?? "",
-    });
-  }, [instance]);
 
   return (
-    <Form onSubmit={formik.handleSubmit}>
-      <Label>Nombre</Label>
-      <Input
-        name="name"
-        placeholder="Nombre"
-        type="text"
-        value={formik.values.name}
-        onChange={formik.handleChange}
-      />
-      {formik.touched.name && formik.errors.name && (
-        <InputFeedback type="error">{formik.errors.name}</InputFeedback>
-      )}
-      {backendValidationErrors.name && (
-        <InputFeedback type="error">
-          {backendValidationErrors.name}
-        </InputFeedback>
-      )}
-
-      <Label>Descripción</Label>
-      <Input
-        name="description"
-        type="text"
-        value={formik.values.description}
-        onChange={formik.handleChange}
-        placeholder="Descripción"
-      />
-      {formik.touched.description && formik.errors.description && (
-        <InputFeedback type="error">{formik.errors.description}</InputFeedback>
-      )}
-      {backendValidationErrors.description && (
-        <InputFeedback type="error">
-          {backendValidationErrors.description}
-        </InputFeedback>
-      )}
-
-      <ButtonGroup align="center" gap="5px">
-        <SubmitButton type="submit">
-          {instance ? "Actualizar" : "Enviar"}
-        </SubmitButton>
-        <CancelButton type="button" onClick={onCancel}>
-          Cerrar
-        </CancelButton>
-      </ButtonGroup>
-    </Form>
+    <EntryEditor
+      state={"ready"}
+      entryType={"Categorías"}
+      save={submit}
+      data={instance ?? {}}
+      fields={[
+        {
+          name: "name",
+          title: "Nombre",
+          type: "text",
+        },
+        {
+          name: "description",
+          title: "Descripción",
+          type: "text",
+        },
+      ]}
+    />
   );
 }
