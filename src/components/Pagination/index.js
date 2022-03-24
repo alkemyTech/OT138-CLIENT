@@ -1,25 +1,54 @@
 import React from 'react';
 import ReactPaginate from 'react-paginate';
+import { Select } from '../Inputs';
 import styled from '@emotion/styled';
 
 export default function Pagination({ onPageChange, totalPages }) {
 
-    function handlePageChange(event) {
-        onPageChange(event.selected+1);
-    }
+  function handlePageChange(event) {
+    onPageChange(event.selected + 1);
+  }
 
-    return (
-        <StyledPagination
-            onPageChange={handlePageChange}
-            pageRangeDisplayed={1}
-            pageCount={totalPages}
-            breakLabel="..."
-            activeClassName="activePage"
-            previousLabel="❮"
-            nextLabel="❯"
-        />
-    );
+  return (
+    <StyledPagination
+      onPageChange={handlePageChange}
+      pageRangeDisplayed={1}
+      pageCount={totalPages}
+      breakLabel="..."
+      activeClassName="activePage"
+      previousLabel="❮"
+      nextLabel="❯"
+    />
+  );
 }
+
+export function SelectLimit({ onSelect, options = [10, 15, 25] }) {
+  return (
+    <StyledSelectLimit>
+      <span>Mostrar</span>
+      <select onChange={event => onSelect(event.target.value)}>
+        {
+          options.map((opt, index) => (
+            <option key={index} value={opt}>{opt}</option>
+          ))
+        }
+      </select>
+    </StyledSelectLimit>
+  )
+}
+
+const StyledSelectLimit = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  select {
+    padding: 5px;
+    margin: 0;
+    border-radius: 5px;
+    font-size: 1.1rem;
+  }
+`;
 
 const StyledPagination = styled(ReactPaginate)`
     display: flex;

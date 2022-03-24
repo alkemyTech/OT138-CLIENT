@@ -3,8 +3,8 @@ import Table from "../../components/Table";
 import moment from "moment";
 import { getContacts as getContactsService } from "../../services/requests/contacts";
 import toast from "react-hot-toast";
-import { SectionTitle } from "../../styles/BackOffice";
-import Pagination from "../../components/Pagination";
+import { HeaderButtons, SectionTitle } from "../../styles/BackOffice";
+import Pagination, { SelectLimit } from "../../components/Pagination";
 import { Button } from "../../components/Inputs";
 import { Content } from "../../components/Wrappers/Containers";
 import Swal from "sweetalert2";
@@ -14,21 +14,26 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { createArrayOfObjects } from "../../helpers";
 
 export default function Contacts() {
-  const [limit, setLimit] = useState(10);
-  const [contacts, setContacts] = useState(createArrayOfObjects(limit));
+  const limitOptions = [10, 15, 25, 50];
+
+  const [pageLimit, setPageLimit] = useState(limitOptions[0]);
+  const [contacts, setContacts] = useState(createArrayOfObjects(pageLimit));
   const [pagination, setPagination] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
   const [tableLoading, setTableLoading] = useState(true);
+
   useEffect(() => {
-    getContacts(currentPage);
-  }, []);
+    setCurrentPage(1);
+    getContacts(1);
+  }, [pageLimit]);
+
   async function getContacts(page) {
     setTableLoading(true);
     const {
       success,
       data: contactsData,
       errorMessage,
-    } = await getContactsService(page, limit);
+    } = await getContactsService(page, pageLimit);
 
     if (success) {
       const { items, ...pagination } = contactsData;
@@ -65,6 +70,9 @@ export default function Contacts() {
       >
         Mensajes de Contacto
       </SectionTitle>
+      <HeaderButtons>
+        <SelectLimit onSelect={value => setPageLimit(value)} options={limitOptions} />
+      </HeaderButtons>
       <Table>
         <thead>
           <tr>
