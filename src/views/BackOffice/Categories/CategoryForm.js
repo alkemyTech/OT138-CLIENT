@@ -3,15 +3,7 @@ import {
   updateCategory,
   createCategory,
 } from "../../../services/requests/categories";
-import Form from "../../../components/Form";
 import toast from "react-hot-toast";
-import {
-  SubmitButton,
-  CancelButton,
-  InputFeedback,
-} from "../../../components/Form/styles";
-import { useFormik } from "formik";
-import { Input, ButtonGroup, Label } from "../../../components/Inputs";
 import * as Yup from "yup";
 import EntryEditor from "../../../components/EntryEditor";
 

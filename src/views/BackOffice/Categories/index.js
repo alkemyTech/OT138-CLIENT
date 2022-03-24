@@ -15,8 +15,6 @@ import { FaPlusSquare } from "react-icons/fa";
 import Swal from "sweetalert2";
 import Modal, {
   ModalBody,
-  ModalHeader,
-  ModalTitle,
 } from "../../../components/Modal";
 import { HeaderButtons, AddButton } from "../../../styles/BackOffice";
 import CategoryForm from "./CategoryForm";
@@ -32,11 +30,9 @@ export default function Categories() {
   const [categories, setCategories] = useState(createArrayOfObjects(pageLimit));
   const [lockedCategoryIds, setLockedCategoryIds] = useState([]);
   const [pagination, setPagination] = useState({});
-  const [currentPage, setCurrentPage] = useState(1);
   const [tableLoading, setTableLoading] = useState(true);
 
   async function goToPage(page) {
-    setCurrentPage(page);
     getCategories(page);
   }
   // CategoryForm metadata
@@ -46,7 +42,6 @@ export default function Categories() {
   });
 
   useEffect(() => {
-    setCurrentPage(1);
     getCategories(1);
   }, [pageLimit]);
 
