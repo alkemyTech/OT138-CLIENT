@@ -1,6 +1,7 @@
 import api from "../../config/api";
 import { API_SLIDES } from "../../constants/urls";
 import { apiErrors } from '../../constants';
+import { createFormData } from '../../helpers';
 
 //GET ALL SLIDES
 export const getSlides = async (page=1,limit=10) => {
@@ -70,7 +71,15 @@ export const postSlides = async (values) => {
     successMessage: "",
   };
   try {
-    const { data } = await api.post(API_SLIDES, { imageURL: values.imageURL, text: values.text, order: values.order, organizationID: values.organizationID });
+    const { data } = await api.post(
+      API_SLIDES, 
+      createFormData(values),
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }
+    )
     if (data.error) {
       result.errorMessage = data.message;
     } else {
@@ -86,7 +95,7 @@ export const postSlides = async (values) => {
 }
 
 //UPDATED SLIDES
-export const putSlides = async ( id,text,imageUrl,order,organizationID) => {
+export const putSlides = async ({id, text, image, order, organizationID}) => {
 
   const result = {
     success: false,
@@ -96,7 +105,14 @@ export const putSlides = async ( id,text,imageUrl,order,organizationID) => {
   };
 
   try {
-    const { data } = await api.put(`${API_SLIDES}/${id}`, { text: text, imageURL: imageUrl, order:order, organizationID:organizationID });
+    const { data } = await api.put(
+      `${API_SLIDES}/${id}`, 
+      createFormData({id, text, image, order, organizationID}),
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
     if (data.error) {
       result.errorMessage = data.message;
       result.data = data.slider;
