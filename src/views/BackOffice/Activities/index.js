@@ -42,7 +42,8 @@ export default function Activities() {
   }
 
   useEffect(() => {
-    fetchActivities(currentPage);
+    setCurrentPage(1);
+    fetchActivities(1);
   }, [pageLimit]);
 
   function buttonStyles(color) {

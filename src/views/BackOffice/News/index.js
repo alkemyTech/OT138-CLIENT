@@ -8,36 +8,25 @@ import {
 import toast from "react-hot-toast";
 import { Button, ButtonGroup } from "../../../components/Inputs";
 import { Content } from "../../../components/Wrappers/Containers";
-import Pagination from "../../../components/Pagination";
+import Pagination, { SelectLimit } from "../../../components/Pagination";
 import {
   FaEdit,
-  FaPencilAlt,
-  FaPlus,
   FaPlusSquare,
   FaTrash,
 } from "react-icons/fa";
 import { TailSpin } from "react-loader-spinner";
 import Swal from "sweetalert2";
-import Modal, {
-  ModalBody,
-  ModalHeader,
-  ModalTitle,
-} from "../../../components/Modal";
-import {
-  HeaderButtons,
-  AddButton,
-  SectionTitle,
-} from "../../../styles/BackOffice";
+import Modal, { ModalBody } from "../../../components/Modal";
+import { HeaderButtons, AddButton, SectionTitle } from "../../../styles/BackOffice";
 import NewsEditor from "./NewsEditor";
-import { Avatar, TextWrapper } from "../../../components/Inputs/styles";
 import Skeleton from "react-loading-skeleton";
 import { AvatarSkeleton, AvatarWithSkeleton } from "../../../components/Skeleton";
 import 'react-loading-skeleton/dist/skeleton.css'
 import { createArrayOfObjects, removeTags } from "../../../helpers";
 
 export default function News() {
-  const [resultsLimit, setResultsLimit] = useState(10);
-  const [news, setNews] = useState(createArrayOfObjects(resultsLimit));
+  const [pageLimit, setPageLimit] = useState(10);
+  const [news, setNews] = useState(createArrayOfObjects(pageLimit));
   const [pagination, setPagination] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
   const [lockedEntryIds, setLockedEntryIds] = useState([]);
@@ -48,8 +37,9 @@ export default function News() {
   const [tableLoading, setTableLoading] = useState(true);
 
   useEffect(() => {
-    getNews(currentPage);
-  }, []);
+    setCurrentPage(1);
+    getNews(1);
+  }, [pageLimit]);
 
   async function getNews(page) {
     setTableLoading(true);
@@ -57,7 +47,7 @@ export default function News() {
       success,
       data: newsData,
       errorMessage,
-    } = await getAllNewsService(page, resultsLimit);
+    } = await getAllNewsService(page, pageLimit);
 
     if (success) {
       const { items, ...pagination } = newsData;
@@ -158,6 +148,7 @@ export default function News() {
       <Content>
         <SectionTitle>Novedades</SectionTitle>
         <HeaderButtons>
+          <SelectLimit onSelect={value => setPageLimit(value)} />
           <AddButton onClick={onCreate} style={{ background: "green" }}>
             <FaPlusSquare /> <b>Crear</b>
           </AddButton>
