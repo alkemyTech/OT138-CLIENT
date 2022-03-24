@@ -1,5 +1,3 @@
-import Backoffice from "../views/Backoffice";
-
 // Enum representing a request status
 export const status = Object.freeze({
   PENDING: "PENDING",
@@ -21,7 +19,18 @@ export const apiErrors = Object.freeze({
   SRV001: "Error del servidor",
 });
 
+// Array for header links, first match of current path with basePath will be displayed.
 export const navItems = [
+  {
+    basePath: "/login",
+    routes: [],
+    hide: true,
+  },
+  {
+    basePath: "/registro",
+    routes: [],
+    hide: true,
+  },
   {
     basePath: "/backoffice",
     routes: [
