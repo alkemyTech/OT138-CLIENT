@@ -75,8 +75,8 @@ function Header({ navItems, logout, auth }) {
             <ImageLoader
               src={publicData.image}
               alt="ong logo"
-              loaderWidth="5rem"
-              loaderHeight="75%"
+              loaderWidth="128px"
+              loaderHeight="48px"
               loaderStyle={{ padding: "0rem 0.5rem" }}
             />
             {/* <h2 className="logo__title">Alkemy ONG</h2> */}

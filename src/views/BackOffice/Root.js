@@ -21,6 +21,7 @@ import { createArrayOfObjects } from "../../helpers";
 
 import { getDonations } from "../../services/requests/donations";
 import moment from "moment";
+import { Avatar } from "../../components/Inputs/styles";
 function Backoffice({ auth }) {
   const [currentPage, setCurrentPage] = useState(1);
   const limit = 4;
@@ -217,7 +218,8 @@ function Backoffice({ auth }) {
             <Table>
               <thead>
                 <tr>
-                  <th width="60%">Dedicatoria</th>
+                  <th width="10%"></th>
+                  <th width="50%">Dedicatoria</th>
                   <th width="20%">Dinero</th>
                   <th width="20%">Fecha</th>
                 </tr>
@@ -230,6 +232,9 @@ function Backoffice({ auth }) {
                         donation;
                       return (
                         <tr key={id_donation}>
+                          <td>
+                            <Avatar src="/anonymous.png" />
+                          </td>
                           <td>
                             <div className="parent">
                               <div className="child">

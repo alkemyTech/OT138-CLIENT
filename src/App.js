@@ -4,7 +4,7 @@ import Login from "./views/Login";
 import Signup from "./views/Signup";
 import FormContacto from "./views/Contact";
 import { Route, Routes, useLocation } from "react-router-dom";
-import { TransitionGroup, CSSTransition } from 'react-transition-group';
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 import "./styles/App.css";
 import Backoffice from "./views/Backoffice";
 import Profile from "./views/Profile";
@@ -32,9 +32,13 @@ function App({ checkAuthentication }) {
 
   return (
     <TransitionGroup component={null}>
-      <CSSTransition key={location.key} classNames="transition-fade" timeout={400}>
+      <CSSTransition
+        key={location.key}
+        classNames="transition-fade"
+        timeout={400}
+      >
         <Routes>
-          <Route path="*" element={<NotFound/>}/>
+          <Route path="*" element={<NotFound />} />
           <Route path="/" element={<Home />} />
           <Route path="/services" element={<h1>Services</h1>} />
           <Route path="/registro" element={<Signup />} />
