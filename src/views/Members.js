@@ -49,7 +49,12 @@ function Members() {
             {members.length > 0 ? (
               members.map((member, index) => {
                 return (
-                  <Card key={index} name={member.name} image={member.image} />
+                  <Card
+                    key={index}
+                    name={member.name}
+                    image={member.image}
+                    area={member.area}
+                  />
                 );
               })
             ) : (
