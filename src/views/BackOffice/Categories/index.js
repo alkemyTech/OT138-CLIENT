@@ -125,11 +125,6 @@ export default function Categories() {
   return (
     <>
       <Modal size="sm" show={formData.display} onClose={() => hideForm()}>
-        <ModalHeader>
-          <ModalTitle>
-            {formData.instance === null ? "Crear" : "Actualizar"} categoría
-          </ModalTitle>
-        </ModalHeader>
         <ModalBody>
           <CategoryForm
             instance={formData.instance}
