@@ -20,8 +20,9 @@ import { logout as logoutAction } from "../../actions/authActions";
 import { status } from "../../constants";
 import { getPublicData } from "../../services/requests/publicData";
 import ImageLoader from "../ImageLoader";
+import { navItems as navItemsConstant } from "../../constants";
 
-function Header({ navItems, logout, auth }) {
+function Header({ logout, auth }) {
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
@@ -35,6 +36,7 @@ function Header({ navItems, logout, auth }) {
     email: "",
   });
   const [publicData, setPublicData] = useState({});
+  const [navItems, setNavItems] = useState([]);
   useEffect(() => {
     (async () => {
       const result = await getPublicData();
@@ -45,6 +47,15 @@ function Header({ navItems, logout, auth }) {
       }
     })();
   }, []);
+
+  useEffect(() => {
+    // Find all routes that match nav items constants
+    const matchedRoutes = navItemsConstant.filter((elem) => {
+      return pathname.includes(elem.basePath);
+    });
+    // use the first match
+    setNavItems(matchedRoutes[0].routes);
+  }, [pathname]);
 
   useEffect(() => {
     if (auth.status === status.SUCCESS) {
@@ -79,16 +90,14 @@ function Header({ navItems, logout, auth }) {
               loaderHeight="48px"
               loaderStyle={{ padding: "0rem 0.5rem" }}
             />
-            {/* <h2 className="logo__title">Alkemy ONG</h2> */}
-          </Logo>
+           </Logo>
         </Link>
         <NavBar>
           {navItems.map((item, index) => {
             return (
               <NavItem
                 key={index}
-                className={pathname === item.route ? "active" : ""}
-              >
+                className={pathname === item.route ? "active" : ""}>
                 <Link to={item.route}>{item.text}</Link>
               </NavItem>
             );
@@ -122,8 +131,7 @@ function Header({ navItems, logout, auth }) {
             return (
               <MobileItem
                 key={index}
-                className={pathname === item.route ? "active" : ""}
-              >
+                className={pathname === item.route ? "active" : ""}>
                 <Link to={item.route} onClick={() => setMenuState(!menuState)}>
                   {item.text}
                 </Link>
