@@ -2,13 +2,15 @@ import React from "react";
 import styled from "@emotion/styled";
 
 export const ModalWrapper = styled.div`
-  height: 100%;
-  width: 100%;
+  height: 100vh;
+  width: 100vw;
   z-index: 9998;
   position: fixed;
   background: rgba(0, 0, 0, 0.5);
   display: ${(props) => (props.show === true ? "flex" : "none")};
   overflow: hidden;
+  top:0;
+  left: 0;
 
   main {
     width: 100%;

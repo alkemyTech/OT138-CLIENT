@@ -1,6 +1,5 @@
 import React from "react";
 import { Formik } from "formik";
-import Header from "../components/Header/Landing";
 import {
   ContainColumn,
   Image,
@@ -65,7 +64,6 @@ function FormContacto() {
   };
   return (
     <Container>
-      <Header />
       <Toaster />
       <Content>
         <ContainColumn>

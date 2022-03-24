@@ -20,9 +20,11 @@ import { logout as logoutAction } from "../../actions/authActions";
 import { status } from "../../constants";
 import { getPublicData } from "../../services/requests/publicData";
 import ImageLoader from "../ImageLoader";
+import { navItems as navItemsConstant } from "../../constants";
+import toast from "react-hot-toast";
 import { isAdmin } from '../../helpers';
 
-function Header({ navItems, logout, auth }) {
+function Header({ logout, auth }) {
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
@@ -36,6 +38,7 @@ function Header({ navItems, logout, auth }) {
     email: "",
   });
   const [publicData, setPublicData] = useState({});
+  const [navItems, setNavItems] = useState({routes:[]});
   useEffect(() => {
     (async () => {
       const result = await getPublicData();
@@ -46,6 +49,20 @@ function Header({ navItems, logout, auth }) {
       }
     })();
   }, []);
+
+  useEffect(() => {
+    // prevent if navItemsConstant is not an Array
+    if (navItemsConstant instanceof Array) {
+      // Find all routes that match nav items constants
+      const matchedRoutes = navItemsConstant.filter((elem) => {
+        return pathname.includes(elem.basePath);
+      });
+      // use the first matched route
+      setNavItems(matchedRoutes[0]);
+    } else {
+      toast.error("Ocurrió un error al cargar la barra de navegación.");
+    }
+  }, [pathname]);
 
   useEffect(() => {
     if (auth.status === status.SUCCESS) {
@@ -65,7 +82,7 @@ function Header({ navItems, logout, auth }) {
     }
   }, [auth]);
 
-  return (
+  return (!navItems.hide &&
     <HeaderContainer>
       <HeaderBar>
         <Hamburger onClick={() => setMenuState(!menuState)}>
@@ -80,16 +97,14 @@ function Header({ navItems, logout, auth }) {
               loaderHeight="48px"
               loaderStyle={{ padding: "0rem 0.5rem" }}
             />
-            {/* <h2 className="logo__title">Alkemy ONG</h2> */}
           </Logo>
         </Link>
         <NavBar>
-          {navItems.map((item, index) => {
+          {navItems.routes.map((item, index) => {
             return (
               <NavItem
                 key={index}
-                className={pathname === item.route ? "active" : ""}
-              >
+                className={pathname === item.route ? "active" : ""}>
                 <Link to={item.route}>{item.text}</Link>
               </NavItem>
             );
@@ -119,12 +134,11 @@ function Header({ navItems, logout, auth }) {
           </SessionButton>
         ) : null}
         <MobileNavBar menuState={menuState}>
-          {navItems.map((item, index) => {
+          {navItems.routes.map((item, index) => {
             return (
               <MobileItem
                 key={index}
-                className={pathname === item.route ? "active" : ""}
-              >
+                className={pathname === item.route ? "active" : ""}>
                 <Link to={item.route} onClick={() => setMenuState(!menuState)}>
                   {item.text}
                 </Link>

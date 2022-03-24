@@ -7,7 +7,6 @@ import { FaEdit, FaPlusSquare, FaTrash } from "react-icons/fa";
 import Table from "../../../components/Table";
 import { Container, Content } from "../../../components/Wrappers/Containers";
 import { getSlides, deleteSlides } from "../../../services/requests/slides";
-import Header from "../../../components/Header/BackOffice";
 import { Avatar } from "../../../components/Inputs/styles";
 import {
   HeaderButtons,
@@ -135,7 +134,6 @@ function Sliders() {
   return (
     <Container>
       <Toaster />
-      <Header />
       <Modal size="sm" show={formData.display} onClose={() => hideForm()}>
         <ModalBody>
           <SliderEditor

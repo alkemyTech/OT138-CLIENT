@@ -6,7 +6,6 @@ import { FaEdit, FaPlusSquare, FaTrash } from "react-icons/fa";
 import Table from "../../../components/Table";
 import { Container, Content } from "../../../components/Wrappers/Containers";
 import { getTestimonies, deleteTestimonies } from "../../../services/requests/testimonials";
-import Header from "../../../components/Header/BackOffice";
 import {
   HeaderButtons,
   AddButton,
@@ -140,7 +139,6 @@ function Testimonials() {
 
     <Container>
       <Toaster />
-      <Header />
       <Modal size="sm" show={formData.display} onClose={() => hideForm()}>
         <ModalBody>
           <TestimonyEditor
