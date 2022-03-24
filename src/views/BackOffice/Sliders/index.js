@@ -15,23 +15,25 @@ import {
   SectionTitle,
 } from "../../../styles/BackOffice";
 import Modal, { ModalBody } from "../../../components/Modal";
-import Pagination from "../../../components/Pagination";
+import Pagination, { SelectLimit } from "../../../components/Pagination";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { Button, ButtonGroup } from "../../../components/Inputs";
 
-function EditForm() {
+function Sliders() {
+  const limitOptions = [10, 15, 25, 50];
+
   //CREATION OF STATES
+  const [pageLimit, setPageLimit] = useState(limitOptions[0]);
   const [sliders, setSlides] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [formData, setFormData] = useState({ display: false, instance: null });
   const [pagination, setPagination] = useState({});
   const [tableLoading, setTableLoading] = useState(true);
-  const resultsLimit = 10;
 
   useEffect(() => {
-    getSlider(currentPage);
-  }, [currentPage]);
+    getSlider(1);
+  }, [pageLimit]);
 
   //GET SLIDERS
   async function getSlider(page) {
@@ -40,7 +42,7 @@ function EditForm() {
       success,
       data: slidesData,
       errorMessage,
-    } = await getSlides(page, resultsLimit);
+    } = await getSlides(page, pageLimit);
     if (success) {
       const { items, ...pagination } = slidesData;
       setSlides(items);
@@ -145,6 +147,7 @@ function EditForm() {
       <Content>
         <SectionTitle>Sliders</SectionTitle>
         <HeaderButtons>
+          <SelectLimit onSelect={value => setPageLimit(value)} options={limitOptions} />
           <AddButton
             onClick={() => {
               onCreate();
@@ -256,4 +259,4 @@ function AvatarWithSkeleton(props) {
   );
 }
 
-export default EditForm;
+export default Sliders;

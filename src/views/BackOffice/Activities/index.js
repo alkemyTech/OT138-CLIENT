@@ -16,7 +16,9 @@ import { AvatarSkeleton, AvatarWithSkeleton } from "../../../components/Skeleton
 import { createArrayOfObjects, removeTags } from "../../../helpers";
 
 export default function Activities() {
-  const [pageLimit, setPageLimit] = useState(10);
+  const limitOptions = [10, 15, 25, 50];
+
+  const [pageLimit, setPageLimit] = useState(limitOptions[0]);
   const [activities, setActivities] = useState(createArrayOfObjects(pageLimit));
   const [pagination, setPagination] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
@@ -152,7 +154,7 @@ export default function Activities() {
       <Content>
         <SectionTitle>Actividades</SectionTitle>
         <HeaderButtons>
-          <SelectLimit onSelect={value => setPageLimit(value) } />
+          <SelectLimit onSelect={value => setPageLimit(value)} options={limitOptions} />
           <AddButton onClick={onCreate} style={{ background: "green" }}>
             <FaPlusSquare /> <b>Crear</b>
           </AddButton>

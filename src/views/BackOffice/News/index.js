@@ -25,7 +25,9 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import { createArrayOfObjects, removeTags } from "../../../helpers";
 
 export default function News() {
-  const [pageLimit, setPageLimit] = useState(10);
+  const limitOptions = [10, 15, 25, 50];
+
+  const [pageLimit, setPageLimit] = useState(limitOptions[0]);
   const [news, setNews] = useState(createArrayOfObjects(pageLimit));
   const [pagination, setPagination] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
@@ -148,7 +150,7 @@ export default function News() {
       <Content>
         <SectionTitle>Novedades</SectionTitle>
         <HeaderButtons>
-          <SelectLimit onSelect={value => setPageLimit(value)} />
+          <SelectLimit onSelect={value => setPageLimit(value)} options={limitOptions} />
           <AddButton onClick={onCreate} style={{ background: "green" }}>
             <FaPlusSquare /> <b>Crear</b>
           </AddButton>

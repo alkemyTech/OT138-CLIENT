@@ -1,7 +1,7 @@
 import api from "../../config/api";
 import { API_USERS } from "../../constants/urls";
 
-export async function getUsers(page, limit) {
+export async function getUsers(page = 1, limit = 10) {
   const result = {
     success: false,
     data: [],

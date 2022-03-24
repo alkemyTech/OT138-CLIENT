@@ -22,9 +22,7 @@ export default function Pagination({ onPageChange, totalPages }) {
   );
 }
 
-export function SelectLimit({ onSelect }) {
-  const options = [5, 10, 15, 25, 50];
-
+export function SelectLimit({ onSelect, options = [10, 15, 25] }) {
   return (
     <StyledSelectLimit>
       <span>Mostrar</span>
