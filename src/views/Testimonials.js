@@ -13,7 +13,9 @@ import toast from "react-hot-toast";
 import Loading from "../components/Loading";
 import { Container, Content } from "../components/Wrappers/Containers";
 import { Footer } from "../components/Footer";
+import Quote from '../components/Quote';
 import { removeTags } from "../helpers";
+
 function Testimonials() {
   const [testimonials, setTestimonials] = useState([]);
   const [pagination, setPagination] = useState({
@@ -50,7 +52,7 @@ function Testimonials() {
 
   useEffect(() => {
     refetch();
-  }, [currentPage,refetch]);
+  }, [currentPage, refetch]);
 
   async function goToPage(page) {
     setCurrentPage(page);
@@ -81,7 +83,7 @@ function Testimonials() {
                     <h2>{name}</h2>
                   </HeaderCard>
                   <Content>
-                  <div className="child">{removeTags(content)}</div>
+                    <Quote text={removeTags(content)} />
                   </Content>
                 </Card>
               );
