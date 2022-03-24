@@ -6,11 +6,13 @@ export const SectionTitle = styled.h1`
 `;
 
 export const HeaderButtons = styled.div`
-  padding: 5px;
+  padding: 5px 0;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
+  align-items: center;
+  gap: 20px;
 `;
 
 export const AddButton = styled(ButtonContainer)`
@@ -23,7 +25,7 @@ export const AddButton = styled(ButtonContainer)`
   min-width: 150px;
   width: auto;
   height: 42px;
-  margin: 0 0 5px 0;
+  margin: 0;
 `;
 
 export const BackOfficeContainer = styled.div`
