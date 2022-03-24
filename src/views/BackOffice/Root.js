@@ -248,7 +248,9 @@ function Backoffice({ auth }) {
                           <td>
                             <b>${value}</b>
                           </td>
-                          <td>{moment(createdAt).format("DD/MM/YY")}</td>
+                          <td>
+                            {moment(createdAt).format("DD/MM/YY · HH:mm")}
+                          </td>
                         </tr>
                       );
                     })
