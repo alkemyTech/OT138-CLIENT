@@ -1,36 +1,24 @@
 import React, { useState, useEffect } from "react";
 import Table from "../../../components/Table";
-import {
-  getActivities,
-  deleteActivity,
-} from "../../../services/requests/activities";
-import { Button, ButtonGroup } from "../../../components/Inputs";
+import { getActivities, deleteActivity } from "../../../services/requests/activities";
+import { Button, ButtonGroup, Select } from "../../../components/Inputs";
 import toast from "react-hot-toast";
 import { FaEdit, FaPlusSquare, FaTrash } from "react-icons/fa";
 import { Content } from "../../../components/Wrappers/Containers";
-import {
-  HeaderButtons,
-  AddButton,
-  SectionTitle,
-} from "../../../styles/BackOffice";
-import Modal, {
-  ModalBody,
-  ModalHeader,
-  ModalTitle,
-} from "../../../components/Modal";
+import { HeaderButtons, AddButton, SectionTitle, } from "../../../styles/BackOffice";
+import Modal, { ModalBody } from "../../../components/Modal";
 import ActivityEditor from "./ActivityEditor";
 import Swal from "sweetalert2";
-import Pagination from "../../../components/Pagination";
+import Pagination, { SelectLimit } from "../../../components/Pagination";
 import moment from "moment";
 import Skeleton from "react-loading-skeleton";
-import {
-  AvatarSkeleton,
-  AvatarWithSkeleton,
-} from "../../../components/Skeleton";
+import { AvatarSkeleton, AvatarWithSkeleton } from "../../../components/Skeleton";
 import { createArrayOfObjects, removeTags } from "../../../helpers";
 
 export default function Activities() {
-  const [pageLimit, setPageLimit] = useState(10);
+  const limitOptions = [10, 15, 25, 50];
+
+  const [pageLimit, setPageLimit] = useState(limitOptions[0]);
   const [activities, setActivities] = useState(createArrayOfObjects(pageLimit));
   const [pagination, setPagination] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
@@ -56,8 +44,9 @@ export default function Activities() {
   }
 
   useEffect(() => {
-    fetchActivities(currentPage);
-  }, []);
+    setCurrentPage(1);
+    fetchActivities(1);
+  }, [pageLimit]);
 
   function buttonStyles(color) {
     return {
@@ -165,6 +154,7 @@ export default function Activities() {
       <Content>
         <SectionTitle>Actividades</SectionTitle>
         <HeaderButtons>
+          <SelectLimit onSelect={value => setPageLimit(value)} options={limitOptions} />
           <AddButton onClick={onCreate} style={{ background: "green" }}>
             <FaPlusSquare /> <b>Crear</b>
           </AddButton>

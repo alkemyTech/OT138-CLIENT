@@ -22,6 +22,7 @@ import { getPublicData } from "../../services/requests/publicData";
 import ImageLoader from "../ImageLoader";
 import { navItems as navItemsConstant } from "../../constants";
 import toast from "react-hot-toast";
+import { isAdmin } from '../../helpers';
 
 function Header({ logout, auth }) {
   const { pathname } = useLocation();
@@ -121,7 +122,7 @@ function Header({ logout, auth }) {
             {dropdownState ? <FaCaretUp /> : <FaCaretDown />}
             <ProfileDropdown dropdownState={dropdownState}>
               <Link to={"/perfil"}>Mi Perfil</Link>
-              <Link to={"/backoffice"}>BackOffice</Link>
+              {isAdmin(auth.user) && <Link to={"/backoffice"}>BackOffice</Link>}
               <Link onClick={() => logout()} to={"#"}>
                 Cerrar Sesión
               </Link>

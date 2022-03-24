@@ -5,7 +5,7 @@ import { Container } from "../components/Wrappers/Containers";
 import Root from "./BackOffice/Root";
 import Categories from "./BackOffice/Categories";
 import Contacts from "./BackOffice/Contacts";
-import Users from "./BackOffice/Users/Users";
+import Users from "./BackOffice/Users/index";
 import Organization from "./BackOffice/Organization";
 import News from "./BackOffice/News";
 import Activities from './BackOffice/Activities';

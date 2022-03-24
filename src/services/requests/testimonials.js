@@ -1,6 +1,7 @@
 import api from "../../config/api";
 import { apiErrors } from '../../constants';
 import { API_TESTIMONIAL } from "../../constants/urls";
+import { createFormData } from '../../helpers';
 
 
 export const getTestimoniesCard = (limit, currentPage) =>
@@ -50,7 +51,17 @@ export const getTestimoniesCard = (limit, currentPage) =>
       successMessage: "",
       };
       try {
-      const { data } = await api.post(API_TESTIMONIAL, { name: values.name, image: values.image, content: values.content });
+
+        const { data } = await api.post(
+          API_TESTIMONIAL, 
+          createFormData(values),
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }
+        )
+  
       if (data.error) {
       result.errorMessage = data.message;
       }else {
@@ -67,7 +78,7 @@ export const getTestimoniesCard = (limit, currentPage) =>
  
 
 
-    export const putTestimonies = async (id,name,image,content) =>{
+    export const putTestimonies = async ({id,name,image,content}) =>{
 
       const result = {
       success: false,
@@ -77,7 +88,13 @@ export const getTestimoniesCard = (limit, currentPage) =>
       };
     
       try {
-      const { data } = await api.put(`${API_TESTIMONIAL}/${id}`, { name: name, image: image, content:content });
+      const { data } = await api.put(`${API_TESTIMONIAL}/${id}`, createFormData({ name: name, image: image, content:content }),
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }
+      );
       if (data.error) {
       result.errorMessage = data.message;
       result.data = data.result;

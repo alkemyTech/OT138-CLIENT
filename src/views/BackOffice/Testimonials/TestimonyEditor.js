@@ -3,27 +3,33 @@ import {Input,Label} from "../../../components/Inputs";
 import {toast} from 'react-hot-toast';
 import {Button,TextEditor} from "../../../components/Inputs"
 import {putTestimonies,postTestimonies} from "../../../services/requests/testimonials";
-import {EntryType} from "../../../components/EntryEditor/styles"
+import {EntryType} from "../../../components/EntryEditor/styles";
+import Dropzone from '../../../components/Dropzone';
 
 
 function TestimonyEditor({data,onSuccess }) {
 
 
-const [inputs,SetInputs] = useState({name:"",image:"",content:""});
+const [inputs,SetInputs] = useState({name:"",content:""});
+const [profileImageToSend, setProfileImageToSend] = useState([]);
+const [profileImage, setProfileImage] = useState('/upload.png');
+const [profileImagePreview, setProfileImagePreview] = useState('/upload.png')
 
 
   useEffect(()=>{
     if(data){
     Updated();
     }else{
-    SetInputs({name:"",image:"",content:""})
+    SetInputs({name:"",content:""})
     }},[data]);
 
 
 
 
+    //UPDATE TETIMONY
     async function Updated(){
-    SetInputs({name:data.name,image:data.image,content:data.content})
+    SetInputs({name:data.name,content:data.content});
+    setProfileImage(data.image)
     }
 
 
@@ -34,25 +40,60 @@ const [inputs,SetInputs] = useState({name:"",image:"",content:""});
     //SEND FORM
     async function submitForm(){
     if(data){
-    const {success} = await putTestimonies(data.id,inputs.name,inputs.image,inputs.content);
+    const {success} = await putTestimonies({
+    id: data.id, 
+    name: inputs.name, 
+    image: profileImage, 
+    content: inputs.content
+    });
     if(success){
     toast.success("Actualizado con éxito");
-    onSuccess()
+    onSuccess();
     }else{
     toast.error("Error al actualizar");
     }
-    }else{  
-    const {success} = await postTestimonies(inputs);
+    } else{  
+    const {success,errorMessage} = await postTestimonies({
+    name: inputs.name, 
+    image: profileImage, 
+    content: inputs.content
+    });
     if(success){
-    toast.success("Slider creado con éxito");
-    onSuccess()
-    }else{
-    toast.error("Error al crear testimonio");
+    toast.success("Testimonio creado con éxito");
+    onSuccess();
+    } else{
+    toast.error(errorMessage);
     }}
     };
 
 
 
+
+    //ONCHANGE IMAGE
+    const onChangeStatus = ({ meta, file, remove }, status) => {
+    if (status === "done") {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = async (event) => {
+    setProfileImageToSend(event?.target?.result);
+    setProfileImage(file);
+    setProfileImagePreview(meta);
+    };
+    }
+    if (status === "removed") {
+    setProfileImageToSend(null);
+    setProfileImage("/upload.png");
+    setProfileImagePreview("/upload.png");
+    }
+    };
+
+
+    //ONSUBMIT IMAGE
+    const onSubmitFile = (files, allFiles) => {
+    allFiles.forEach((f) => f.remove());
+    };
+
+  
 
 
     return (
@@ -64,8 +105,11 @@ const [inputs,SetInputs] = useState({name:"",image:"",content:""});
         </div>
         <Label>Nombre</Label>
         <Input type="text" name="name" value={inputs.name} onChange={(e)=>{SetInputs({...inputs,name:e.target.value})}} />
-        <Label>Url de imagen</Label>
-        <Input type="text" name="image" value={inputs.image} onChange={(e)=>{SetInputs({...inputs,image:e.target.value})}}/>
+        <Label>Archivo de imagen</Label>
+        <Dropzone
+        defaultImage={profileImage}
+        onChangeStatus={onChangeStatus}
+        onSubmit={onSubmitFile}/>
         <Label>Contenido</Label>
         <TextEditor name="content" data={inputs.content} onChange={(e,editor) => {const data = editor.getData(); inputs.content = data}}/>
         <Button onClick={()=>{submitForm()}}><b>GUARDAR</b></Button>
