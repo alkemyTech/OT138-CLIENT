@@ -21,6 +21,7 @@ import { status } from "../../constants";
 import { getPublicData } from "../../services/requests/publicData";
 import ImageLoader from "../ImageLoader";
 import { navItems as navItemsConstant } from "../../constants";
+import toast from "react-hot-toast";
 
 function Header({ logout, auth }) {
   const { pathname } = useLocation();
@@ -36,7 +37,7 @@ function Header({ logout, auth }) {
     email: "",
   });
   const [publicData, setPublicData] = useState({});
-  const [navItems, setNavItems] = useState([]);
+  const [navItems, setNavItems] = useState({routes:[]});
   useEffect(() => {
     (async () => {
       const result = await getPublicData();
@@ -49,12 +50,17 @@ function Header({ logout, auth }) {
   }, []);
 
   useEffect(() => {
-    // Find all routes that match nav items constants
-    const matchedRoutes = navItemsConstant.filter((elem) => {
-      return pathname.includes(elem.basePath);
-    });
-    // use the first match
-    setNavItems(matchedRoutes[0].routes);
+    // prevent if navItemsConstant is not an Array
+    if (navItemsConstant instanceof Array) {
+      // Find all routes that match nav items constants
+      const matchedRoutes = navItemsConstant.filter((elem) => {
+        return pathname.includes(elem.basePath);
+      });
+      // use the first matched route
+      setNavItems(matchedRoutes[0]);
+    } else {
+      toast.error("Ocurrió un error al cargar la barra de navegación.");
+    }
   }, [pathname]);
 
   useEffect(() => {
@@ -75,7 +81,7 @@ function Header({ logout, auth }) {
     }
   }, [auth]);
 
-  return (
+  return (!navItems.hide &&
     <HeaderContainer>
       <HeaderBar>
         <Hamburger onClick={() => setMenuState(!menuState)}>
@@ -90,10 +96,10 @@ function Header({ logout, auth }) {
               loaderHeight="48px"
               loaderStyle={{ padding: "0rem 0.5rem" }}
             />
-           </Logo>
+          </Logo>
         </Link>
         <NavBar>
-          {navItems.map((item, index) => {
+          {navItems.routes.map((item, index) => {
             return (
               <NavItem
                 key={index}
@@ -127,7 +133,7 @@ function Header({ logout, auth }) {
           </SessionButton>
         ) : null}
         <MobileNavBar menuState={menuState}>
-          {navItems.map((item, index) => {
+          {navItems.routes.map((item, index) => {
             return (
               <MobileItem
                 key={index}
