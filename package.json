@@ -27,6 +27,7 @@
     "react-loader-spinner": "^5.1.4",
     "react-loading-skeleton": "^3.0.3",
     "react-markdown": "^8.0.0",
+    "react-modal": "^3.14.4",
     "react-paginate": "^8.1.2",
     "react-query": "^3.34.15",
     "react-redux": "^7.1.3",
