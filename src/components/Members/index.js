@@ -12,6 +12,7 @@ export const MemberCardContainer = styled.div`
   overflow: hidden;
   margin: 1rem;
   box-shadow: 0 2px 8px 4px rgba(0, 0, 0, 0.1);
+  gap: 10px;
   
   .card__avatar {
     width: 200px;
@@ -27,12 +28,14 @@ export const MemberCardContainer = styled.div`
   .card__name {
     font-size: 1.1rem;
     text-align: center;
-    padding: 1.6rem 0.5rem;
     box-sizing: border-box;
   }
 
   .card__area {
-    
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: gray;
+    padding-bottom: 1rem;
   }
 `;
 
