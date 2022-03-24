@@ -18,24 +18,14 @@ function Members() {
 
   const getData = async () => {
     setState("loading");
-    getMembers()
-      .then(async (response) => {
-        if (!response.error) {
-          const data = await response.data.data.map((member) => {
-            return {
-              name: member.name,
-              image: member.image,
-            };
-          });
-          setMembers(await data);
-          setState("ready");
-        } else {
-          setState("error");
-        }
-      })
-      .catch((err) => {
-        setState("error");
-      });
+    const { success, data, errorMessage } = await getMembers();
+
+    if (success) {
+      setMembers(data);
+      setState("ready");
+    } else {
+      setState("error");
+    }
   };
 
   return (
@@ -49,7 +39,12 @@ function Members() {
             {members.length > 0 ? (
               members.map((member, index) => {
                 return (
-                  <Card key={index} name={member.name} image={member.image} />
+                  <Card
+                    key={index}
+                    name={member.name}
+                    image={member.image}
+                    area={member.area}
+                  />
                 );
               })
             ) : (
