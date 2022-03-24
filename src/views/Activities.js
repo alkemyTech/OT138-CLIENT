@@ -7,7 +7,6 @@ import Pagination from "../components/Pagination";
 import Activity from "../components/Activities/Cards";
 import Article from "../components/Article";
 import { Footer } from "../components/Footer";
-import Header from "../components/Header/Landing";
 import Loading from "../components/Loading";
 import { Container, Content } from "../components/Wrappers/Containers";
 import {
@@ -63,7 +62,6 @@ export default function Activities() {
 
   return (
     <Container>
-      <Header />
       <Banner title={"Actividades"} thumbnail={"/activities__banner.jpg"} />
       <Content>
         <ActivitiesContainer>
@@ -110,7 +108,6 @@ export const ActivitiesByID = () => {
 
   return (
     <Container>
-      <Header />
       <Content>
         {isLoading || isFetching ? (
           <Loading />

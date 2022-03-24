@@ -5,7 +5,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import Article from "../components/Article";
 import Banner from "../components/Banner";
 import { Footer } from "../components/Footer";
-import Header from "../components/Header/Landing";
 import Loading from "../components/Loading";
 import New from "../components/News/Cards";
 import { Container, Content } from "../components/Wrappers/Containers";
@@ -58,7 +57,6 @@ export default function News() {
 
   return (
     <Container>
-      <Header />
       <Banner title={"Novedades"} thumbnail={"/news__banner.jpg"} />
       <Content>
         <NewsContainer>
@@ -116,7 +114,6 @@ export const NewsByID = () => {
 
   return (
     <Container>
-      <Header />
       <Content>
         <Article
           key={id}

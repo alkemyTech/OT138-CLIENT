@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Container, Content } from "../components/Wrappers/Containers";
-import Header from "../components/Header/Landing";
 import { Footer } from "../components/Footer";
 import { Card } from "../components/Members";
 import Banner from "../components/Banner";
@@ -40,7 +39,6 @@ function Members() {
 
   return (
     <Container>
-      <Header />
       <Banner title={"Nosotros"} thumbnail={"/members__banner.jpg"} />
       <Content>
         {state === "loading" && <Loading />}

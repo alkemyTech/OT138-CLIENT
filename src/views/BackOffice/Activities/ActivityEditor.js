@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Header from "../../../components/Header/BackOffice";
 import { Footer } from "../../../components/Footer";
 import EntryEditor from "../../../components/EntryEditor";
 import {

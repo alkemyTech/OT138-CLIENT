@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Header from "../components/Header/Landing";
 import Banner from "../components/Banner";
 import Pagination from "../components/Pagination";
 import {
@@ -58,7 +57,6 @@ function Testimonials() {
 
   return (
     <Container>
-      <Header />
       <Content>
         <Banner title={"Testimonios"} thumbnail={"/testimonials.jpg"} />
         <TestimonialsContainer>
