@@ -6,7 +6,7 @@ export const SectionTitle = styled.h1`
 `;
 
 export const HeaderButtons = styled.div`
-  padding: 5px 0;
+  padding: 5px;
   width: 100%;
   display: flex;
   flex-wrap: wrap;

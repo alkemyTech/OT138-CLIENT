@@ -168,9 +168,9 @@ function Testimonials() {
               <tr>
                 <th width="10%">Imagen</th>
                 <th width="20%">Nombre</th>
-                <th width="20%">Content</th>
-                <th width="20%">Fecha de Creación</th>
-                <th width="20%">Fecha de Actualizacion</th>
+                <th width="40%">Content</th>
+                <th width="10%">Fecha de Creación</th>
+                <th width="10%">Fecha de Actualizacion</th>
                 <th width="10%">Acciones</th>
               </tr>
             </thead>
@@ -192,8 +192,10 @@ function Testimonials() {
                       {tableLoading && !item.name ? <Skeleton /> : item.name}
                     </td>
 
-                    <td onClick={() => showEntryContent(item.content)}>
-                      {tableLoading && !item.content ? <Skeleton /> : <div className="child">{removeTags(item.content)}</div>}
+                    <td onClick={() => showEntryContent(item.content)} className="clickable">
+                      {tableLoading && !item.content ? <Skeleton /> : <div className="parent">
+                        <div className="child">{removeTags(item.content)}</div>
+                      </div>}
 
                     </td>
                     <td>
