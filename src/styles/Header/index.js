@@ -195,14 +195,13 @@ export const ProfileDropdown = styled.div`
   justify-content: center;
   min-width: 140px;
   width: 100%;
-  height: 150px;
   background: #fff;
   position: absolute;
   top: 4.1rem;
   right: 0;
   z-index: 3;
   box-shadow: rgb(0 0 0 / 20%) 0px 8px 16px 0px;
-  padding: 1rem;
+  padding: 2rem 1rem;
   border-radius: 5px;
   a {
     margin: 4px 0;
