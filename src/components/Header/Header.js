@@ -20,6 +20,7 @@ import { logout as logoutAction } from "../../actions/authActions";
 import { status } from "../../constants";
 import { getPublicData } from "../../services/requests/publicData";
 import ImageLoader from "../ImageLoader";
+import { isAdmin } from '../../helpers';
 
 function Header({ navItems, logout, auth }) {
   const { pathname } = useLocation();
@@ -106,7 +107,7 @@ function Header({ navItems, logout, auth }) {
             {dropdownState ? <FaCaretUp /> : <FaCaretDown />}
             <ProfileDropdown dropdownState={dropdownState}>
               <Link to={"/perfil"}>Mi Perfil</Link>
-              <Link to={"/backoffice"}>BackOffice</Link>
+              {isAdmin(auth.user) && <Link to={"/backoffice"}>BackOffice</Link>}
               <Link onClick={() => logout()} to={"#"}>
                 Cerrar Sesión
               </Link>

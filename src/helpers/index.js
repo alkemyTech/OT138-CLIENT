@@ -30,3 +30,7 @@ export function createFormData(values){
   }
   return formData;
 }
+
+export function isAdmin(user) {
+  return (user && user.roleName === 'Admin');
+}
