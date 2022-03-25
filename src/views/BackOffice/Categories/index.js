@@ -13,11 +13,7 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import { TailSpin } from "react-loader-spinner";
 import { FaPlusSquare } from "react-icons/fa";
 import Swal from "sweetalert2";
-import Modal, {
-  ModalBody,
-  ModalHeader,
-  ModalTitle,
-} from "../../../components/Modal";
+import Modal from '../../../components/Modal';
 import { HeaderButtons, AddButton } from "../../../styles/BackOffice";
 import CategoryForm from "./CategoryForm";
 import Pagination, { SelectLimit } from "../../../components/Pagination";
@@ -124,19 +120,18 @@ export default function Categories() {
 
   return (
     <>
-      <Modal size="sm" show={formData.display} onClose={() => hideForm()}>
-        <ModalHeader>
-          <ModalTitle>
-            {formData.instance === null ? "Crear" : "Actualizar"} categoría
-          </ModalTitle>
-        </ModalHeader>
-        <ModalBody>
-          <CategoryForm
-            instance={formData.instance}
-            onSuccess={(instance) => onCategoryUpdated()}
-            onCancel={() => hideForm()}
-          />
-        </ModalBody>
+      <Modal
+        open={formData.display}
+        onClose={hideForm}
+        center
+        closeOnOverlayClick={false}
+      >
+        {formData.instance === null ? "Crear" : "Actualizar"} categoría
+        <CategoryForm
+          instance={formData.instance}
+          onSuccess={(instance) => onCategoryUpdated()}
+          onCancel={() => hideForm()}
+        />
       </Modal>
       <Content>
         <SectionTitle>Categorías</SectionTitle>

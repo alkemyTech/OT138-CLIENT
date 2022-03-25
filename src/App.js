@@ -5,7 +5,6 @@ import Signup from "./views/Signup";
 import FormContacto from "./views/Contact";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
-import "./styles/App.css";
 import Backoffice from "./views/Backoffice";
 import Profile from "./views/Profile";
 import Members from "./views/Members";
@@ -23,6 +22,9 @@ import TestimonialsBackOffice from "./views/BackOffice/Testimonials/index";
 import Testimonials from "./views/Testimonials";
 import Sliders from "./views/BackOffice/Sliders/index";
 import ThanksForYourDonation from "./views/ThanksForYourDonation";
+// Styles
+import "./styles/App.css";
+
 function App({ checkAuthentication }) {
   const location = useLocation();
 

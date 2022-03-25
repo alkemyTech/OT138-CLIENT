@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import { FaEdit, FaPlusSquare, FaTrash } from "react-icons/fa";
 import { Content } from "../../../components/Wrappers/Containers";
 import { HeaderButtons, AddButton, SectionTitle, } from "../../../styles/BackOffice";
-import Modal, { ModalBody } from "../../../components/Modal";
+import Modal from '../../../components/Modal';
 import ActivityEditor from "./ActivityEditor";
 import Swal from "sweetalert2";
 import Pagination, { SelectLimit } from "../../../components/Pagination";
@@ -143,13 +143,16 @@ export default function Activities() {
 
   return (
     <>
-      <Modal size="sm" show={formData.display} onClose={() => hideForm()}>
-        <ModalBody>
-          <ActivityEditor
-            data={formData.instance}
-            onSuccess={(entry) => onUpdate()}
-          />
-        </ModalBody>
+      <Modal 
+        open={formData.display} 
+        onClose={hideForm} 
+        center
+        closeOnOverlayClick={false}
+      >
+        <ActivityEditor
+          data={formData.instance}
+          onSuccess={(entry) => onUpdate()}
+        />
       </Modal>
       <Content>
         <SectionTitle>Actividades</SectionTitle>
