@@ -44,9 +44,14 @@ export default function Activities() {
   }
 
   useEffect(() => {
-    setCurrentPage(1);
-    fetchActivities(1);
+    // Fetch data to get new pagination after page limit change
+    fetchActivities(currentPage);
   }, [pageLimit]);
+
+  useEffect(()=>{
+    // current page is grater than total pages, fetch data of last page
+    if (currentPage > pagination.pages) changePage(pagination.pages);
+  },[pagination.pages])
 
   function buttonStyles(color) {
     return {
@@ -238,6 +243,7 @@ export default function Activities() {
           <Pagination
             onPageChange={changePage}
             totalPages={pagination.pages || 0}
+            forcePage={currentPage}
           />
         )}
       </Content>

@@ -3,7 +3,7 @@ import ReactPaginate from 'react-paginate';
 import { Select } from '../Inputs';
 import styled from '@emotion/styled';
 
-export default function Pagination({ onPageChange, totalPages }) {
+export default function Pagination({ onPageChange, totalPages, forcePage }) {
 
   function handlePageChange(event) {
     onPageChange(event.selected + 1);
@@ -18,6 +18,7 @@ export default function Pagination({ onPageChange, totalPages }) {
       activeClassName="activePage"
       previousLabel="❮"
       nextLabel="❯"
+      forcePage={forcePage===undefined ? undefined: (forcePage-1)}
     />
   );
 }

@@ -39,9 +39,14 @@ export default function News() {
   const [tableLoading, setTableLoading] = useState(true);
 
   useEffect(() => {
-    setCurrentPage(1);
-    getNews(1);
+    // Fetch data to get new pagination after page limit change
+    getNews(currentPage);
   }, [pageLimit]);
+
+  useEffect(()=>{
+    // current page is grater than total pages, fetch data of last page
+    if (currentPage > pagination.pages) goToPage(pagination.pages);
+  },[pagination.pages])
 
   async function getNews(page) {
     setTableLoading(true);
@@ -220,6 +225,7 @@ export default function News() {
           <Pagination
             onPageChange={goToPage}
             totalPages={pagination.pages || 0}
+            forcePage = {currentPage}
           />
         )}
       </Content>
