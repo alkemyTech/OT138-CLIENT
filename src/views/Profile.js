@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Header from "../components/Header/Landing";
 import {
   ProfileContent,
   Message,
@@ -125,7 +124,6 @@ function Profile(props) {
 
   return (
     <Container>
-      <Header />
       {dataState === "loading" && <Loading />}
       {dataState === "loaded" && (
         <ProfileContent>

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import EntryEditor from "../../../components/EntryEditor";
-import Header from "../../../components/Header/BackOffice";
 import { Footer } from "../../../components/Footer";
 import { getProfileByAdmin, saveProfileData, updateProfileByAdmin } from "../../../services/requests/profile";
 import { Container, Content } from "../../../components/Wrappers/Containers";
@@ -59,7 +58,6 @@ function UserEditor(){
 
     return(
         <Container>
-            <Header />
             <Content>
                 <Toaster/>
                 <EntryEditor 

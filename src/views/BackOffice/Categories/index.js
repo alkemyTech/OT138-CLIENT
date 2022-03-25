@@ -28,11 +28,9 @@ export default function Categories() {
   const [categories, setCategories] = useState(createArrayOfObjects(pageLimit));
   const [lockedCategoryIds, setLockedCategoryIds] = useState([]);
   const [pagination, setPagination] = useState({});
-  const [currentPage, setCurrentPage] = useState(1);
   const [tableLoading, setTableLoading] = useState(true);
 
   async function goToPage(page) {
-    setCurrentPage(page);
     getCategories(page);
   }
   // CategoryForm metadata
@@ -42,7 +40,6 @@ export default function Categories() {
   });
 
   useEffect(() => {
-    setCurrentPage(1);
     getCategories(1);
   }, [pageLimit]);
 
@@ -126,7 +123,6 @@ export default function Categories() {
         center
         closeOnOverlayClick={false}
       >
-        {formData.instance === null ? "Crear" : "Actualizar"} categoría
         <CategoryForm
           instance={formData.instance}
           onSuccess={(instance) => onCategoryUpdated()}

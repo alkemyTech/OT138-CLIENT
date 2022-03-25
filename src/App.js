@@ -22,6 +22,7 @@ import TestimonialsBackOffice from "./views/BackOffice/Testimonials/index";
 import Testimonials from "./views/Testimonials";
 import Sliders from "./views/BackOffice/Sliders/index";
 import ThanksForYourDonation from "./views/ThanksForYourDonation";
+import Header from "./components/Header/Header";
 // Styles
 import "./styles/App.css";
 
@@ -34,6 +35,7 @@ function App({ checkAuthentication }) {
 
   return (
     <TransitionGroup component={null}>
+      <Header/>
       <CSSTransition
         key={location.key}
         classNames="transition-fade"
