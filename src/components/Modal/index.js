@@ -1,36 +1,23 @@
 import React from "react";
-import {
-  ModalContainer,
-  ModalWrapper,
-  ModalBody as ModalBodyStyle,
-  ModalHeader as ModalHeaderStyle,
-  ModalTitle as ModalTitleStyle,
-  CloseButton,
-} from "./styles";
+import { Modal as ResponsiveModal } from 'react-responsive-modal';
+import 'react-responsive-modal/styles.css';
 
-export default function Modal({ children, show = false, onClose, size }) {
+export default function Modal({ children, ...rest }) {
   return (
-    show && (
-      <ModalWrapper show={show}>
-        <main>
-          <ModalContainer size={size}>
-            <CloseButton onClick={onClose}>✕</CloseButton>
-            {children}
-          </ModalContainer>
-        </main>
-      </ModalWrapper>
-    )
+    <ResponsiveModal styles={modalStyles} {...rest}>
+      {children}
+    </ResponsiveModal>
   );
 }
 
-export function ModalHeader({ children }) {
-  return <ModalHeaderStyle>{children}</ModalHeaderStyle>;
-}
-
-export function ModalBody({ children }) {
-  return <ModalBodyStyle>{children}</ModalBodyStyle>;
-}
-
-export function ModalTitle({ children }) {
-  return <ModalTitleStyle>{children}</ModalTitleStyle>;
+const modalStyles = {
+  modalContainer: {
+    padding: '0.5rem'
+  },
+  modal: {
+    borderRadius: '5px',
+    width: '100%',
+    maxWidth: '1000px',
+    margin: '0'
+  }
 }

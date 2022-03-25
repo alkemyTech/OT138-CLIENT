@@ -11,7 +11,7 @@ import {
   AddButton,
   SectionTitle,
 } from "../../../styles/BackOffice";
-import Modal, { ModalBody } from "../../../components/Modal";
+import Modal from "../../../components/Modal";
 import Pagination, { SelectLimit } from "../../../components/Pagination";
 import Skeleton from "react-loading-skeleton";
 import { AvatarSkeleton, AvatarWithSkeleton } from "../../../components/Skeleton";
@@ -139,13 +139,16 @@ function Testimonials() {
 
     <Container>
       <Toaster />
-      <Modal size="sm" show={formData.display} onClose={() => hideForm()}>
-        <ModalBody>
-          <TestimonyEditor
-            data={formData.instance}
-            onSuccess={() => onUpdated()}
-          />
-        </ModalBody>
+      <Modal
+        open={formData.display}
+        onClose={hideForm}
+        center
+        closeOnOverlayClick={false}
+      >
+        <TestimonyEditor
+          data={formData.instance}
+          onSuccess={() => onUpdated()}
+        />
       </Modal>
       <Content>
         <SectionTitle>Testimonios</SectionTitle>

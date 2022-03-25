@@ -16,7 +16,7 @@ import {
 } from "react-icons/fa";
 import { TailSpin } from "react-loader-spinner";
 import Swal from "sweetalert2";
-import Modal, { ModalBody } from "../../../components/Modal";
+import Modal from "../../../components/Modal";
 import { HeaderButtons, AddButton, SectionTitle } from "../../../styles/BackOffice";
 import NewsEditor from "./NewsEditor";
 import Skeleton from "react-loading-skeleton";
@@ -139,13 +139,16 @@ export default function News() {
 
   return (
     <>
-      <Modal size="sm" show={formData.display} onClose={() => hideForm()}>
-        <ModalBody>
-          <NewsEditor
-            data={formData.instance}
-            onSuccess={(entry) => onUpdated()}
-          />
-        </ModalBody>
+      <Modal
+        open={formData.display}
+        onClose={hideForm}
+        center
+        closeOnOverlayClick={false}
+      >
+        <NewsEditor
+          data={formData.instance}
+          onSuccess={(entry) => onUpdated()}
+        />
       </Modal>
       <Content>
         <SectionTitle>Novedades</SectionTitle>

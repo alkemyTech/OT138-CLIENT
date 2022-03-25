@@ -13,7 +13,7 @@ import {
   AddButton,
   SectionTitle,
 } from "../../../styles/BackOffice";
-import Modal, { ModalBody } from "../../../components/Modal";
+import Modal from "../../../components/Modal";
 import Pagination, { SelectLimit } from "../../../components/Pagination";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -134,13 +134,16 @@ function Sliders() {
   return (
     <Container>
       <Toaster />
-      <Modal size="sm" show={formData.display} onClose={() => hideForm()}>
-        <ModalBody>
-          <SliderEditor
-            data={formData.instance}
-            onSuccess={() => onUpdated()}
-          />
-        </ModalBody>
+      <Modal
+        open={formData.display}
+        onClose={hideForm}
+        center
+        closeOnOverlayClick={false}
+      >
+        <SliderEditor
+          data={formData.instance}
+          onSuccess={() => onUpdated()}
+        />
       </Modal>
       <Content>
         <SectionTitle>Sliders</SectionTitle>
