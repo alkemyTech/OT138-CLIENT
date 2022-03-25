@@ -30,9 +30,16 @@ function Sliders() {
   const [pagination, setPagination] = useState({});
   const [tableLoading, setTableLoading] = useState(true);
 
+
   useEffect(() => {
-    getSlider(1);
+    // Fetch data to get new pagination after page limit change
+    getSlider(currentPage);
   }, [pageLimit]);
+
+  useEffect(()=>{
+    // current page is grater than total pages, fetch data of last page
+    if (currentPage > pagination.pages) goToPage(pagination.pages);
+  },[pagination.pages])
 
   //GET SLIDERS
   async function getSlider(page) {
@@ -225,6 +232,7 @@ function Sliders() {
             <Pagination
               onPageChange={goToPage}
               totalPages={pagination.pages || 0}
+              forcePage={currentPage}
             />
           )}
         </>

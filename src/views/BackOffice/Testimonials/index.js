@@ -32,9 +32,14 @@ function Testimonials() {
   const [tableLoading, setTableLoading] = useState(true);
 
   useEffect(() => {
-    setCurrentPage(1);
-    getTestomony(1);
+    // Fetch data to get new pagination after page limit change
+    getTestomony(currentPage);
   }, [pageLimit]);
+
+  useEffect(()=>{
+    // current page is grater than total pages, fetch data of last page
+    if (currentPage > pagination.pages) goToPage(pagination.pages);
+  },[pagination.pages])
 
   async function getTestomony(page) {
     setTableLoading(true);
@@ -238,6 +243,7 @@ function Testimonials() {
             <Pagination
               onPageChange={goToPage}
               totalPages={pagination.pages || 0}
+              forcePage={currentPage}
             />
           )}
         </>

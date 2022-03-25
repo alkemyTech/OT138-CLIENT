@@ -23,9 +23,14 @@ export default function Contacts() {
   const [tableLoading, setTableLoading] = useState(true);
 
   useEffect(() => {
-    setCurrentPage(1);
-    getContacts(1);
+    // Fetch data to get new pagination after page limit change
+    getContacts(currentPage);
   }, [pageLimit]);
+
+  useEffect(()=>{
+    // current page is grater than total pages, fetch data of last page
+    if (currentPage > pagination.pages) goToPage(pagination.pages);
+  },[pagination.pages])
 
   async function getContacts(page) {
     setTableLoading(true);
@@ -119,6 +124,7 @@ export default function Contacts() {
         <Pagination
           onPageChange={goToPage}
           totalPages={pagination.pages || 0}
+          forcePage={currentPage}
         />
       )}
     </Content>

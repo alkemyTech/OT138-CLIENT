@@ -21,6 +21,7 @@ export default function Users() {
   const [pagination, setPagination] = useState({});
   const [users, setUsers] = useState(createArrayOfObjects(pageLimit));
   const [lockedEntryIds, setLockedEntryIds] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
   let navigate = useNavigate();
 
   async function fetchUsers(page) {
@@ -37,10 +38,18 @@ export default function Users() {
   }
 
   useEffect(() => {
-    fetchUsers(1);
+    // Fetch data to get new pagination after page limit change
+    fetchUsers(currentPage);
   }, [pageLimit]);
 
+  useEffect(()=>{
+    // current page is grater than total pages, fetch data of last page
+    if (currentPage > pagination.pages) goToPage(pagination.pages);
+  },[pagination.pages])
+
+
   function goToPage(page) {
+    setCurrentPage(page);
     fetchUsers(page);
   }
 
@@ -151,6 +160,7 @@ export default function Users() {
           <Pagination
             onPageChange={goToPage}
             totalPages={pagination.pages || 0}
+            forcePage={currentPage}
           />
         )}
       </Content>
