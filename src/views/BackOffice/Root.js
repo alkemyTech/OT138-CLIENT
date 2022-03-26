@@ -17,7 +17,7 @@ import { getNews } from "../../services/requests/news";
 import { getUsersList } from "../../services/requests/users";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { createArrayOfObjects } from "../../helpers";
+import { createArrayOfObjects, removeTags } from "../../helpers";
 
 import { getDonations } from "../../services/requests/donations";
 import moment from "moment";
@@ -116,7 +116,7 @@ function Backoffice({ auth }) {
                               <b>{name}</b>
                             </Link>
                           </td>
-                          <td className="table__wrap__text">{content}</td>
+                          <td className="table__wrap__text">{content && removeTags(content)}</td>
                         </tr>
                       );
                     })
@@ -179,7 +179,7 @@ function Backoffice({ auth }) {
                               </div>
                             </Link>
                           </td>
-                          <td className="table__wrap__text">{content}</td>
+                          <td className="table__wrap__text">{content && removeTags(content)}</td>
                         </tr>
                       );
                     })
