@@ -8,7 +8,7 @@ export async function getUsers(page = 1, limit = 10) {
     errorMessage: "",
   };
   try {
-    const { data: resObj } = await api.get(API_USERS, {params:{page, limit}});
+    const { data: resObj } = await api.get(API_USERS, { params: { page, limit } });
     if (resObj.error === false) {
       result.success = true;
       result.result = resObj.result;
@@ -35,19 +35,20 @@ export async function deleteUser(id) {
   };
 
   try {
-    const { data: resObj } = await api.delete(`/users/protected/${id}`);
+    const { data: resObj } = await api.delete(`/users/${id}`);
 
     if (resObj.error === false) {
       result.success = true;
-      result.data = resObj.message;
+      result.data = resObj.result;
     } else {
       result.errorMessage = resObj.message;
     }
 
   } catch (e) {
-    console.error(e);
-    result.errorMessage = "Unexpected error during fetching";
+    result.errorMessage = "Error al eliminar usuario";
   };
+
+  return result;
 };
 
 export async function updateUser(id) {
@@ -62,13 +63,15 @@ export async function updateUser(id) {
 
     if (resObj.error === false) {
       result.success = true;
-      result.data = resObj.message;
+      result.data = resObj.data;
     } else {
       result.errorMessage = resObj.message;
     }
 
   } catch (e) {
     console.error(e);
-    result.errorMessage = "Unexpected error during fetching";
+    result.errorMessage = "Error al actualizar usuario";
   };
+
+  return result;
 };

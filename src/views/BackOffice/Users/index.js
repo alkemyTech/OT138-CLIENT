@@ -7,11 +7,12 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import { Content } from "../../../components/Wrappers/Containers";
 import { HeaderButtons, SectionTitle } from "../../../styles/BackOffice";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
 import { createArrayOfObjects } from "../../../helpers";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import Pagination, { SelectLimit } from "../../../components/Pagination";
+import UserEditor from "./UserEditor";
+import Modal from "../../../components/Modal";
 
 export default function Users() {
   const limitOptions = [10, 15, 25, 50];
@@ -22,7 +23,10 @@ export default function Users() {
   const [users, setUsers] = useState(createArrayOfObjects(pageLimit));
   const [lockedEntryIds, setLockedEntryIds] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  let navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    display: false,
+    instance: null,
+  });
 
   async function fetchUsers(page) {
     setTableLoading(true);
@@ -42,11 +46,24 @@ export default function Users() {
     fetchUsers(currentPage);
   }, [pageLimit]);
 
-  useEffect(()=>{
+  useEffect(() => {
     // current page is grater than total pages, fetch data of last page
     if (currentPage > pagination.pages) goToPage(pagination.pages);
-  },[pagination.pages])
+  }, [pagination.pages])
 
+  function onEdit(instance) {
+    setFormData({
+      display: true,
+      instance: instance,
+    });
+  }
+
+  function hideForm() {
+    setFormData({
+      display: false,
+      instance: null,
+    });
+  }
 
   function goToPage(page) {
     setCurrentPage(page);
@@ -62,8 +79,13 @@ export default function Users() {
   }
 
   useEffect(() => {
-    fetchUsers();
+    fetchUsers(1);
   }, []);
+
+  function onUpdated() {
+    hideForm();
+    fetchUsers(currentPage);
+  }
 
   async function onDelete(id) {
     const result = await Swal.fire({
@@ -78,20 +100,17 @@ export default function Users() {
     if (result.isConfirmed) {
       setLockedEntryIds((state) => [...state, id]);
 
-      const { data } = await deleteUser(id);
+      const { success, errorMessage } = await deleteUser(id);
 
-      if (!data.error) {
-        fetchUsers();
+      if (success) {
+        fetchUsers(currentPage);
+        toast.success('Usuario eliminado');
       } else {
-        toast.error(`Error al eliminar usuario: ${data.message}`);
+        toast.error(`Error al eliminar usuario: ${errorMessage}`);
       }
 
       setLockedEntryIds((state) => state.filter((entryId) => entryId !== id));
     }
-  }
-
-  function onEdit(id) {
-    navigate(`/backoffice/usuarios/editar/${id}`);
   }
 
   function buttonStyles(color) {
@@ -104,6 +123,17 @@ export default function Users() {
 
   return (
     <>
+      <Modal
+        open={formData.display}
+        onClose={hideForm}
+        center
+        closeOnOverlayClick={false}
+      >
+        <UserEditor
+          data={formData.instance}
+          onSuccess={(entry) => onUpdated()}
+        />
+      </Modal>
       <Content>
         <SectionTitle
           style={{
@@ -120,8 +150,9 @@ export default function Users() {
             <tr>
               <th style={{ width: "20%" }}>Nombre</th>
               <th style={{ width: "20%" }}>Apellido</th>
-              <th style={{ width: "45%" }}>Email</th>
-              <th style={{ width: "15%" }}>Acciones</th>
+              <th style={{ width: "35%" }}>Email</th>
+              <th style={{ width: "15%" }}>Rol ID</th>
+              <th style={{ width: "10%" }}>Acciones</th>
             </tr>
           </thead>
           <tbody style={{ overflow: "scroll" }}>
@@ -131,6 +162,7 @@ export default function Users() {
                   <td>{tableLoading ? <StyledSkeleton /> : user.firstName}</td>
                   <td>{tableLoading ? <StyledSkeleton /> : user.lastName}</td>
                   <td>{tableLoading ? <StyledSkeleton /> : user.email}</td>
+                  <td>{tableLoading ? <StyledSkeleton /> : user.roleId}</td>
                   <td>
                     {tableLoading ? (
                       <StyledSkeleton />
@@ -138,7 +170,7 @@ export default function Users() {
                       <ButtonGroup align="center" gap={"8px"}>
                         <Button
                           style={buttonStyles("orange")}
-                          onClick={() => onEdit(user.id)}
+                          onClick={() => onEdit(user)}
                         >
                           <FaEdit />
                         </Button>
