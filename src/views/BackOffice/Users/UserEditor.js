@@ -1,104 +1,63 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import EntryEditor from "../../../components/EntryEditor";
 import { Footer } from "../../../components/Footer";
-import { getProfileByAdmin, saveProfileData, updateProfileByAdmin } from "../../../services/requests/profile";
+import { getProfileByAdmin, updateProfileByAdmin } from "../../../services/requests/profile";
 import { Container, Content } from "../../../components/Wrappers/Containers";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
-function UserEditor(){
+function UserEditor({ data, onSuccess }) {
 
-    const [data, setData] = useState({});
-    const [state, setState] = useState("ready");
+  const saveData = (formData, _) => {
+    updateProfileByAdmin({ ...formData, id: data.id }).then(response => {
+      if (!response.data.error) {
+        toast.success("Los datos fueron guardados con éxito");
+        onSuccess(response.data.result);
+      } else {
+        toast.error("Error al guardar");
+      }
+    }).catch(err => {
+      toast.error("Error al guardar");
+    })
+  }
 
-    const { id } = useParams();
-
-    useEffect(() => {
-        if (id) {
-          getData();
+  return (
+    <EntryEditor
+      id={data?.id ?? null}
+      state={"ready"}
+      entryType={"Usuarios"}
+      get={() => { }}
+      save={saveData}
+      data={data ?? {}}
+      fields={[
+        {
+          name: "firstName",
+          title: "Nombre",
+          type: "text",
+        },
+        {
+          name: "lastName",
+          title: "Apellido",
+          type: "text",
+        },
+        {
+          name: "roleId",
+          title: "Rol",
+          type: "select",
+          defaultValue: data?.roleId || 2,
+          options: [
+            {
+              value: 2,
+              text: `(${2}) Usuario común`
+            },
+            {
+              value: 1,
+              text: `(${1}) Administrador`
+            }
+          ]
         }
-    }, []);
-
-    const getData = async () => {
-        setState("loading");
-        getProfileByAdmin(id).then( response => {
-            if(!response.data.error){
-                const { id, firstName, lastName, roleId } = response.data.result; 
-                setData({
-                    id: id,
-                    firstName: firstName,
-                    lastName: lastName,
-                    roleId: roleId
-                });
-                setState("ready");
-            } else {
-                setState("error");
-            }
-        })
-        .catch(err => {
-            console.log(err);
-            setState("error");
-        })
-    }
-
-    const saveData = async (data) => {
-        const factorizeData = {...data}
-        factorizeData.id = id;
-        updateProfileByAdmin(factorizeData).then(response => {
-            if(!response.data.error){
-                toast.success("Los datos fueron guardados con éxito");
-            } else{
-                toast.error("Error al intentar guardar");
-            }
-        }).catch(err => {
-            console.log(err);
-            toast.error("Error al intentar guardar");
-        })
-    }
-
-    return(
-        <Container>
-            <Content>
-                <Toaster/>
-                <EntryEditor 
-                    id = {id}
-                    state = {state}
-                    entryType = {"User"}
-                    get = {getData}
-                    save = {saveData}
-                    data = {data}
-                    fields={[
-                        {
-                        name: "firstName",
-                        title: "Nombre",
-                        type: "text",
-                        },
-                        {
-                        name: "lastName",
-                        title: "Apellido",
-                        type: "text",
-                        },
-                        {
-                            name: "roleId",
-                            title: "Rol",
-                            type: "select",
-                            options: [
-                                {
-                                    value: 2,
-                                    text: "Usuario común"
-                                },
-                                {
-                                    value: 1,
-                                    text: "Administrador"
-                                }
-                            ]
-                        }
-                    ]}
-                />
-            </Content>
-            <Footer/>
-        </Container>
-    )
+      ]}
+    />
+  )
 
 }
 

@@ -89,22 +89,6 @@ function App({ checkAuthentication }) {
               </Protected>
             }
           />
-          <Route
-            path="/backoffice/actividades/editar/:id"
-            element={
-              <Protected isAdmin>
-                <ActivityEditor />
-              </Protected>
-            }
-          />
-          <Route
-            path="/backoffice/usuarios/editar/:id"
-            element={
-              <Protected isAdmin>
-                <UserEditor />
-              </Protected>
-            }
-          />
 
           <Route
             path="/backoffice/slider"
