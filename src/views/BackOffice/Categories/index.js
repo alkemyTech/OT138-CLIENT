@@ -29,8 +29,10 @@ export default function Categories() {
   const [lockedCategoryIds, setLockedCategoryIds] = useState([]);
   const [pagination, setPagination] = useState({});
   const [tableLoading, setTableLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1)
 
   async function goToPage(page) {
+    setCurrentPage(page)
     getCategories(page);
   }
   // CategoryForm metadata
@@ -40,8 +42,14 @@ export default function Categories() {
   });
 
   useEffect(() => {
-    getCategories(1);
+    // Fetch data to get new pagination after page limit change
+    getCategories(currentPage);
   }, [pageLimit]);
+
+  useEffect(()=>{
+    // current page is grater than total pages, fetch data of last page
+    if (currentPage > pagination.pages) goToPage(pagination.pages);
+  },[pagination.pages])
 
   async function getCategories(page) {
     setTableLoading(true);
@@ -190,6 +198,7 @@ export default function Categories() {
           <Pagination
             onPageChange={goToPage}
             totalPages={pagination.pages || 0}
+            forcePage={currentPage}
           />
         )}
       </Content>
