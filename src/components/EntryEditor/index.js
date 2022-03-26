@@ -59,7 +59,10 @@ function EntryEditor({ id, state, entryType, get, save, data, fields }) {
     fieldsWithData.forEach((field) => {
       formData[field.name] = field.value;
     });
-    save(formData, sendImage);
+    // put dropzone data in form data also.
+    const dropzones = fieldsWithData.filter((val)=> { return val.type === "dropzone"})
+    formData[dropzones[0].name] = sendImage;
+    save(formData, sendImage); // sendImage not longer necessary but maintained for compatibility 
   };
 
   const onChangeStatus = ({ meta, file, remove }, status) => {
