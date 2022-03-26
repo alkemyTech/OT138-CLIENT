@@ -2,7 +2,7 @@
 
 ## Development branch deploy
 
-[Somos Más ONG Link](https://alkemy.ml).
+[Somos Más ONG Link](https://somosmas.ml).
 
 ## Available Commands
 
