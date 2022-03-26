@@ -21,10 +21,9 @@ import Dropzone from "../../components/Dropzone";
 function EntryEditor({ id, state, entryType, get, save, data, fields }) {
   const [fieldsWithData, setFieldsWithData] = useState([]);
   const [checked, setChecked] = useState(false);
-  const [imagenEnviar, setImagenEnviar] = useState([]);
-  const [imagen_portada, setImagenPortada] = useState("/dog_upload.png");
-  const [imagen_portada_preview, setImagenPortadaPreview] =
-    useState("/dog_upload.png");
+  const [sendImage, setSendImage] = useState();
+  const [displayImage, setDisplayImage] = useState("/upload.png");
+
   useEffect(() => {
     setFieldsWithData(
       fields.map((field) => {
@@ -38,6 +37,10 @@ function EntryEditor({ id, state, entryType, get, save, data, fields }) {
         };
       })
     );
+    if(data.image){
+      setDisplayImage(data.image);
+      setSendImage(data.image);
+    }
   }, [data, fields]);
 
   const updateField = (fieldName, fieldValue) => {
@@ -56,7 +59,7 @@ function EntryEditor({ id, state, entryType, get, save, data, fields }) {
     fieldsWithData.forEach((field) => {
       formData[field.name] = field.value;
     });
-    save(formData, imagen_portada);
+    save(formData, sendImage);
   };
 
   const onChangeStatus = ({ meta, file, remove }, status) => {
@@ -64,24 +67,18 @@ function EntryEditor({ id, state, entryType, get, save, data, fields }) {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = async (event) => {
-        setImagenEnviar(event?.target?.result);
-        setImagenPortada(file);
-        setImagenPortadaPreview(meta);
+        setSendImage(file);
+        setDisplayImage(file);
       };
     }
     if (status === "removed") {
-      setImagenEnviar(null);
-      setImagenPortada("/upload.png");
-      setImagenPortadaPreview("/upload.png");
+      setSendImage(null);
     }
   };
 
   const onSubmitFile = (files, allFiles) => {
     allFiles.forEach((f) => f.remove());
   };
-  useEffect(() => {
-    console.log("data", data);
-  }, [data]);
 
   return (
     <>
