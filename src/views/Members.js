@@ -53,6 +53,7 @@ function Members() {
         {state === "error" && (
           <h2>Aún no hay nada que mostrar aquí, ocurrió un error</h2>
         )}
+
       </Content>
       <Footer />
     </Container>
