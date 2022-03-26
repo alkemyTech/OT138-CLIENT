@@ -6,15 +6,16 @@ import {
   Form,
   MessageError,
 } from "../styles/FormContact";
+import { Footer } from "../components/Footer";
 import { Button } from "../components/Inputs";
 import { createContact } from "../services/requests/contacts";
 import { Container, Content } from "../components/Wrappers/Containers";
 import { Toaster, toast } from "react-hot-toast";
 import { Input, TextArea } from "../components/Inputs";
-import {SendridContact} from "../services/requests/sendGrid";
+import { SendridContact } from "../services/requests/sendGrid";
 
 function FormContacto() {
- 
+
   const submitForm = async (values, { resetForm }) => {
     resetForm();
     try {
@@ -26,8 +27,8 @@ function FormContacto() {
         toast.error("Error al enviar el mensaje.");
       }
 
-     
-      
+
+
 
     } catch (error) {
       toast.error("Error al intentar enviar el mensaje.");
@@ -140,6 +141,7 @@ function FormContacto() {
           </Formik>
         </ContainColumn>
       </Content>
+      <Footer />
     </Container>
   );
 }
