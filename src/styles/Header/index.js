@@ -142,6 +142,7 @@ export const Hamburger = styled.div`
   align-items: center;
   justify-self: flex-start;
   padding: 0 0.5rem;
+  cursor: pointer;
   @media (max-width: 960px) {
     display: flex;
     font-size: 30px;
@@ -156,7 +157,7 @@ export const MobileNavBar = styled.div`
   position: absolute;
   top: 4rem;
   z-index: 10;
-  
+
   width: 100%;
   background: #fff;
   border-radius: 0 0 5px 5px;

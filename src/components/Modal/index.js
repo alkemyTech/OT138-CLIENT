@@ -1,6 +1,6 @@
 import React from "react";
-import { Modal as ResponsiveModal } from 'react-responsive-modal';
-import 'react-responsive-modal/styles.css';
+import { Modal as ResponsiveModal } from "react-responsive-modal";
+import "react-responsive-modal/styles.css";
 
 export default function Modal({ children, ...rest }) {
   return (
@@ -12,12 +12,12 @@ export default function Modal({ children, ...rest }) {
 
 const modalStyles = {
   modalContainer: {
-    padding: '0.5rem'
+    padding: "0.5rem",
   },
   modal: {
-    borderRadius: '5px',
-    width: '100%',
-    maxWidth: '1000px',
-    margin: '0'
-  }
-}
+    borderRadius: "5px",
+    width: "100%",
+    maxWidth: "500px",
+    margin: "0",
+  },
+};

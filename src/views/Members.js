@@ -50,7 +50,9 @@ function Members() {
             )}
           </MembersContainer>
         )}
-        {state === "error" && <h2>Lo lamentamos, hubo un error</h2>}
+        {state === "error" && (
+          <h2>Aún no hay nada que mostrar aquí, ocurrió un error</h2>
+        )}
       </Content>
       <Footer />
     </Container>
