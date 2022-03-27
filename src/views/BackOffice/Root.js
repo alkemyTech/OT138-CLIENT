@@ -116,7 +116,9 @@ function Backoffice({ auth }) {
                               <b>{name}</b>
                             </Link>
                           </td>
-                          <td className="table__wrap__text">{content && removeTags(content)}</td>
+                          <td className="table__wrap__text">
+                            {content && removeTags(content)}
+                          </td>
                         </tr>
                       );
                     })
@@ -179,7 +181,9 @@ function Backoffice({ auth }) {
                               </div>
                             </Link>
                           </td>
-                          <td className="table__wrap__text">{content && removeTags(content)}</td>
+                          <td className="table__wrap__text">
+                            {content && removeTags(content)}
+                          </td>
                         </tr>
                       );
                     })
@@ -228,12 +232,21 @@ function Backoffice({ auth }) {
                 {!isLoadingDonations ? (
                   !donations?.data?.error && !isErrorDonations ? (
                     donations?.data?.result?.items?.map((donation) => {
-                      const { id_donation, message, value, createdAt } =
-                        donation;
+                      const {
+                        id_donation,
+                        message,
+                        value,
+                        UserDonation,
+                        createdAt,
+                      } = donation;
                       return (
                         <tr key={id_donation}>
                           <td>
-                            <Avatar src="/anonymous.png" />
+                            <Avatar
+                              src={
+                                UserDonation?.User?.image ?? "/anonymous.png"
+                              }
+                            />
                           </td>
                           <td>
                             <div className="parent">
