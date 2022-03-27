@@ -1,31 +1,35 @@
 import React, { useState, useEffect } from "react";
 import EntryEditor from "../../../components/EntryEditor";
 import { Footer } from "../../../components/Footer";
-import { getProfileByAdmin, updateProfileByAdmin } from "../../../services/requests/profile";
+import {
+  getProfileByAdmin,
+  updateProfileByAdmin,
+} from "../../../services/requests/profile";
 import { Container, Content } from "../../../components/Wrappers/Containers";
 import toast from "react-hot-toast";
 
 function UserEditor({ data, onSuccess }) {
-
   const saveData = (formData, _) => {
-    updateProfileByAdmin({ ...formData, id: data.id }).then(response => {
-      if (!response.data.error) {
-        toast.success("Los datos fueron guardados con éxito");
-        onSuccess(response.data.result);
-      } else {
+    updateProfileByAdmin({ ...formData, id: data.id })
+      .then((response) => {
+        if (!response.data.error) {
+          toast.success("Los datos fueron guardados con éxito");
+          onSuccess(response.data.result);
+        } else {
+          toast.error("Error al guardar");
+        }
+      })
+      .catch((err) => {
         toast.error("Error al guardar");
-      }
-    }).catch(err => {
-      toast.error("Error al guardar");
-    })
-  }
+      });
+  };
 
   return (
     <EntryEditor
       id={data?.id ?? null}
       state={"ready"}
       entryType={"Usuarios"}
-      get={() => { }}
+      get={() => {}}
       save={saveData}
       data={data ?? {}}
       fields={[
@@ -47,18 +51,17 @@ function UserEditor({ data, onSuccess }) {
           options: [
             {
               value: 2,
-              text: `(${2}) Usuario común`
+              text: `Estándar`,
             },
             {
               value: 1,
-              text: `(${1}) Administrador`
-            }
-          ]
-        }
+              text: `Administrador`,
+            },
+          ],
+        },
       ]}
     />
-  )
-
+  );
 }
 
 export default UserEditor;
