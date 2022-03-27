@@ -37,7 +37,7 @@ function EntryEditor({ id, state, entryType, get, save, data, fields }) {
         };
       })
     );
-    if(data.image){
+    if (data.image) {
       setDisplayImage(data.image);
       setSendImage(data.image);
     }
@@ -60,9 +60,13 @@ function EntryEditor({ id, state, entryType, get, save, data, fields }) {
       formData[field.name] = field.value;
     });
     // put dropzone data in form data also.
-    const dropzones = fieldsWithData.filter((val)=> { return val.type === "dropzone"})
-    formData[dropzones[0].name] = sendImage;
-    save(formData, sendImage); // sendImage not longer necessary but maintained for compatibility 
+    const dropzones = fieldsWithData.filter((val) => {
+      return val.type === "dropzone";
+    });
+    if (dropzones.length > 0) {
+      formData[dropzones[0].name] = sendImage;
+    }
+    save(formData, sendImage); // sendImage not longer necessary but maintained for compatibility
   };
 
   const onChangeStatus = ({ meta, file, remove }, status) => {
