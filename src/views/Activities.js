@@ -115,7 +115,7 @@ export const ActivitiesByID = () => {
           <Article
             key={response?.data?.result.id}
             id={response?.data?.result.id}
-            title={response?.data?.result.title}
+            title={response?.data?.result.name}
             content={response?.data?.result.content}
             thumbnail={response?.data?.result.image}
           />
