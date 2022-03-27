@@ -63,7 +63,7 @@ function Signup({ login }) {
     initialValues: {
       firstName: "",
       lastName: "",
-      phone: "",
+      phone: null,
       email: "",
       password: "",
     },
