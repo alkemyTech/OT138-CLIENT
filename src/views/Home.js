@@ -13,8 +13,8 @@ function Home() {
       <Content>
         <News />
         <Activities />
-        <Footer />
       </Content>
+      <Footer />
     </Container>
   );
 }
