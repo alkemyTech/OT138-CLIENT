@@ -11,26 +11,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { Container, Content } from "../../../components/Wrappers/Containers";
 
 function ActivityEditor({ data, onSuccess }) {
-  //const [data, setData] = useState({});
   const [state, setState] = useState("ready");
-
-  /*useEffect(() => {
-    if (id) {
-      getActivity();
-    }
-  }, [id]);
-
-  const getActivity = async () => {
-    setState("loading");
-    getActivitiesById(id).then((response) => {
-      if (!response.data.error) {
-        setData(response.data.result);
-      } else {
-        toast.error("No se pudo cargar los datos");
-      }
-      setState("ready");
-    });
-  };*/
 
   const saveActivity = async (formData, image) => {
     if (data) {
