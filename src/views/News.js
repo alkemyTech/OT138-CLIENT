@@ -11,6 +11,7 @@ import { Container, Content } from "../components/Wrappers/Containers";
 import { getNews, getNewsById } from "../services/requests/news";
 import { NewsContainer } from "../styles/News";
 import toast from "react-hot-toast";
+import { removeTags } from "../helpers";
 
 export default function News() {
   const [news, setNews] = useState([]);
@@ -70,7 +71,7 @@ export default function News() {
                   key={id}
                   id={id}
                   name={name}
-                  content={content}
+                  content={removeTags(content)}
                   image={image}
                 />
               );
