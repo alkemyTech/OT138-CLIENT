@@ -49,7 +49,7 @@ export default function Users() {
   useEffect(() => {
     // current page is grater than total pages, fetch data of last page
     if (currentPage > pagination.pages) goToPage(pagination.pages);
-  }, [pagination.pages])
+  }, [pagination.pages]);
 
   function onEdit(instance) {
     setFormData({
@@ -104,7 +104,7 @@ export default function Users() {
 
       if (success) {
         fetchUsers(currentPage);
-        toast.success('Usuario eliminado');
+        toast.success("Usuario eliminado");
       } else {
         toast.error(`Error al eliminar usuario: ${errorMessage}`);
       }
@@ -143,7 +143,10 @@ export default function Users() {
           Usuarios
         </SectionTitle>
         <HeaderButtons>
-          <SelectLimit onSelect={value => setPageLimit(value)} options={limitOptions} />
+          <SelectLimit
+            onSelect={(value) => setPageLimit(value)}
+            options={limitOptions}
+          />
         </HeaderButtons>
         <Table>
           <thead>
@@ -151,7 +154,7 @@ export default function Users() {
               <th style={{ width: "20%" }}>Nombre</th>
               <th style={{ width: "20%" }}>Apellido</th>
               <th style={{ width: "35%" }}>Email</th>
-              <th style={{ width: "15%" }}>Rol ID</th>
+              <th style={{ width: "15%" }}>Rol</th>
               <th style={{ width: "10%" }}>Acciones</th>
             </tr>
           </thead>
@@ -162,7 +165,15 @@ export default function Users() {
                   <td>{tableLoading ? <StyledSkeleton /> : user.firstName}</td>
                   <td>{tableLoading ? <StyledSkeleton /> : user.lastName}</td>
                   <td>{tableLoading ? <StyledSkeleton /> : user.email}</td>
-                  <td>{tableLoading ? <StyledSkeleton /> : user.roleId}</td>
+                  <td>
+                    {tableLoading ? (
+                      <StyledSkeleton />
+                    ) : user.roleId === 1 ? (
+                      "Administrador"
+                    ) : (
+                      "Estándar"
+                    )}
+                  </td>
                   <td>
                     {tableLoading ? (
                       <StyledSkeleton />

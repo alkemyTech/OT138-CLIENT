@@ -12,19 +12,23 @@ import {
   MobileItem,
   ProfileDropdown,
   SessionButton,
+  LinksDropdown,
 } from "../../styles/Header";
 import { FaBars, FaCaretDown, FaCaretUp } from "react-icons/fa";
+import { IoEllipsisHorizontalSharp } from 'react-icons/io5';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { logout as logoutAction } from "../../actions/authActions";
 import { status } from "../../constants";
 import { getPublicData } from "../../services/requests/publicData";
 import ImageLoader from "../ImageLoader";
-import { navItems as navItemsConstant } from "../../constants";
+import { navItems as navItemsConstant, navItemsGroup } from "../../constants";
 import toast from "react-hot-toast";
 import { isAdmin } from '../../helpers';
 
 function Header({ logout, auth }) {
+  const MAX_NAV_LINKS = 6;
+
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
@@ -38,7 +42,7 @@ function Header({ logout, auth }) {
     email: "",
   });
   const [publicData, setPublicData] = useState({});
-  const [navItems, setNavItems] = useState({routes:[]});
+  const [navItems, setNavItems] = useState({ routes: [] });
   useEffect(() => {
     (async () => {
       const result = await getPublicData();
@@ -100,15 +104,34 @@ function Header({ logout, auth }) {
           </Logo>
         </Link>
         <NavBar>
-          {navItems.routes.map((item, index) => {
-            return (
-              <NavItem
-                key={index}
-                className={pathname === item.route ? "active" : ""}>
-                <Link to={item.route}>{item.text}</Link>
-              </NavItem>
-            );
-          })}
+          {
+            navItems.routes.slice(0, MAX_NAV_LINKS).map((item, index) => {
+              return (
+                <NavItem
+                  key={index}
+                  className={pathname === item.route ? "active" : ""}>
+                  <Link to={item.route}>{item.text}</Link>
+                </NavItem>
+              );
+            })
+          }
+          <LinksDropdown>
+            <span className="dropdown__name">...</span>
+            <div className="dropdown__content">
+              {
+                navItems.routes.slice(MAX_NAV_LINKS).map((item, index) => {
+                  return (
+                    <NavItem
+                      textAlign='left'
+                      key={index}
+                      className={pathname === item.route ? "active" : ""}>
+                      <Link to={item.route}>{item.text}</Link>
+                    </NavItem>
+                  );
+                })
+              }
+            </div>
+          </LinksDropdown>
         </NavBar>
         {dataState === "loaded" && auth.authenticated ? (
           <Avatar onClick={() => setDropdownState(!dropdownState)}>

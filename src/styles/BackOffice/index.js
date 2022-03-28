@@ -100,7 +100,9 @@ export const StatisticsBox = styled.div`
 
 export const BackofficeWelcome = styled.div`
   display: flex;
+  padding: 1rem;
   flex-direction: column;
+  align-items: center;
   width: 100%;
 
   .welcome__title {

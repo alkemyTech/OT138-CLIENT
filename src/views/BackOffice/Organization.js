@@ -31,7 +31,7 @@ function Organization() {
 
   let organizationSchema = yup.object().shape({
     name: yup.string().required("Nombre es un campo obligatorio."),
-    image: yup.string().required("URL de la imagen es un campo obligatorio."),
+    image: yup.mixed().required("La imagen es un campo obligatorio."),
   });
 
   const saveOrganization = async (formData, imagen_portada) => {
@@ -72,6 +72,7 @@ function Organization() {
             getEntry={getOrganization}
             save={saveOrganization}
             data={data}
+            yupSchema={organizationSchema}
             fields={[
               {
                 name: "name",
@@ -80,7 +81,7 @@ function Organization() {
               },
               {
                 name: "image",
-                title: "Url de imagen",
+                title: "Imagen",
                 type: "dropzone",
               },
             ]}
