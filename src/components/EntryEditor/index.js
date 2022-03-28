@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Loading from "../../components/Loading";
-import { EditorContent, EntryType, Message } from "./styles";
+import { EditorContent, EntryType, Message, ValidationMessage } from "./styles";
 import { Input, Label, Button, TextArea, TextEditor, Select } from "../Inputs";
 import Dropzone from "../../components/Dropzone";
+import toast from "react-hot-toast";
+import { ValidationError } from "yup";
 /**
  *
  * @param {integer} [id] The entry id. If not provided, the function assumes that it will create a new entry
@@ -18,11 +20,22 @@ import Dropzone from "../../components/Dropzone";
  * @returns {component} EntryEditor, a React component that renders a form for loading, creating and/or updating entries
  */
 
-function EntryEditor({ id, state, entryType, get, save, data, fields }) {
+function EntryEditor({
+  id,
+  state,
+  entryType,
+  get,
+  save,
+  data,
+  fields,
+  yupSchema,
+}) {
   const [fieldsWithData, setFieldsWithData] = useState([]);
   const [checked, setChecked] = useState(false);
   const [sendImage, setSendImage] = useState();
   const [displayImage, setDisplayImage] = useState("/upload.png");
+  const [validationErrors, setValidationErrors] = useState({});
+  const [touchedField, setTouchedField] = useState({});
 
   useEffect(() => {
     setFieldsWithData(
@@ -43,7 +56,30 @@ function EntryEditor({ id, state, entryType, get, save, data, fields }) {
     }
   }, [data, fields]);
 
+  // validate date on every change
+  useEffect(() => {
+    //only validate if yupSchema is present
+    if (yupSchema) {
+      const formData = {};
+      fieldsWithData.forEach((field) => {
+        formData[field.name] = field.value;
+      });
+      let valErrors = {};
+      try {
+        yupSchema.validateSync(formData, { abortEarly: false });
+      } catch (error) {
+        error.inner.forEach((elem) => {
+          valErrors[elem.path] = elem.message;
+        });
+      }
+      setValidationErrors(valErrors);
+    }
+  }, [fieldsWithData]);
+
   const updateField = (fieldName, fieldValue) => {
+    let newTouchedField = touchedField;
+    newTouchedField[fieldName] = true;
+    setTouchedField(newTouchedField);
     setFieldsWithData((state) => {
       const newState = [...state];
       const index = state.findIndex((field) => field.name === fieldName);
@@ -66,7 +102,19 @@ function EntryEditor({ id, state, entryType, get, save, data, fields }) {
     if (dropzones.length > 0) {
       formData[dropzones[0].name] = sendImage;
     }
-    save(formData, sendImage); // sendImage not longer necessary but maintained for compatibility
+    try {
+      if (yupSchema)
+        yupSchema.validateSync(formData, {
+          abortEarly: false,
+        });
+      save(formData, sendImage); // sendImage not longer necessary but maintained for compatibility
+    } catch (error) {
+      if (error instanceof ValidationError) {
+        toast.error(error.errors.join("\n"));
+      } else {
+        throw error;
+      }
+    }
   };
 
   const onChangeStatus = ({ meta, file, remove }, status) => {
@@ -118,6 +166,16 @@ function EntryEditor({ id, state, entryType, get, save, data, fields }) {
                 {field.type === "text" && (
                   <Input
                     type="text"
+                    value={field.value}
+                    name={field.name}
+                    onChange={({ target: { name, value } }) =>
+                      updateField(name, value)
+                    }
+                  />
+                )}
+                {field.type === "number" && (
+                  <Input
+                    type="number"
                     value={field.value}
                     name={field.name}
                     onChange={({ target: { name, value } }) =>
@@ -183,6 +241,9 @@ function EntryEditor({ id, state, entryType, get, save, data, fields }) {
                     />
                   </label>
                 )}
+                <ValidationMessage>
+                  {touchedField[field.name] && validationErrors[field.name]}
+                </ValidationMessage>
               </div>
             );
           })}

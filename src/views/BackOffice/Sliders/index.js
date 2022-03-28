@@ -18,13 +18,15 @@ import Pagination, { SelectLimit } from "../../../components/Pagination";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { Button, ButtonGroup } from "../../../components/Inputs";
+import { AvatarSkeleton, AvatarWithSkeleton } from "../../../components/Skeleton";
+import { createArrayOfObjects } from "../../../helpers";
 
 function Sliders() {
   const limitOptions = [10, 15, 25, 50];
 
   //CREATION OF STATES
   const [pageLimit, setPageLimit] = useState(limitOptions[0]);
-  const [sliders, setSlides] = useState([]);
+  const [sliders, setSlides] = useState(createArrayOfObjects(pageLimit));
   const [currentPage, setCurrentPage] = useState(1);
   const [formData, setFormData] = useState({ display: false, instance: null });
   const [pagination, setPagination] = useState({});
@@ -248,24 +250,6 @@ function buttonStyles(color) {
     height: "40px",
     background: color,
   };
-}
-
-function AvatarSkeleton() {
-  return <Skeleton circle={true} width="45px" height="45px" />;
-}
-
-function AvatarWithSkeleton(props) {
-  const [loaded, setLoaded] = useState(false);
-  return (
-    <>
-      <Avatar
-        {...props}
-        onLoad={() => setLoaded(true)}
-        style={loaded ? {} : { display: "none" }}
-      />
-      {!loaded && <AvatarSkeleton />}
-    </>
-  );
 }
 
 export default Sliders;

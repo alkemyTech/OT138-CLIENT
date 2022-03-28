@@ -3,6 +3,14 @@ import EntryEditor from "../../../components/EntryEditor";
 import { createNewsEntry, updateEntry } from "../../../services/requests/news";
 import toast from "react-hot-toast";
 
+import * as yup from "yup";
+
+let newsSchema = yup.object().shape({
+  name: yup.string().required("Nombre es obligatorio"),
+  content: yup.string().required("Contenido es obligatorio"),
+  image: yup.mixed().required("Imagen es obligatorio"),
+});
+
 function NewsEditor({ data, onSuccess }) {
   const save = async (formData, image) => {
     if (data) {
@@ -15,7 +23,7 @@ function NewsEditor({ data, onSuccess }) {
         name: formData.name,
         content: formData.content,
         categoryId: formData.categoryId,
-        image: image
+        image: image,
       });
       if (success) {
         toast.success("Guardado con éxito");
@@ -33,7 +41,7 @@ function NewsEditor({ data, onSuccess }) {
         name: formData.name,
         content: formData.content,
         categoryId: formData.categoryId,
-        image: image
+        image: image,
       });
 
       if (success) {
@@ -53,6 +61,7 @@ function NewsEditor({ data, onSuccess }) {
       get={() => {}}
       save={save}
       data={data ?? {}}
+      yupSchema={newsSchema}
       fields={[
         {
           name: "name",
