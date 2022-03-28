@@ -85,7 +85,7 @@ export const StatisticsBox = styled.div`
   div > div {
     overflow: hidden;
   }
-  @media (max-width: 960px) {
+  @media (max-width: 1367px) {
     div > div {
       overflow: auto;
     }
