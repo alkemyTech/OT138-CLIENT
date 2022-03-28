@@ -3,6 +3,8 @@ import Loading from "../../components/Loading";
 import { EditorContent, EntryType, Message } from "./styles";
 import { Input, Label, Button, TextArea, TextEditor, Select } from "../Inputs";
 import Dropzone from "../../components/Dropzone";
+import toast from "react-hot-toast";
+import { ValidationError } from "yup";
 /**
  *
  * @param {integer} [id] The entry id. If not provided, the function assumes that it will create a new entry
@@ -18,7 +20,16 @@ import Dropzone from "../../components/Dropzone";
  * @returns {component} EntryEditor, a React component that renders a form for loading, creating and/or updating entries
  */
 
-function EntryEditor({ id, state, entryType, get, save, data, fields }) {
+function EntryEditor({
+  id,
+  state,
+  entryType,
+  get,
+  save,
+  data,
+  fields,
+  yupSchema,
+}) {
   const [fieldsWithData, setFieldsWithData] = useState([]);
   const [checked, setChecked] = useState(false);
   const [sendImage, setSendImage] = useState();
@@ -66,7 +77,20 @@ function EntryEditor({ id, state, entryType, get, save, data, fields }) {
     if (dropzones.length > 0) {
       formData[dropzones[0].name] = sendImage;
     }
-    save(formData, sendImage); // sendImage not longer necessary but maintained for compatibility
+    try {
+      console.log("beforeVal", formData);
+      if (yupSchema)
+        yupSchema.validateSync(formData, {
+          abortEarly: false,
+        });
+      save(formData, sendImage); // sendImage not longer necessary but maintained for compatibility
+    } catch (error) {
+      if (error instanceof ValidationError) {
+        toast.error(error.errors.join(".\n"));
+      } else {
+        throw error;
+      }
+    }
   };
 
   const onChangeStatus = ({ meta, file, remove }, status) => {
@@ -118,6 +142,16 @@ function EntryEditor({ id, state, entryType, get, save, data, fields }) {
                 {field.type === "text" && (
                   <Input
                     type="text"
+                    value={field.value}
+                    name={field.name}
+                    onChange={({ target: { name, value } }) =>
+                      updateField(name, value)
+                    }
+                  />
+                )}
+                {field.type === "number" && (
+                  <Input
+                    type="number"
                     value={field.value}
                     name={field.name}
                     onChange={({ target: { name, value } }) =>
