@@ -18,7 +18,6 @@ function TestimonyEditor({ data, onSuccess }) {
   //SEND FORM
   async function submitForm(values, image) {
     try {
-      testimonySchema.validateSync(values);
       if (data?.id) {
         const { success } = await putTestimonies({
           id: data.id,
@@ -46,11 +45,7 @@ function TestimonyEditor({ data, onSuccess }) {
         }
       }
     } catch (error) {
-      if (error instanceof yup.ValidationError) {
-        toast.error(error.message);
-      } else {
-        toast.error("Sucedió un error inesperado");
-      }
+      toast.error("Sucedió un error inesperado");
     }
   }
 
@@ -62,6 +57,7 @@ function TestimonyEditor({ data, onSuccess }) {
         getEntry={() => data}
         save={submitForm}
         data={data ?? {}}
+        yupSchema={testimonySchema}
         fields={[
           {
             name: "name",
