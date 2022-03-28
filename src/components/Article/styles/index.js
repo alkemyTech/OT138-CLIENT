@@ -36,6 +36,13 @@ export const ArticleContainer = styled.section`
     object-fit: cover;
     margin: 0 0 1rem 0;
   }
+  .article__category {
+    font-size: 0.8rem;
+    font-weight: 600;
+    span {
+      font-weight: 400;
+    }
+  }
   span {
     color: var(--span-links-color);
     margin: 5px 0;
