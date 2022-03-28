@@ -51,6 +51,10 @@ export const navItems = [
         text: "Testimonios",
       },
       {
+        route: "/backoffice/miembros",
+        text: "Miembros"
+      },
+      {
         route: "/backoffice/categories",
         text: "Categorías",
       },
