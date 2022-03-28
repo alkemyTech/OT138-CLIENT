@@ -1,5 +1,6 @@
 import React from "react";
 import { useQuery } from "react-query";
+import { removeTags } from "../../helpers";
 import { getNews } from "../../services/requests/news";
 import Loading from "../Loading";
 import New from "./Cards";
@@ -38,7 +39,7 @@ export default function News() {
                       key={id}
                       id={id}
                       name={name}
-                      content={content}
+                      content={removeTags(content)}
                       image={image}
                     />
                   );
