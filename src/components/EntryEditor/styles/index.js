@@ -26,3 +26,8 @@ export const Message = styled.div`
     margin: 10px 0px;
   }
 `;
+
+export const ValidationMessage = styled.div`
+  font-size: 0.75rem;
+  color: tomato;
+`;
