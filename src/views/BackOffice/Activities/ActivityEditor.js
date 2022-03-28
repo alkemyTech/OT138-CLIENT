@@ -9,6 +9,13 @@ import {
 } from "../../../services/requests/activities";
 import toast, { Toaster } from "react-hot-toast";
 import { Container, Content } from "../../../components/Wrappers/Containers";
+import * as yup from "yup";
+
+let activitySchema = yup.object().shape({
+  name: yup.string().required("Nombre es obligatorio"),
+  content: yup.string().required("Contenido es obligatorio"),
+  image: yup.mixed().required("Imagen es obligatorio"),
+});
 
 function ActivityEditor({ data, onSuccess }) {
   const [state, setState] = useState("ready");
@@ -64,6 +71,7 @@ function ActivityEditor({ data, onSuccess }) {
         getEntry={getActivitiesById}
         save={saveActivity}
         data={data ?? {}}
+        yupSchema={activitySchema}
         fields={[
           {
             name: "name",

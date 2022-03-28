@@ -5,6 +5,22 @@ import { Button } from "../../../components/Inputs";
 import { postSlides, putSlides } from "../../../services/requests/slides";
 import { EntryType } from "../../../components/EntryEditor/styles";
 import Dropzone from "../../../components/Dropzone";
+import EntryEditor from "../../../components/EntryEditor";
+import * as yup from "yup";
+
+let sliderSchema = yup.object().shape({
+  text: yup
+    .string()
+    .max(255, "El texto no debe superar los 255 caracteres")
+    .required("Texto es obligatorio"),
+  order: yup
+    .number("Orden es obligatorio")
+    .typeError("Orden es obligatorio")
+    .positive("Orden debe ser positivo")
+    .integer("Orden debe ser entero")
+    .required("Orden es obligatorio"),
+  image: yup.mixed().required("Imagen es obligatorio"),
+});
 
 function SliderEditor({ data, onSuccess }) {
   const [inputs, setInputs] = useState({
@@ -17,7 +33,9 @@ function SliderEditor({ data, onSuccess }) {
   const [profileImagePreview, setProfileImagePreview] = useState("/upload.png");
 
   useEffect(() => {
+    console.log("data", data);
     if (data) {
+      data.image = data.imageURL;
       Updated();
     } else {
       setInputs({ text: "", order: "", organizationID: "" });
@@ -35,13 +53,13 @@ function SliderEditor({ data, onSuccess }) {
   }
 
   //SEND FORM
-  async function submitForm() {
+  async function submitForm(formData) {
     if (data) {
       const { success, errorMessage } = await putSlides({
         id: data.id,
-        text: inputs.text,
-        image: profileImage,
-        order: inputs.order,
+        text: formData.text,
+        image: formData.image,
+        order: formData.order,
         organizationID: 1,
       });
       if (success) {
@@ -52,9 +70,9 @@ function SliderEditor({ data, onSuccess }) {
       }
     } else {
       const { success, errorMessage } = await postSlides({
-        text: inputs.text,
-        image: profileImage,
-        order: inputs.order,
+        text: formData.text,
+        image: formData.image,
+        order: formData.order,
         organizationID: 1,
       });
       if (success) {
@@ -89,43 +107,31 @@ function SliderEditor({ data, onSuccess }) {
 
   return (
     <Fragment>
-      <div>
-        <h1 className="activities__title">
-          {data ? "Actualizar Slider" : "Crear Slider"}
-        </h1>
-        <EntryType>Sliders</EntryType>
-      </div>
-      <Label>Texto de slider</Label>
-      <Input
-        type="text"
-        name="text"
-        value={inputs.text}
-        onChange={(e) => {
-          setInputs({ ...inputs, text: e.target.value });
-        }}
+      <EntryEditor
+        state="ready"
+        entryType={"Slider"}
+        getEntry={() => inputs}
+        save={submitForm}
+        data={data ?? {}}
+        yupSchema={sliderSchema}
+        fields={[
+          {
+            name: "text",
+            title: "Texto",
+            type: "text",
+          },
+          {
+            name: "image",
+            title: "Imagen",
+            type: "dropzone",
+          },
+          {
+            name: "order",
+            title: "Orden",
+            type: "number",
+          },
+        ]}
       />
-      <Label>Archivo de imagen</Label>
-      <Dropzone
-        defaultImage={profileImage}
-        onChangeStatus={onChangeStatus}
-        onSubmit={onSubmitFile}
-      />
-      <Label>Order</Label>
-      <Input
-        type="number"
-        name="order"
-        value={inputs.order}
-        onChange={(e) => {
-          setInputs({ ...inputs, order: e.target.value });
-        }}
-      />
-      <Button
-        onClick={() => {
-          submitForm();
-        }}
-      >
-        <b>GUARDAR</b>
-      </Button>
     </Fragment>
   );
 }

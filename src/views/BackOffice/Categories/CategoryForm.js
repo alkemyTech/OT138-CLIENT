@@ -44,7 +44,7 @@ export default function CategotyForm({ instance, onCancel, onSuccess }) {
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         toast.error(error.message);
-        console.log(error)
+        console.log(error);
       } else {
         throw error;
       }
@@ -65,6 +65,7 @@ export default function CategotyForm({ instance, onCancel, onSuccess }) {
       entryType={"Categorías"}
       save={submit}
       data={instance ?? {}}
+      yupSchema={validationSchema}
       fields={[
         {
           name: "name",
