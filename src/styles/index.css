@@ -165,3 +165,27 @@ body {
 ::-webkit-scrollbar-track {
   background: var(--scrollbar-background);
 }
+
+.PhoneInput {
+  background: #edf2f7;
+  padding: 0 0.5rem;
+  min-width: 180px;
+  width: 100%;
+  border: none;
+  font-size: 1rem;
+  height: 48px;
+  border-radius: 0.25rem;
+  border: 2px solid transparent;
+  -webkit-transition: all 0.2s ease 0s;
+  transition: all 0.2s ease 0s;
+  outline: none;
+  margin: 0 0 0.5rem 0;
+}
+
+.PhoneInputInput {
+  height: 48px;
+  font-size: 1rem;
+  outline: none;
+  border: none;
+  background: #edf2f7;
+}

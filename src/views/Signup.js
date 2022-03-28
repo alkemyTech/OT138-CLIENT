@@ -20,7 +20,7 @@ import {
 import { Button, Input } from "../components/Inputs";
 import { register } from "../services/requests/auth";
 import { SendridRegister } from "../services/requests/sendGrid";
-
+import PhoneInput from "react-phone-number-input";
 // Returns an object with the error messages for handled input validation
 // i.e. fields required, correct email format and password min 6 chars length
 const validate = (values) => {
@@ -98,7 +98,7 @@ function Signup({ login }) {
   const [source, setSource] = useState(
     photos[Math.floor(Math.random() * photos.length)]
   );
-
+  const [phone, setPhone] = useState();
   return (
     <Container>
       <Toaster />
@@ -144,12 +144,19 @@ function Signup({ login }) {
               Número de Celular{" "}
               {formik.errors.phone ? <span>{formik.errors.phone}</span> : null}
             </Label>
-            <Input
+            {/* <Input
               placeholder="Celular"
               type="number"
               name="phone"
               value={formik.values.phone}
               onChange={formik.handleChange}
+            /> */}
+            <PhoneInput
+              name="phone"
+              placeholder="Número de Celular"
+              value={formik.values.phone}
+              onChange={(e) => formik.setFieldValue("phone", e)}
+              defaultCountry={"AR"}
             />
             <Label>
               Email{" "}

@@ -3597,7 +3597,7 @@
     "@ckeditor/ckeditor5-utils" "^32.0.0"
     "@ckeditor/ckeditor5-widget" "^32.0.0"
 
-"classnames@^2.2.6":
+"classnames@^2.2.5", "classnames@^2.2.6":
   "integrity" "sha512-OlQdbZ7gLfGarSqxesMesDa5uz7KFbID8Kpq/SxIoNGDqY8lSYs0D+hhtBXhcdB3rcbXArFr7vlHheLk1voeNA=="
   "resolved" "https://registry.npmjs.org/classnames/-/classnames-2.3.1.tgz"
   "version" "2.3.1"
@@ -3858,6 +3858,11 @@
     "parse-json" "^5.0.0"
     "path-type" "^4.0.0"
     "yaml" "^1.10.0"
+
+"country-flag-icons@^1.0.2":
+  "integrity" "sha512-1sF/6cit7MYfmxrqNiVN0ijLGv10xtV8egAUwUgIW6Q/Y6d7SuuVw5TOBnG7qIFqrNjxaPNoIAZmx7yOEuZvDA=="
+  "resolved" "https://registry.npmjs.org/country-flag-icons/-/country-flag-icons-1.4.25.tgz"
+  "version" "1.4.25"
 
 "countup.js@^2.0.8":
   "integrity" "sha512-pW3xwwD+hB+xmtI16xFcuLS0D5hSQqPQWkZOdgpKQyzxCquDNo2VCFPkRw12vmvdpnicXVTcjmYiakG6biwINg=="
@@ -5817,6 +5822,13 @@
   "resolved" "https://registry.npmjs.org/inline-style-parser/-/inline-style-parser-0.1.1.tgz"
   "version" "0.1.1"
 
+"input-format@^0.3.7":
+  "integrity" "sha512-hgwiCjV7MnhFvX4Hwrvk7hB2a2rcB2CQb7Ex7GlK1ISbEXuLtflwBUnadFSA1rVNDPFh9yWBaJJ4/o1XkzhPIg=="
+  "resolved" "https://registry.npmjs.org/input-format/-/input-format-0.3.7.tgz"
+  "version" "0.3.7"
+  dependencies:
+    "prop-types" "^15.7.2"
+
 "internal-slot@^1.0.3":
   "integrity" "sha512-O0DB1JC/sPyZl7cIo78n5dR7eUSwwpYPiXRhTzNxZVAMUuB8vlnRFyLxdrVToks6XPLVnFfbzaVd5WLjhgg+vA=="
   "resolved" "https://registry.npmjs.org/internal-slot/-/internal-slot-1.0.3.tgz"
@@ -6720,6 +6732,11 @@
   dependencies:
     "prelude-ls" "~1.1.2"
     "type-check" "~0.3.2"
+
+"libphonenumber-js@^1.9.50":
+  "integrity" "sha512-cCzQPChw2XbordcO2LKiw5Htx5leHVfFk/EXkxNHqJfFo7Fndcb1kF5wPJpc316vCJhhikedYnVysMh3Sc7Ocw=="
+  "resolved" "https://registry.npmjs.org/libphonenumber-js/-/libphonenumber-js-1.9.50.tgz"
+  "version" "1.9.50"
 
 "lilconfig@^2.0.3", "lilconfig@^2.0.4":
   "integrity" "sha512-bfTIN7lEsiooCocSISTWXkiWJkRqtL9wYtYy+8EK3Y41qh3mpwPU0ycTOgjdY9ErwXCc8QyrQp82bdL0Xkm9yA=="
@@ -8568,7 +8585,7 @@
     "strip-ansi" "^6.0.1"
     "text-table" "^0.2.0"
 
-"react-dom@*", "react-dom@^16.0.0", "react-dom@^16.0.0 || ^17.0.0", "react-dom@^16.13.1", "react-dom@^16.8.0 || ^17", "react-dom@^16.8.0 || ^17.0.0", "react-dom@>= 16.8.0", "react-dom@>=16", "react-dom@>=16.2.0", "react-dom@>=16.6.0", "react-dom@>=16.8":
+"react-dom@*", "react-dom@^16.0.0", "react-dom@^16.0.0 || ^17.0.0", "react-dom@^16.13.1", "react-dom@^16.8.0 || ^17", "react-dom@^16.8.0 || ^17.0.0", "react-dom@>= 16.8.0", "react-dom@>=0.16.8", "react-dom@>=16", "react-dom@>=16.2.0", "react-dom@>=16.6.0", "react-dom@>=16.8":
   "integrity" "sha512-81PIMmVLnCNLO/fFOQxdQkvEq/+Hfpv24XNJfpyZhTRfO0QcmQIF/PgCa1zCOj2w1hrn12MFLyaJ/G0+Mxtfag=="
   "resolved" "https://registry.npmjs.org/react-dom/-/react-dom-16.13.1.tgz"
   "version" "16.13.1"
@@ -8683,6 +8700,17 @@
   "version" "8.1.2"
   dependencies:
     "prop-types" "^15.6.1"
+
+"react-phone-number-input@^3.1.48":
+  "integrity" "sha512-tv//mJo8Ywrf2z4nm9KajfxX7lmsNxuT2n/V1g/6hojPnvTL4Fsp9/uX/q4Y47/AVftv6NZPylMIU5bRD2veHA=="
+  "resolved" "https://registry.npmjs.org/react-phone-number-input/-/react-phone-number-input-3.1.48.tgz"
+  "version" "3.1.48"
+  dependencies:
+    "classnames" "^2.2.5"
+    "country-flag-icons" "^1.0.2"
+    "input-format" "^0.3.7"
+    "libphonenumber-js" "^1.9.50"
+    "prop-types" "^15.7.2"
 
 "react-query@^3.34.15":
   "integrity" "sha512-dOhGLB5RT3p+wWj0rVdAompSg+R9t6oMRk+JhU8DP0tpJM2UyIv3r4Kk0zUkHSxT+QG34hFdrgdqxVWxgeNq4g=="
@@ -8816,7 +8844,7 @@
     "loose-envify" "^1.4.0"
     "prop-types" "^15.6.2"
 
-"react@*", "react@^0.14.0 || ^15.0.0-0 || ^16.0.0-0", "react@^16 || ^17", "react@^16.0.0", "react@^16.0.0 || ^17.0.0", "react@^16.13.1", "react@^16.13.1 || ^17.0.0", "react@^16.3.0 || ^17.0.0", "react@^16.8 || ^17", "react@^16.8.0 || ^17", "react@^16.8.0 || ^17.0.0", "react@^16.8.3", "react@^16.9.0 || ^17.0.0 || 18.0.0-beta", "react@>= 16", "react@>= 16.3.0", "react@>= 16.8.0", "react@>=16", "react@>=16.2.0", "react@>=16.3.0", "react@>=16.6.0", "react@>=16.8", "react@>=16.8.0":
+"react@*", "react@^0.14.0 || ^15.0.0-0 || ^16.0.0-0", "react@^16 || ^17", "react@^16.0.0", "react@^16.0.0 || ^17.0.0", "react@^16.13.1", "react@^16.13.1 || ^17.0.0", "react@^16.3.0 || ^17.0.0", "react@^16.8 || ^17", "react@^16.8.0 || ^17", "react@^16.8.0 || ^17.0.0", "react@^16.8.3", "react@^16.9.0 || ^17.0.0 || 18.0.0-beta", "react@>= 16", "react@>= 16.3.0", "react@>= 16.8.0", "react@>=0.16.8", "react@>=16", "react@>=16.2.0", "react@>=16.3.0", "react@>=16.6.0", "react@>=16.8", "react@>=16.8.0":
   "integrity" "sha512-YMZQQq32xHLX0bz5Mnibv1/LHb3Sqzngu7xstSM+vrkE5Kzr9xE0yMByK5kMoTK30YVJE61WfbxIFFvfeDKT1w=="
   "resolved" "https://registry.npmjs.org/react/-/react-16.13.1.tgz"
   "version" "16.13.1"

@@ -9,8 +9,8 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import "react-dropzone-uploader/dist/styles.css";
+import "react-phone-number-input/style.css";
 import "./styles/index.css";
-
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
