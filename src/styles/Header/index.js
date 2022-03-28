@@ -81,7 +81,7 @@ export const NavItem = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: ${props => props.textAlign === 'left' ? 'flext-start' : 'center'};
   text-align: center;
   margin: 0 10px;
   a {
@@ -207,6 +207,41 @@ export const ProfileDropdown = styled.div`
   a {
     margin: 4px 0;
     cursor: pointer;
+  }
+`;
+
+export const LinksDropdown = styled.div`
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  margin: 0;
+  
+  .dropdown__name {
+    padding: 0 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .dropdown__content {
+    border-radius: 5px;
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    gap: 10px;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 2rem 1rem;
+    z-index: 1;
+  }
+
+  &:hover .dropdown__content {
+    display: flex;
+  }
+
+  @media (max-width: 960px) {
+    display: none;
   }
 `;
 
