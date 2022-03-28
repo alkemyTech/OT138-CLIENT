@@ -115,23 +115,26 @@ function Header({ logout, auth }) {
               );
             })
           }
-          <LinksDropdown>
-            <span className="dropdown__name">...</span>
-            <div className="dropdown__content">
-              {
-                navItems.routes.slice(MAX_NAV_LINKS).map((item, index) => {
-                  return (
-                    <NavItem
-                      textAlign='left'
-                      key={index}
-                      className={pathname === item.route ? "active" : ""}>
-                      <Link to={item.route}>{item.text}</Link>
-                    </NavItem>
-                  );
-                })
-              }
-            </div>
-          </LinksDropdown>
+          {
+            navItems.routes.length > MAX_NAV_LINKS &&
+            <LinksDropdown>
+              <span className="dropdown__name">...</span>
+              <div className="dropdown__content">
+                {
+                  navItems.routes.slice(MAX_NAV_LINKS).map((item, index) => {
+                    return (
+                      <NavItem
+                        textAlign='left'
+                        key={index}
+                        className={pathname === item.route ? "active" : ""}>
+                        <Link to={item.route}>{item.text}</Link>
+                      </NavItem>
+                    );
+                  })
+                }
+              </div>
+            </LinksDropdown>
+          }
         </NavBar>
         {dataState === "loaded" && auth.authenticated ? (
           <Avatar onClick={() => setDropdownState(!dropdownState)}>
