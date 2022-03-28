@@ -202,7 +202,7 @@ export default function Users() {
         {pagination && (
           <Pagination
             onPageChange={goToPage}
-            totalPages={pagination.pages || 0}
+            totalPages={pagination.pages || 1}
             forcePage={currentPage}
           />
         )}

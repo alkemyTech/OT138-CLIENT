@@ -34,73 +34,76 @@ function App({ checkAuthentication }) {
   }, []);
 
   return (
-    <TransitionGroup component={null}>
-      <Header/>
+    /*<TransitionGroup component={null}>
+      
       <CSSTransition
         key={location.key}
         classNames="transition-fade"
         timeout={400}
-      >
-        <Routes>
-          <Route path="*" element={<NotFound />} />
-          <Route path="/" element={<Home />} />
-          <Route path="/services" element={<h1>Services</h1>} />
-          <Route path="/registro" element={<Signup />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/contacto" element={<FormContacto />} />
-          <Route path="/nosotros" element={<Members />} />
-          <Route path="/testimonios" element={<Testimonials />} />
-          <Route path="/gracias" element={<ThanksForYourDonation />} />
-          <Route
-            path="/perfil"
-            element={
-              <Protected>
-                <Profile />
-              </Protected>
-            }
-          />
-          <Route path="/actividades" element={<Activities />} />
-          <Route path="/actividades/:id" element={<ActivitiesByID />} />
-          <Route path="/novedades" element={<News />} />
-          <Route path="/novedades/:id" element={<NewsByID />} />
-          <Route
-            path="/backoffice/*"
-            element={
-              <Protected isAdmin>
-                <Backoffice />
-              </Protected>
-            }
-          />
+      >*/
+    <>
+      <Header />
+      <Routes>
+        <Route path="*" element={<NotFound />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/services" element={<h1>Services</h1>} />
+        <Route path="/registro" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/contacto" element={<FormContacto />} />
+        <Route path="/nosotros" element={<Members />} />
+        <Route path="/testimonios" element={<Testimonials />} />
+        <Route path="/gracias" element={<ThanksForYourDonation />} />
+        <Route
+          path="/perfil"
+          element={
+            <Protected>
+              <Profile />
+            </Protected>
+          }
+        />
+        <Route path="/actividades" element={<Activities />} />
+        <Route path="/actividades/:id" element={<ActivitiesByID />} />
+        <Route path="/novedades" element={<News />} />
+        <Route path="/novedades/:id" element={<NewsByID />} />
+        <Route
+          path="/backoffice/*"
+          element={
+            <Protected isAdmin>
+              <Backoffice />
+            </Protected>
+          }
+        />
 
-          <Route
-            path="/backoffice/testimonials"
-            element={
-              <Protected isAdmin>
-                <TestimonialsBackOffice />
-              </Protected>
-            }
-          />
+        <Route
+          path="/backoffice/testimonials"
+          element={
+            <Protected isAdmin>
+              <TestimonialsBackOffice />
+            </Protected>
+          }
+        />
 
-          <Route
-            path="/backoffice/actividades/nueva"
-            element={
-              <Protected isAdmin>
-                <ActivityEditor />
-              </Protected>
-            }
-          />
+        <Route
+          path="/backoffice/actividades/nueva"
+          element={
+            <Protected isAdmin>
+              <ActivityEditor />
+            </Protected>
+          }
+        />
 
-          <Route
-            path="/backoffice/slider"
-            element={
-              <Protected isAdmin>
-                <Sliders />
-              </Protected>
-            }
-          />
-        </Routes>
-      </CSSTransition>
-    </TransitionGroup>
+        <Route
+          path="/backoffice/slider"
+          element={
+            <Protected isAdmin>
+              <Sliders />
+            </Protected>
+          }
+        />
+      </Routes>
+    </>
+    /*</CSSTransition>
+  </TransitionGroup>*/
   );
 }
 

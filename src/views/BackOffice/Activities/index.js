@@ -242,7 +242,7 @@ export default function Activities() {
         {pagination && (
           <Pagination
             onPageChange={changePage}
-            totalPages={pagination.pages || 0}
+            totalPages={pagination.pages || 1}
             forcePage={currentPage}
           />
         )}
