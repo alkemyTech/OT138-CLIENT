@@ -186,7 +186,7 @@ function Members() {
                     />}
                   </td>
                   <td>{tableLoading ? <Skeleton /> : entry.name}</td>
-                  <td className="clickable">
+                  <td>
                     {tableLoading ? <Skeleton /> : <div className="parent">
                       <div className="child">{(entry.area)}</div>
                     </div>}
