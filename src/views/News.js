@@ -120,6 +120,7 @@ export const NewsByID = () => {
           id={id}
           title={news?.data?.result?.name}
           content={news?.data?.result?.content}
+          category={news?.data?.result?.categoryName}
           thumbnail={news?.data?.result?.image}
         />
       </Content>
