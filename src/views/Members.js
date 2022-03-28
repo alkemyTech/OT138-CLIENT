@@ -18,9 +18,8 @@ function Members() {
   const getData = async () => {
     setState("loading");
     const { success, data, errorMessage } = await getMembers();
-
     if (success) {
-      setMembers(data);
+      setMembers(data.items);
       setState("ready");
     } else {
       setState("error");
